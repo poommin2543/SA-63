@@ -19,12 +19,18 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 //import Footer from './components/Footer';
-import Icon from '@material-ui/core/Icon';
+//import Icon from '@material-ui/core/Icon';
 import SaveIcon from '@material-ui/icons/Save';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
-const styles = (theme) => ({
+const top100Films = [
+  { title: 'ใช้แล้วทิ้ง', year: 1994 },
+  { title: 'นำกลับมาใช้ใหม่', year: 1972 }
+];
+
+const styles = (theme: { spacing: (arg0: number) => number; palette: { common: { white: any; }; }; }) => ({
   secondaryBar: {
     zIndex: 0,
   },
@@ -46,7 +52,7 @@ const styles = (theme) => ({
   },
 });
 
-function Header(props) {
+function Header(props: { classes: any; onDrawerToggle: any; }) {
   const { classes, onDrawerToggle } = props;
 
   return (
@@ -170,12 +176,33 @@ function Header(props) {
             <Grid item xs={2}></Grid>
             <Grid item xs={2}>
               <Typography color="primary" variant="h6" component="h1">
+                ประเภทของเครื่องมือ
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+            <Autocomplete
+              id="combo-box-demo"
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              
+              renderInput={(params) => <TextField {...params} label="โปรดระบุประเภท" variant="outlined" />}
+            />
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}> </Grid>
+
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Typography color="primary" variant="h6" component="h1">
                 จำนวน/ชิ้น
               </Typography>
             </Grid>
             <Grid item xs={2}>
               <Paper className={classes.paper}>
-                <TextField id="outlined-basic" label="กรุณาใส่จำนวน" variant="outlined"/></Paper>
+                <TextField id="outlined-number" type='number' InputLabelProps={{
+                  shrink: true,}}label="กรุณาใส่จำนวน" variant="outlined"/>
+                  </Paper>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}> </Grid>
