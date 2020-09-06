@@ -87,7 +87,7 @@ function Header(props: { classes: any; onDrawerToggle: any; }) {
             </Grid>
             <Grid item>
               <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar src="https://scontent.fnak3-1.fna.fbcdn.net/v/t1.0-1/cp0/c0.24.80.80a/p80x80/118251964_1523930951142174_1223119877856967161_o.jpg?_nc_cat=100&_nc_sid=7206a8&_nc_eui2=AeGud1VE_FvpszPeEGewB0_PjtLenCu9ryeO0t6cK72vJ0wzrk8_F0vaLzoBnmMEHlCtbaeFZ_vnHdYwBPs99lRu&_nc_ohc=woL9JSPw-psAX9bma7M&_nc_ht=scontent.fnak3-1.fna&oh=72514f0e3741918f167c24737161cb72&oe=5F7ADCB6" alt="Noom My Avatar" />
+                <Avatar src="https://shorturl.at/ixKX1" alt="Noom My Avatar" />
               </IconButton>
             </Grid>
           </Grid>
@@ -176,7 +176,7 @@ function Header(props: { classes: any; onDrawerToggle: any; }) {
             <Grid item xs={2}></Grid>
             <Grid item xs={2}>
               <Typography color="primary" variant="h6" component="h1">
-                ประเภทของเครื่องมือ
+                ประเภทของอุปกรณ์
               </Typography>
             </Grid>
             <Grid item xs={2}>
