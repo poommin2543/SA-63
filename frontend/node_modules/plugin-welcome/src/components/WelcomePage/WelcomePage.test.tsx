@@ -8,7 +8,7 @@ describe('WelcomePage', () => {
   it('should render', () => {
     const rendered = render(
       <ThemeProvider theme={lightTheme}>
-        <WelcomePage />
+        <WelcomePage/>
       </ThemeProvider>,
     );
     expect(rendered.baseElement).toBeInTheDocument();
