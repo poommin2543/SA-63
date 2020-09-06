@@ -19,7 +19,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 //import Footer from './components/Footer';
-//import Icon from '@material-ui/core/Icon';
+import Icon from '@material-ui/core/Icon';
 import SaveIcon from '@material-ui/icons/Save';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
