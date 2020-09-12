@@ -1,327 +1,262 @@
-import React, { useState } from 'react';
-
-import { Link as RouterLink } from 'react-router-dom';
-
-import {
-
- Content,
-
- Header,
-
- Page,
-
- pageTheme,
-
- ContentHeader,
-
-} from '@backstage/core';
-
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-
-import TextField from '@material-ui/core/TextField';
-
-import Button from '@material-ui/core/Button';
-
-import FormControl from '@material-ui/core/FormControl';
-
-import { Alert } from '@material-ui/lab';
-
-import { DefaultApi } from '../../api/apis';
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
-
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+//import HelpIcon from '@material-ui/icons/Help';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
+import MenuIcon from '@material-ui/icons/Menu';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+//import Footer from './components/Footer';
+//import Icon from '@material-ui/core/Icon';
+import SaveIcon from '@material-ui/icons/Save';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import Typography from '@material-ui/core/Typography';
+const lightColor = 'rgba(255, 255, 255, 0.7)';
 
-import Box from '@material-ui/core/Box';
+const top100Films = [
+  { title: 'ใช้แล้วทิ้ง', year: 1994 },
+  { title: 'นำกลับมาใช้ใหม่', year: 1972 }
+];
 
-import Link from '@material-ui/core/Link';
+const styles = (theme: { spacing: (arg0: number) => number; palette: { common: { white: any; }; }; }) => ({
+  secondaryBar: {
+    zIndex: 0,
+  },
+  menuButton: {
+    marginLeft: -theme.spacing(1),
+  },
+  iconButtonAvatar: {
+    padding: 4,
+  },
+  link: {
+    textDecoration: 'none',
+    color: lightColor,
+    '&:hover': {
+      color: theme.palette.common.white,
+    },
+  },
+  button: {
+    borderColor: lightColor,
+  },
+});
 
-const useStyles = makeStyles((theme: Theme) =>
+function Header(props: { classes: any; onDrawerToggle: any; }) {
+  const { classes, onDrawerToggle } = props;
 
- createStyles({
+  return (
+    <React.Fragment>
+      <AppBar color="primary" position="sticky" elevation={0}>
+        <Toolbar>
+          <Grid container spacing={1} alignItems="center">
+            <Hidden smUp>
+              <Grid item>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={onDrawerToggle}
+                  className={classes.menuButton}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Grid>
+            </Hidden>
+            <Grid item xs />
+            <Grid item>
+              <Link className={classes.link} href="#" variant="body2">
+                log out
+              </Link>
+            </Grid>
+            <Grid item>
+              <Tooltip title="Alerts • No alerts">
+                <IconButton color="inherit">
+                  <NotificationsIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+            <Grid item>
+              <IconButton color="inherit" className={classes.iconButtonAvatar}>
+                <Avatar src="https://shorturl.at/ixKX1" alt="Noom My Avatar" />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <AppBar
+        component="div"
+        className={classes.secondaryBar}
+        color="primary"
+        position="static"
+        elevation={0}
+      >
+        <Toolbar>
+          <Grid container alignItems="center" spacing={1}>
+            <Grid item xs>
+              <Typography color="inherit" variant="h1" component="h1">
+                ระบบเครื่องมือแพทย์
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button className={classes.button} variant="outlined" color="inherit" size="small">
+                นพ.ภูมิมินทร์ พินพิมาย
+              </Button>
+            </Grid>
+            
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <AppBar
+        component="div"
+        className={classes.secondaryBar}
+        color="primary"
+        position="static"
+        elevation={0}
+      >
+        <Tabs value={0} textColor="inherit">
+          <Tab textColor="inherit" label="ADD Data" />
+          <Tab textColor="inherit" label="DEL Data" />
+          
+          <Tab textColor="inherit" label="UPDATE Data" />
+        </Tabs>
+      </AppBar>
+      
+      <AppBar
+        component="div"
+        className={classes.secondaryBar}
+        color="inherit"
+        position="static"
+        elevation={1}
+      >
+        <Toolbar>
+          <Grid container alignItems="center" spacing={4}>
+            <Grid item xs={12}></Grid>
+            <Grid item xs={12}></Grid>
+        
+            
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Typography color="primary" variant="h6" component="h1">
+                ID เครื่องมือแพทย์
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Paper className={classes.paper}>
+                <TextField id="outlined-basic" label="กรุณาใส่ ID" variant="outlined"/></Paper>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}> </Grid>
 
-   root: {
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Typography color="primary" variant="h6" component="h1">
+                ชื่อเครื่องมือแพทย์
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Paper className={classes.paper}>
+                <TextField id="outlined-basic" label="กรุณาใส่ชื่อเครื่องมือ" variant="outlined"/></Paper>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}> </Grid>
 
-     display: 'flex',
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Typography color="primary" variant="h6" component="h1">
+                ประเภทของอุปกรณ์
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+            <Autocomplete
+              id="combo-box-demo"
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              
+              renderInput={(params) => <TextField {...params} label="โปรดระบุประเภท" variant="outlined" />}
+            />
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}> </Grid>
 
-     flexWrap: 'wrap',
-
-     justifyContent: 'center',
-
-   },
-
-   margin: {
-
-     margin: theme.spacing(3),
-
-   },
-
-   withoutLabel: {
-
-     marginTop: theme.spacing(3),
-
-   },
-
-   textField: {
-
-     width: '25ch',
-
-   },
-
- }),
-
-);
-
-
-const initialUserState = {
-
- name: 'System Analysis and Design',
-
- age: 20,
-
-};
-
-
-export default function Create() {
-
- const classes = useStyles();
-
- const profile = { givenName: 'ระบบเครื่องมือแพทย์' };
-
- const api = new DefaultApi();
-
-
- const [user, setUser] = useState(initialUserState);
-
- const [status, setStatus] = useState(false);
-
- const [alert, setAlert] = useState(true);
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Typography color="primary" variant="h6" component="h1">
+                จำนวน/ชิ้น
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Paper className={classes.paper}>
+                <TextField id="outlined-number" type='number' InputLabelProps={{
+                  shrink: true,}}label="กรุณาใส่จำนวน" variant="outlined"/>
+                  </Paper>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}> </Grid>
 
 
- const handleInputChange = (event: any) => {
-
-   const { id, value } = event.target;
-
-   setUser({ ...user, [id]: value });
-
- };
-
-
- const CreateUser = async () => {
-
-   const res = await api.createUser({ user });
-
-   setStatus(true);
-
-   if (res.id != ''){
-
-     setAlert(true);
-
-   } else {
-
-     setAlert(false);
-
-   }
-
-   const timer = setTimeout(() => {
-
-     setStatus(false);
-
-   }, 1000);
-
- };
-
- const frist = [
-  { title: '10001' },
-  { title: '10002'},];
-
- return (
-
-   <Page theme={pageTheme.home}>
-
-<Header
-
-title={` ${profile.givenName || 'ระบบเครื่องมือแพทย์'}`}
-
-subtitle="ยินดีต้อนรับเข้าสู่ระบบบันทึกข้อมูลอุปกรณ์แพทย์"
-><Avatar>N</Avatar>
-<Typography component="div" variant="body1">
-      <Box color="white">Poommin Phinphimai</Box>
-      <Box color="secondary.main"></Box>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}> </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                className={classes.button}
+                startIcon={<SaveIcon />}
+              >
+                Save
+              </Button>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}> </Grid>
+            <Grid item xs={12}></Grid>
+            <Grid item xs={12}></Grid>
+            
+    </Grid>
+        </Toolbar>
+      </AppBar>
+      <AppBar
+        component="div"
+        className={classes.secondaryBar}
+        color="primary"
+        position="static"
+        elevation={0}
+      >
+        <Toolbar>
+          <Grid container alignItems="center" spacing={1}>
+            <Grid item xs>
       
     
-    <Typography className={classes.root}>
-      <Link href="#" onClick={"link"}>
-        Log Out
-      </Link>
-      </Typography>
-      </Typography>
-</Header>
-
-     <Content>
-
-       <ContentHeader title="">
-
-         {status ? (
-
-           <div>
-
-             {alert ? (
-
-               <Alert severity="success">
-
-                 This is a success alert — check it out!
-
-               </Alert>
-
-             ) : (
-
-               <Alert severity="warning" style={{ marginTop: 20 }}>
-
-                 This is a warning alert — check it out!
-
-               </Alert>
-
-             )}
-
-           </div>
-
-         ) : null}
-
-       </ContentHeader>
-
-       <div className={classes.root}>
-
-         <form noValidate autoComplete="off">
-
-         <div className={classes.margin}>
-         <div class="form-control">
-          <label for="my-input">ID เครื่องมือแพทย์     </label>
-          <input id="my-input" aria-describedby="my-helper-text" />
-          <span id="my-helper-text"></span>
-          </div>
-
-        <div class="form-control">
-          <label for="my-input">ชื่อเครื่องมือแพทย์     </label>
-          <input id="my-input" aria-describedby="my-helper-text" />
-          <span id="my-helper-text"></span>
-        </div>
-
-        <div class="form-control">
-          <label for="my-input">จำนวน/ชิ้น&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input id="my-input" aria-describedby="my-helper-text" />
-          <span id="my-helper-text"></span>
-        </div>
-
-         </div>
-
-           <div className={classes.margin}>
-
-             <Button
-
-               onClick={() => {
-
-                 CreateUser();
-
-               }}
-
-               variant="contained"
-
-               color="primary"
-
-             >
-
-              เพิ่มข้อมูล
-
-             </Button>
-
-             <Button
-
-               style={{ marginLeft: 20 }}
-
-               component={RouterLink}
-
-               to="/"
-
-               variant="contained"
-
-             >
-
-              อัพเดต
-
-             </Button>
-             <Button
-
-               style={{ marginLeft: 20 }}
-
-               component={RouterLink}
-
-               to="/"
-
-               variant="contained"
-
-               color="secondary"
-
-             >
-
-              ลบข้อมูล
-
-             </Button>
-             <h1>ระบบทำรายการ</h1>
-             <Autocomplete
-            id="combo-box-demo"
-            options={frist}
-            getOptionLabel={(option) => option.title}
-            style={{ width: 400,marginTop: 10 }}
-            renderInput={(params) => <TextField {...params} label="ID เครื่องมือแพทย์" variant="outlined" 
-            />}
-            />
-
-            <Autocomplete
-            id="combo-box-demo"
-            options={frist}
-            getOptionLabel={(option) => option.title}
-            style={{ width: 400,marginTop: 10 }}
-            renderInput={(params) => <TextField {...params} label="จำนวน/ชิ้น" variant="outlined" 
-            />}
-            />
+            </Grid>
             
+            
+          </Grid>
+        </Toolbar>
+      </AppBar>
            
-
-           </div>
-           <div className={classes.root}>
-           <Button
-
-            onClick={() => {
-
-              CreateUser();
-
-            }}
-
-            variant="contained"
-
-            color="primary"
-
-            >
-
-            บันทึกข้อมูล
-
-            </Button>
-
-              
-           </div>
-           
-        
-         </form>
-
-       </div>
-
-     </Content>
-
-   </Page>
-
- );
-
+    </React.Fragment>
+  );
 }
+
+Header.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onDrawerToggle: PropTypes.func.isRequired,
+};
+
+export default withStyles(styles)(Header);
+
