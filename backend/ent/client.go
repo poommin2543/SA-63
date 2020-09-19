@@ -9,10 +9,14 @@ import (
 
 	"github.com/poommin/app/ent/migrate"
 
-	"github.com/poommin/app/ent/user"
+	"github.com/poommin/app/ent/medicalequipment"
+	"github.com/poommin/app/ent/medicaltype"
+	"github.com/poommin/app/ent/physician"
+	"github.com/poommin/app/ent/systemequipment"
 
 	"github.com/facebookincubator/ent/dialect"
 	"github.com/facebookincubator/ent/dialect/sql"
+	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 )
 
 // Client is the client that holds all ent builders.
@@ -20,8 +24,14 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// User is the client for interacting with the User builders.
-	User *UserClient
+	// Medicalequipment is the client for interacting with the Medicalequipment builders.
+	Medicalequipment *MedicalequipmentClient
+	// Medicaltype is the client for interacting with the Medicaltype builders.
+	Medicaltype *MedicaltypeClient
+	// Physician is the client for interacting with the Physician builders.
+	Physician *PhysicianClient
+	// Systemequipment is the client for interacting with the Systemequipment builders.
+	Systemequipment *SystemequipmentClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -35,7 +45,10 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.User = NewUserClient(c.config)
+	c.Medicalequipment = NewMedicalequipmentClient(c.config)
+	c.Medicaltype = NewMedicaltypeClient(c.config)
+	c.Physician = NewPhysicianClient(c.config)
+	c.Systemequipment = NewSystemequipmentClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -66,9 +79,12 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	}
 	cfg := config{driver: tx, log: c.log, debug: c.debug, hooks: c.hooks}
 	return &Tx{
-		ctx:    ctx,
-		config: cfg,
-		User:   NewUserClient(cfg),
+		ctx:              ctx,
+		config:           cfg,
+		Medicalequipment: NewMedicalequipmentClient(cfg),
+		Medicaltype:      NewMedicaltypeClient(cfg),
+		Physician:        NewPhysicianClient(cfg),
+		Systemequipment:  NewSystemequipmentClient(cfg),
 	}, nil
 }
 
@@ -83,15 +99,18 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	}
 	cfg := config{driver: &txDriver{tx: tx, drv: c.driver}, log: c.log, debug: c.debug, hooks: c.hooks}
 	return &Tx{
-		config: cfg,
-		User:   NewUserClient(cfg),
+		config:           cfg,
+		Medicalequipment: NewMedicalequipmentClient(cfg),
+		Medicaltype:      NewMedicaltypeClient(cfg),
+		Physician:        NewPhysicianClient(cfg),
+		Systemequipment:  NewSystemequipmentClient(cfg),
 	}, nil
 }
 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		User.
+//		Medicalequipment.
 //		Query().
 //		Count(ctx)
 //
@@ -113,88 +132,436 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.User.Use(hooks...)
+	c.Medicalequipment.Use(hooks...)
+	c.Medicaltype.Use(hooks...)
+	c.Physician.Use(hooks...)
+	c.Systemequipment.Use(hooks...)
 }
 
-// UserClient is a client for the User schema.
-type UserClient struct {
+// MedicalequipmentClient is a client for the Medicalequipment schema.
+type MedicalequipmentClient struct {
 	config
 }
 
-// NewUserClient returns a client for the User from the given config.
-func NewUserClient(c config) *UserClient {
-	return &UserClient{config: c}
+// NewMedicalequipmentClient returns a client for the Medicalequipment from the given config.
+func NewMedicalequipmentClient(c config) *MedicalequipmentClient {
+	return &MedicalequipmentClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `user.Hooks(f(g(h())))`.
-func (c *UserClient) Use(hooks ...Hook) {
-	c.hooks.User = append(c.hooks.User, hooks...)
+// A call to `Use(f, g, h)` equals to `medicalequipment.Hooks(f(g(h())))`.
+func (c *MedicalequipmentClient) Use(hooks ...Hook) {
+	c.hooks.Medicalequipment = append(c.hooks.Medicalequipment, hooks...)
 }
 
-// Create returns a create builder for User.
-func (c *UserClient) Create() *UserCreate {
-	mutation := newUserMutation(c.config, OpCreate)
-	return &UserCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a create builder for Medicalequipment.
+func (c *MedicalequipmentClient) Create() *MedicalequipmentCreate {
+	mutation := newMedicalequipmentMutation(c.config, OpCreate)
+	return &MedicalequipmentCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Update returns an update builder for User.
-func (c *UserClient) Update() *UserUpdate {
-	mutation := newUserMutation(c.config, OpUpdate)
-	return &UserUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Medicalequipment.
+func (c *MedicalequipmentClient) Update() *MedicalequipmentUpdate {
+	mutation := newMedicalequipmentMutation(c.config, OpUpdate)
+	return &MedicalequipmentUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *UserClient) UpdateOne(u *User) *UserUpdateOne {
-	mutation := newUserMutation(c.config, OpUpdateOne, withUser(u))
-	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *MedicalequipmentClient) UpdateOne(m *Medicalequipment) *MedicalequipmentUpdateOne {
+	mutation := newMedicalequipmentMutation(c.config, OpUpdateOne, withMedicalequipment(m))
+	return &MedicalequipmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *UserClient) UpdateOneID(id int) *UserUpdateOne {
-	mutation := newUserMutation(c.config, OpUpdateOne, withUserID(id))
-	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *MedicalequipmentClient) UpdateOneID(id int) *MedicalequipmentUpdateOne {
+	mutation := newMedicalequipmentMutation(c.config, OpUpdateOne, withMedicalequipmentID(id))
+	return &MedicalequipmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for User.
-func (c *UserClient) Delete() *UserDelete {
-	mutation := newUserMutation(c.config, OpDelete)
-	return &UserDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Medicalequipment.
+func (c *MedicalequipmentClient) Delete() *MedicalequipmentDelete {
+	mutation := newMedicalequipmentMutation(c.config, OpDelete)
+	return &MedicalequipmentDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a delete builder for the given entity.
-func (c *UserClient) DeleteOne(u *User) *UserDeleteOne {
-	return c.DeleteOneID(u.ID)
+func (c *MedicalequipmentClient) DeleteOne(m *Medicalequipment) *MedicalequipmentDeleteOne {
+	return c.DeleteOneID(m.ID)
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *UserClient) DeleteOneID(id int) *UserDeleteOne {
-	builder := c.Delete().Where(user.ID(id))
+func (c *MedicalequipmentClient) DeleteOneID(id int) *MedicalequipmentDeleteOne {
+	builder := c.Delete().Where(medicalequipment.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &UserDeleteOne{builder}
+	return &MedicalequipmentDeleteOne{builder}
 }
 
-// Create returns a query builder for User.
-func (c *UserClient) Query() *UserQuery {
-	return &UserQuery{config: c.config}
+// Create returns a query builder for Medicalequipment.
+func (c *MedicalequipmentClient) Query() *MedicalequipmentQuery {
+	return &MedicalequipmentQuery{config: c.config}
 }
 
-// Get returns a User entity by its id.
-func (c *UserClient) Get(ctx context.Context, id int) (*User, error) {
-	return c.Query().Where(user.ID(id)).Only(ctx)
+// Get returns a Medicalequipment entity by its id.
+func (c *MedicalequipmentClient) Get(ctx context.Context, id int) (*Medicalequipment, error) {
+	return c.Query().Where(medicalequipment.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *UserClient) GetX(ctx context.Context, id int) *User {
-	u, err := c.Get(ctx, id)
+func (c *MedicalequipmentClient) GetX(ctx context.Context, id int) *Medicalequipment {
+	m, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
-	return u
+	return m
+}
+
+// QueryMedicalEquipment queries the Medical_equipment edge of a Medicalequipment.
+func (c *MedicalequipmentClient) QueryMedicalEquipment(m *Medicalequipment) *SystemequipmentQuery {
+	query := &SystemequipmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(medicalequipment.Table, medicalequipment.FieldID, id),
+			sqlgraph.To(systemequipment.Table, systemequipment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, medicalequipment.MedicalEquipmentTable, medicalequipment.MedicalEquipmentColumn),
+		)
+		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
-func (c *UserClient) Hooks() []Hook {
-	return c.hooks.User
+func (c *MedicalequipmentClient) Hooks() []Hook {
+	return c.hooks.Medicalequipment
+}
+
+// MedicaltypeClient is a client for the Medicaltype schema.
+type MedicaltypeClient struct {
+	config
+}
+
+// NewMedicaltypeClient returns a client for the Medicaltype from the given config.
+func NewMedicaltypeClient(c config) *MedicaltypeClient {
+	return &MedicaltypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `medicaltype.Hooks(f(g(h())))`.
+func (c *MedicaltypeClient) Use(hooks ...Hook) {
+	c.hooks.Medicaltype = append(c.hooks.Medicaltype, hooks...)
+}
+
+// Create returns a create builder for Medicaltype.
+func (c *MedicaltypeClient) Create() *MedicaltypeCreate {
+	mutation := newMedicaltypeMutation(c.config, OpCreate)
+	return &MedicaltypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Medicaltype.
+func (c *MedicaltypeClient) Update() *MedicaltypeUpdate {
+	mutation := newMedicaltypeMutation(c.config, OpUpdate)
+	return &MedicaltypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *MedicaltypeClient) UpdateOne(m *Medicaltype) *MedicaltypeUpdateOne {
+	mutation := newMedicaltypeMutation(c.config, OpUpdateOne, withMedicaltype(m))
+	return &MedicaltypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *MedicaltypeClient) UpdateOneID(id int) *MedicaltypeUpdateOne {
+	mutation := newMedicaltypeMutation(c.config, OpUpdateOne, withMedicaltypeID(id))
+	return &MedicaltypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Medicaltype.
+func (c *MedicaltypeClient) Delete() *MedicaltypeDelete {
+	mutation := newMedicaltypeMutation(c.config, OpDelete)
+	return &MedicaltypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *MedicaltypeClient) DeleteOne(m *Medicaltype) *MedicaltypeDeleteOne {
+	return c.DeleteOneID(m.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *MedicaltypeClient) DeleteOneID(id int) *MedicaltypeDeleteOne {
+	builder := c.Delete().Where(medicaltype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &MedicaltypeDeleteOne{builder}
+}
+
+// Create returns a query builder for Medicaltype.
+func (c *MedicaltypeClient) Query() *MedicaltypeQuery {
+	return &MedicaltypeQuery{config: c.config}
+}
+
+// Get returns a Medicaltype entity by its id.
+func (c *MedicaltypeClient) Get(ctx context.Context, id int) (*Medicaltype, error) {
+	return c.Query().Where(medicaltype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *MedicaltypeClient) GetX(ctx context.Context, id int) *Medicaltype {
+	m, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return m
+}
+
+// QueryMedicalType queries the Medical_type edge of a Medicaltype.
+func (c *MedicaltypeClient) QueryMedicalType(m *Medicaltype) *SystemequipmentQuery {
+	query := &SystemequipmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(medicaltype.Table, medicaltype.FieldID, id),
+			sqlgraph.To(systemequipment.Table, systemequipment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, medicaltype.MedicalTypeTable, medicaltype.MedicalTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *MedicaltypeClient) Hooks() []Hook {
+	return c.hooks.Medicaltype
+}
+
+// PhysicianClient is a client for the Physician schema.
+type PhysicianClient struct {
+	config
+}
+
+// NewPhysicianClient returns a client for the Physician from the given config.
+func NewPhysicianClient(c config) *PhysicianClient {
+	return &PhysicianClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `physician.Hooks(f(g(h())))`.
+func (c *PhysicianClient) Use(hooks ...Hook) {
+	c.hooks.Physician = append(c.hooks.Physician, hooks...)
+}
+
+// Create returns a create builder for Physician.
+func (c *PhysicianClient) Create() *PhysicianCreate {
+	mutation := newPhysicianMutation(c.config, OpCreate)
+	return &PhysicianCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Physician.
+func (c *PhysicianClient) Update() *PhysicianUpdate {
+	mutation := newPhysicianMutation(c.config, OpUpdate)
+	return &PhysicianUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PhysicianClient) UpdateOne(ph *Physician) *PhysicianUpdateOne {
+	mutation := newPhysicianMutation(c.config, OpUpdateOne, withPhysician(ph))
+	return &PhysicianUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PhysicianClient) UpdateOneID(id int) *PhysicianUpdateOne {
+	mutation := newPhysicianMutation(c.config, OpUpdateOne, withPhysicianID(id))
+	return &PhysicianUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Physician.
+func (c *PhysicianClient) Delete() *PhysicianDelete {
+	mutation := newPhysicianMutation(c.config, OpDelete)
+	return &PhysicianDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PhysicianClient) DeleteOne(ph *Physician) *PhysicianDeleteOne {
+	return c.DeleteOneID(ph.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PhysicianClient) DeleteOneID(id int) *PhysicianDeleteOne {
+	builder := c.Delete().Where(physician.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PhysicianDeleteOne{builder}
+}
+
+// Create returns a query builder for Physician.
+func (c *PhysicianClient) Query() *PhysicianQuery {
+	return &PhysicianQuery{config: c.config}
+}
+
+// Get returns a Physician entity by its id.
+func (c *PhysicianClient) Get(ctx context.Context, id int) (*Physician, error) {
+	return c.Query().Where(physician.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PhysicianClient) GetX(ctx context.Context, id int) *Physician {
+	ph, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return ph
+}
+
+// QueryUserPhysician queries the User_Physician edge of a Physician.
+func (c *PhysicianClient) QueryUserPhysician(ph *Physician) *SystemequipmentQuery {
+	query := &SystemequipmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := ph.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(physician.Table, physician.FieldID, id),
+			sqlgraph.To(systemequipment.Table, systemequipment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, physician.UserPhysicianTable, physician.UserPhysicianColumn),
+		)
+		fromV = sqlgraph.Neighbors(ph.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PhysicianClient) Hooks() []Hook {
+	return c.hooks.Physician
+}
+
+// SystemequipmentClient is a client for the Systemequipment schema.
+type SystemequipmentClient struct {
+	config
+}
+
+// NewSystemequipmentClient returns a client for the Systemequipment from the given config.
+func NewSystemequipmentClient(c config) *SystemequipmentClient {
+	return &SystemequipmentClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `systemequipment.Hooks(f(g(h())))`.
+func (c *SystemequipmentClient) Use(hooks ...Hook) {
+	c.hooks.Systemequipment = append(c.hooks.Systemequipment, hooks...)
+}
+
+// Create returns a create builder for Systemequipment.
+func (c *SystemequipmentClient) Create() *SystemequipmentCreate {
+	mutation := newSystemequipmentMutation(c.config, OpCreate)
+	return &SystemequipmentCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Systemequipment.
+func (c *SystemequipmentClient) Update() *SystemequipmentUpdate {
+	mutation := newSystemequipmentMutation(c.config, OpUpdate)
+	return &SystemequipmentUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *SystemequipmentClient) UpdateOne(s *Systemequipment) *SystemequipmentUpdateOne {
+	mutation := newSystemequipmentMutation(c.config, OpUpdateOne, withSystemequipment(s))
+	return &SystemequipmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *SystemequipmentClient) UpdateOneID(id int) *SystemequipmentUpdateOne {
+	mutation := newSystemequipmentMutation(c.config, OpUpdateOne, withSystemequipmentID(id))
+	return &SystemequipmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Systemequipment.
+func (c *SystemequipmentClient) Delete() *SystemequipmentDelete {
+	mutation := newSystemequipmentMutation(c.config, OpDelete)
+	return &SystemequipmentDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *SystemequipmentClient) DeleteOne(s *Systemequipment) *SystemequipmentDeleteOne {
+	return c.DeleteOneID(s.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *SystemequipmentClient) DeleteOneID(id int) *SystemequipmentDeleteOne {
+	builder := c.Delete().Where(systemequipment.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &SystemequipmentDeleteOne{builder}
+}
+
+// Create returns a query builder for Systemequipment.
+func (c *SystemequipmentClient) Query() *SystemequipmentQuery {
+	return &SystemequipmentQuery{config: c.config}
+}
+
+// Get returns a Systemequipment entity by its id.
+func (c *SystemequipmentClient) Get(ctx context.Context, id int) (*Systemequipment, error) {
+	return c.Query().Where(systemequipment.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *SystemequipmentClient) GetX(ctx context.Context, id int) *Systemequipment {
+	s, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return s
+}
+
+// QueryOwner queries the owner edge of a Systemequipment.
+func (c *SystemequipmentClient) QueryOwner(s *Systemequipment) *PhysicianQuery {
+	query := &PhysicianQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := s.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(systemequipment.Table, systemequipment.FieldID, id),
+			sqlgraph.To(physician.Table, physician.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, systemequipment.OwnerTable, systemequipment.OwnerColumn),
+		)
+		fromV = sqlgraph.Neighbors(s.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryOwnera queries the ownera edge of a Systemequipment.
+func (c *SystemequipmentClient) QueryOwnera(s *Systemequipment) *MedicalequipmentQuery {
+	query := &MedicalequipmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := s.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(systemequipment.Table, systemequipment.FieldID, id),
+			sqlgraph.To(medicalequipment.Table, medicalequipment.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, systemequipment.OwneraTable, systemequipment.OwneraColumn),
+		)
+		fromV = sqlgraph.Neighbors(s.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryOwnerf queries the ownerf edge of a Systemequipment.
+func (c *SystemequipmentClient) QueryOwnerf(s *Systemequipment) *MedicaltypeQuery {
+	query := &MedicaltypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := s.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(systemequipment.Table, systemequipment.FieldID, id),
+			sqlgraph.To(medicaltype.Table, medicaltype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, systemequipment.OwnerfTable, systemequipment.OwnerfColumn),
+		)
+		fromV = sqlgraph.Neighbors(s.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *SystemequipmentClient) Hooks() []Hook {
+	return c.hooks.Systemequipment
 }

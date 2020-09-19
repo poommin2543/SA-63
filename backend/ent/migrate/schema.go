@@ -8,24 +8,99 @@ import (
 )
 
 var (
-	// UsersColumns holds the columns for the "users" table.
-	UsersColumns = []*schema.Column{
+	// MedicalequipmentsColumns holds the columns for the "medicalequipments" table.
+	MedicalequipmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "age", Type: field.TypeInt},
-		{Name: "name", Type: field.TypeString},
+		{Name: "medical_id", Type: field.TypeString},
+		{Name: "medical_name", Type: field.TypeString},
+		{Name: "medical_stock", Type: field.TypeInt},
 	}
-	// UsersTable holds the schema information for the "users" table.
-	UsersTable = &schema.Table{
-		Name:        "users",
-		Columns:     UsersColumns,
-		PrimaryKey:  []*schema.Column{UsersColumns[0]},
+	// MedicalequipmentsTable holds the schema information for the "medicalequipments" table.
+	MedicalequipmentsTable = &schema.Table{
+		Name:        "medicalequipments",
+		Columns:     MedicalequipmentsColumns,
+		PrimaryKey:  []*schema.Column{MedicalequipmentsColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{},
+	}
+	// MedicaltypesColumns holds the columns for the "medicaltypes" table.
+	MedicaltypesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "type_id", Type: field.TypeString},
+		{Name: "type_name", Type: field.TypeString},
+	}
+	// MedicaltypesTable holds the schema information for the "medicaltypes" table.
+	MedicaltypesTable = &schema.Table{
+		Name:        "medicaltypes",
+		Columns:     MedicaltypesColumns,
+		PrimaryKey:  []*schema.Column{MedicaltypesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{},
+	}
+	// PhysiciansColumns holds the columns for the "physicians" table.
+	PhysiciansColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "physician_id", Type: field.TypeString},
+		{Name: "physician_name", Type: field.TypeString},
+		{Name: "physician_email", Type: field.TypeString},
+	}
+	// PhysiciansTable holds the schema information for the "physicians" table.
+	PhysiciansTable = &schema.Table{
+		Name:        "physicians",
+		Columns:     PhysiciansColumns,
+		PrimaryKey:  []*schema.Column{PhysiciansColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{},
+	}
+	// SystemequipmentsColumns holds the columns for the "systemequipments" table.
+	SystemequipmentsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "system_id", Type: field.TypeString},
+		{Name: "medical_id", Type: field.TypeString},
+		{Name: "type_id", Type: field.TypeString},
+		{Name: "physician_id", Type: field.TypeString},
+		{Name: "system_data", Type: field.TypeTime},
+		{Name: "medicalequipment_medical_equipment", Type: field.TypeInt, Nullable: true},
+		{Name: "medicaltype_medical_type", Type: field.TypeInt, Nullable: true},
+		{Name: "physician_user_physician", Type: field.TypeInt, Nullable: true},
+	}
+	// SystemequipmentsTable holds the schema information for the "systemequipments" table.
+	SystemequipmentsTable = &schema.Table{
+		Name:       "systemequipments",
+		Columns:    SystemequipmentsColumns,
+		PrimaryKey: []*schema.Column{SystemequipmentsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:  "systemequipments_medicalequipments_Medical_equipment",
+				Columns: []*schema.Column{SystemequipmentsColumns[6]},
+
+				RefColumns: []*schema.Column{MedicalequipmentsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:  "systemequipments_medicaltypes_Medical_type",
+				Columns: []*schema.Column{SystemequipmentsColumns[7]},
+
+				RefColumns: []*schema.Column{MedicaltypesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:  "systemequipments_physicians_User_Physician",
+				Columns: []*schema.Column{SystemequipmentsColumns[8]},
+
+				RefColumns: []*schema.Column{PhysiciansColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		UsersTable,
+		MedicalequipmentsTable,
+		MedicaltypesTable,
+		PhysiciansTable,
+		SystemequipmentsTable,
 	}
 )
 
 func init() {
+	SystemequipmentsTable.ForeignKeys[0].RefTable = MedicalequipmentsTable
+	SystemequipmentsTable.ForeignKeys[1].RefTable = MedicaltypesTable
+	SystemequipmentsTable.ForeignKeys[2].RefTable = PhysiciansTable
 }

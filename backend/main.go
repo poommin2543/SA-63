@@ -68,7 +68,16 @@ func main() {
    }
  
    v1 := router.Group("/api/v1")
-   controllers.NewUserController(v1, client)
+   controllers.NewMedicalequipmentController(v1, client)
+
+   v2 := router.Group("/api/v2")
+   controllers.NewMedicaltypeController(v2, client)
+
+   v3 := router.Group("/api/v3")
+   controllers.NewPhysicianController(v3, client)
+
+   v4 := router.Group("/api/v4")
+   controllers.NewSystemequipmentController(v4, client)
  
    router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
    router.Run()

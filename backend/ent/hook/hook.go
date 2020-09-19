@@ -9,15 +9,54 @@ import (
 	"github.com/poommin/app/ent"
 )
 
-// The UserFunc type is an adapter to allow the use of ordinary
-// function as User mutator.
-type UserFunc func(context.Context, *ent.UserMutation) (ent.Value, error)
+// The MedicalequipmentFunc type is an adapter to allow the use of ordinary
+// function as Medicalequipment mutator.
+type MedicalequipmentFunc func(context.Context, *ent.MedicalequipmentMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f UserFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.UserMutation)
+func (f MedicalequipmentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.MedicalequipmentMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UserMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MedicalequipmentMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The MedicaltypeFunc type is an adapter to allow the use of ordinary
+// function as Medicaltype mutator.
+type MedicaltypeFunc func(context.Context, *ent.MedicaltypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f MedicaltypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.MedicaltypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MedicaltypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The PhysicianFunc type is an adapter to allow the use of ordinary
+// function as Physician mutator.
+type PhysicianFunc func(context.Context, *ent.PhysicianMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PhysicianFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PhysicianMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PhysicianMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The SystemequipmentFunc type is an adapter to allow the use of ordinary
+// function as Systemequipment mutator.
+type SystemequipmentFunc func(context.Context, *ent.SystemequipmentMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SystemequipmentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.SystemequipmentMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SystemequipmentMutation", m)
 	}
 	return f(ctx, mv)
 }
