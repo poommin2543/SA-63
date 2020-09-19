@@ -27,7 +27,7 @@ func (Systemequipment) Fields() []ent.Field {
 }
 func (Systemequipment) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("owner", UserPhysician.Type).
+		edge.From("owner", Physician.Type).
 			Ref("User_Physician").
 			Unique(),
 

@@ -7,12 +7,12 @@ import (
 )
 
 // User schema.
-type UserPhysician struct {
+type Physician struct {
 	ent.Schema
 }
 
 // Fields of the user.
-func (UserPhysician) Fields() []ent.Field {
+func (Physician) Fields() []ent.Field {
 	return []ent.Field{
 
 		field.String("PHYSICIAN_ID"),
@@ -20,7 +20,7 @@ func (UserPhysician) Fields() []ent.Field {
 		field.String("PHYSICIAN_EMAIL"),
 	}
 }
-func (UserPhysician) Edges() []ent.Edge {
+func (Physician) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("User_Physician", Systemequipment.Type),
 	}
