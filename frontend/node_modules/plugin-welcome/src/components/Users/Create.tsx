@@ -144,19 +144,7 @@ function Header(props: { classes: any; onDrawerToggle: any; }) {
             <Grid item xs={12}></Grid>
         
             
-            <Grid item xs={2}></Grid>
-            <Grid item xs={2}></Grid>
-            <Grid item xs={2}>
-              <Typography color="primary" variant="h6" component="h1">
-                ID เครื่องมือแพทย์
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Paper className={classes.paper}>
-                <TextField id="outlined-basic" label="กรุณาใส่ ID" variant="outlined"/></Paper>
-            </Grid>
-            <Grid item xs={2}></Grid>
-            <Grid item xs={2}> </Grid>
+            
 
             <Grid item xs={2}></Grid>
             <Grid item xs={2}></Grid>

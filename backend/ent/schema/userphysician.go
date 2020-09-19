@@ -22,6 +22,6 @@ func (UserPhysician) Fields() []ent.Field {
 }
 func (UserPhysician) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("User_Physician", DataSystem.Type),
+		edge.To("User_Physician", Systemequipment.Type),
 	}
 }

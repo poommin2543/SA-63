@@ -20,6 +20,6 @@ func (Medicaltype) Fields() []ent.Field {
 }
 func (Medicaltype) Edges() []ent.Edge {
     return []ent.Edge{
-        edge.To("Medical_type", DataSystem.Type),
+        edge.To("Medical_type", Systemequipment.Type),
     }
 }

@@ -8,12 +8,12 @@ import (
 )
 
 // User schema.
-type DataSystem struct {
+type Systemequipment struct {
 	ent.Schema
 }
 
 // Fields of the user.
-func (DataSystem) Fields() []ent.Field {
+func (Systemequipment) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("System_ID").
 			NotEmpty(),
@@ -25,7 +25,7 @@ func (DataSystem) Fields() []ent.Field {
 			
 	}
 }
-func (DataSystem) Edges() []ent.Edge {
+func (Systemequipment) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("owner", UserPhysician.Type).
 			Ref("User_Physician").
