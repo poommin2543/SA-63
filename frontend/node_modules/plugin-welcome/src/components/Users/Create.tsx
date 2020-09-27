@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -22,6 +23,10 @@ import TextField from '@material-ui/core/TextField';
 //import Icon from '@material-ui/core/Icon';
 import SaveIcon from '@material-ui/icons/Save';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import DeleteIcon from '@material-ui/icons/Delete';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import ComponanceTable from '../Table';
+
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -55,13 +60,25 @@ const styles = (theme: { spacing: (arg0: number) => number; palette: { common: {
 function Header(props: { classes: any; onDrawerToggle: any; }) {
   const { classes, onDrawerToggle } = props;
 
+function HomeIcon(props:any) {
+    return (
+      <SvgIcon {...props}>
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+      </SvgIcon>
+    );
+  }
   return (
     <React.Fragment>
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={1} alignItems="center">
             <Hidden smUp>
-              <Grid item>
+            <Grid item>
+                <IconButton aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+                </Grid>  
+                <Grid item>
                 <IconButton
                   color="inherit"
                   aria-label="open drawer"
@@ -108,6 +125,17 @@ function Header(props: { classes: any; onDrawerToggle: any; }) {
               </Typography>
             </Grid>
             <Grid item>
+                <IconButton 
+                style={{ marginLeft: 20 }}
+                component={RouterLink}
+                to="/"
+                >
+                  
+                <HomeIcon color="inherit" />
+                </IconButton>
+                </Grid>  
+            
+            <Grid item>
               <Button className={classes.button} variant="outlined" color="inherit" size="small">
                 นพ.ภูมิมินทร์ พินพิมาย
               </Button>
@@ -128,7 +156,9 @@ function Header(props: { classes: any; onDrawerToggle: any; }) {
           <Tab textColor="inherit" label="DEL Data" />
           
           <Tab textColor="inherit" label="UPDATE Data" />
+          
         </Tabs>
+        
       </AppBar>
       
       <AppBar
@@ -201,11 +231,14 @@ function Header(props: { classes: any; onDrawerToggle: any; }) {
             <Grid item xs={2}></Grid>
             <Grid item xs={2}>
               <Button
+              
                 variant="contained"
                 color="primary"
                 size="large"
                 className={classes.button}
-                startIcon={<SaveIcon />}
+                
+                startIcon={<SaveIcon 
+                />}
               >
                 Save
               </Button>
@@ -236,7 +269,8 @@ function Header(props: { classes: any; onDrawerToggle: any; }) {
           </Grid>
         </Toolbar>
       </AppBar>
-           
+      
+      <ComponanceTable></ComponanceTable>
     </React.Fragment>
   );
 }

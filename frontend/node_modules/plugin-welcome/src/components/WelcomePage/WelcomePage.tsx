@@ -31,6 +31,7 @@ const WelcomePage: FC<{}> = () => {
        </ContentHeader>
        <ComponanceTable></ComponanceTable>
      </Content>
+     
    </Page>
  );
 };

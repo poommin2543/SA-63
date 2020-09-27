@@ -81,11 +81,13 @@ export default function ComponentsTable() {
 
            <TableCell align="center">No.</TableCell>
 
-           <TableCell align="center">Name</TableCell>
+           <TableCell align="center">Medical</TableCell>
 
-           <TableCell align="center">Age</TableCell>
+           <TableCell align="center">Type</TableCell>
 
-           <TableCell align="center">Manage</TableCell>
+           <TableCell align="center">PHYSICIAN</TableCell>
+
+           <TableCell align="center">DATA</TableCell>
 
          </TableRow>
 
