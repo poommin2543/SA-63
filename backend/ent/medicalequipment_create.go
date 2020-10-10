@@ -9,8 +9,8 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/poommin/app/ent/medicalequipment"
-	"github.com/poommin/app/ent/systemequipment"
+	"github.com/poommin2543/app/ent/medicalequipment"
+	"github.com/poommin2543/app/ent/systemequipment"
 )
 
 // MedicalequipmentCreate is the builder for creating a Medicalequipment entity.

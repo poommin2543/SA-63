@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/poommin/app/ent/medicalequipment"
+	"github.com/poommin2543/app/ent/medicalequipment"
 )
 
 // Medicalequipment is the model entity for the Medicalequipment schema.

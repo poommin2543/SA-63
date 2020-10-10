@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/poommin/app/ent/medicaltype"
+	"github.com/poommin2543/app/ent/medicaltype"
 )
 
 // Medicaltype is the model entity for the Medicaltype schema.

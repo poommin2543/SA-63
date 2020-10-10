@@ -5,8 +5,8 @@ package ent
 import (
 	"time"
 
-	"github.com/poommin/app/ent/schema"
-	"github.com/poommin/app/ent/systemequipment"
+	"github.com/poommin2543/app/ent/schema"
+	"github.com/poommin2543/app/ent/systemequipment"
 )
 
 // The init function reads all schema descriptors with runtime

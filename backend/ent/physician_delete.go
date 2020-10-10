@@ -9,8 +9,8 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/poommin/app/ent/physician"
-	"github.com/poommin/app/ent/predicate"
+	"github.com/poommin2543/app/ent/physician"
+	"github.com/poommin2543/app/ent/predicate"
 )
 
 // PhysicianDelete is the builder for deleting a Physician entity.

@@ -4,9 +4,9 @@ import (
    "context"
    "log"
  
-   "github.com/poommin/app/controllers"
-   _ "github.com/poommin/app/docs"
-   "github.com/poommin/app/ent"
+   "github.com/poommin2543/app/controllers"
+   _ "github.com/poommin2543/app/docs"
+   "github.com/poommin2543/app/ent"
    "github.com/gin-contrib/cors"
    "github.com/gin-gonic/gin"
    _ "github.com/mattn/go-sqlite3"

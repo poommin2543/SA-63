@@ -7,12 +7,12 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/poommin/app/ent/migrate"
+	"github.com/poommin2543/app/ent/migrate"
 
-	"github.com/poommin/app/ent/medicalequipment"
-	"github.com/poommin/app/ent/medicaltype"
-	"github.com/poommin/app/ent/physician"
-	"github.com/poommin/app/ent/systemequipment"
+	"github.com/poommin2543/app/ent/medicalequipment"
+	"github.com/poommin2543/app/ent/medicaltype"
+	"github.com/poommin2543/app/ent/physician"
+	"github.com/poommin2543/app/ent/systemequipment"
 
 	"github.com/facebookincubator/ent/dialect"
 	"github.com/facebookincubator/ent/dialect/sql"

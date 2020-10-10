@@ -8,10 +8,10 @@ import (
 	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/poommin/app/ent/medicalequipment"
-	"github.com/poommin/app/ent/medicaltype"
-	"github.com/poommin/app/ent/physician"
-	"github.com/poommin/app/ent/systemequipment"
+	"github.com/poommin2543/app/ent/medicalequipment"
+	"github.com/poommin2543/app/ent/medicaltype"
+	"github.com/poommin2543/app/ent/physician"
+	"github.com/poommin2543/app/ent/systemequipment"
 )
 
 // Systemequipment is the model entity for the Systemequipment schema.

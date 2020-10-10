@@ -10,10 +10,10 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/poommin/app/ent/medicalequipment"
-	"github.com/poommin/app/ent/medicaltype"
-	"github.com/poommin/app/ent/physician"
-	"github.com/poommin/app/ent/systemequipment"
+	"github.com/poommin2543/app/ent/medicalequipment"
+	"github.com/poommin2543/app/ent/medicaltype"
+	"github.com/poommin2543/app/ent/physician"
+	"github.com/poommin2543/app/ent/systemequipment"
 )
 
 // SystemequipmentCreate is the builder for creating a Systemequipment entity.

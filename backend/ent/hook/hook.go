@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/poommin/app/ent"
+	"github.com/poommin2543/app/ent"
 )
 
 // The MedicalequipmentFunc type is an adapter to allow the use of ordinary

@@ -9,8 +9,8 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/poommin/app/ent/medicaltype"
-	"github.com/poommin/app/ent/predicate"
+	"github.com/poommin2543/app/ent/medicaltype"
+	"github.com/poommin2543/app/ent/predicate"
 )
 
 // MedicaltypeDelete is the builder for deleting a Medicaltype entity.
