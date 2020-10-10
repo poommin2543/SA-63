@@ -47,7 +47,7 @@ export default function ComponentsTable() {
 
    const getUsers = async () => {
 
-     const res = await api.listUser({ limit: 10, offset: 0 });
+     const res:any = await api.listUser({ limit: 10, offset: 0 });
 
      setLoading(false);
 
@@ -95,7 +95,7 @@ export default function ComponentsTable() {
 
        <TableBody>
 
-         {users.map(item => (
+         {users.map((item:any) => (
 
            <TableRow key={item.id}>
 
