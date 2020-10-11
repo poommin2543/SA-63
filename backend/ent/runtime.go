@@ -3,8 +3,6 @@
 package ent
 
 import (
-	"time"
-
 	"github.com/poommin2543/app/ent/schema"
 	"github.com/poommin2543/app/ent/systemequipment"
 )
@@ -19,8 +17,4 @@ func init() {
 	systemequipmentDescSystemID := systemequipmentFields[0].Descriptor()
 	// systemequipment.SystemIDValidator is a validator for the "System_ID" field. It is called by the builders before save.
 	systemequipment.SystemIDValidator = systemequipmentDescSystemID.Validators[0].(func(string) error)
-	// systemequipmentDescSystemDATA is the schema descriptor for System_DATA field.
-	systemequipmentDescSystemDATA := systemequipmentFields[4].Descriptor()
-	// systemequipment.DefaultSystemDATA holds the default value on creation for the System_DATA field.
-	systemequipment.DefaultSystemDATA = systemequipmentDescSystemDATA.Default.(func() time.Time)
 }

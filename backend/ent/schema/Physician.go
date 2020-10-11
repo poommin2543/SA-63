@@ -6,12 +6,12 @@ import (
     "github.com/facebookincubator/ent/schema/field"
 )
 
-// User schema.
+// Physician holds the schema definition for the Physician entity.
 type Physician struct {
 	ent.Schema
 }
 
-// Fields of the user.
+// Fields of the Physician.
 func (Physician) Fields() []ent.Field {
 	return []ent.Field{
 
@@ -20,6 +20,8 @@ func (Physician) Fields() []ent.Field {
 		field.String("PHYSICIAN_EMAIL"),
 	}
 }
+
+// Edges of the Physician.
 func (Physician) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("User_Physician", Systemequipment.Type),

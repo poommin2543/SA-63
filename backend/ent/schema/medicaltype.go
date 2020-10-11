@@ -6,20 +6,22 @@ import (
     "github.com/facebookincubator/ent/schema/field"
 )
 
-// User schema.
+// Medicaltype holds the schema definition for the Medicaltype entity.
 type Medicaltype struct {
-    ent.Schema
+	ent.Schema
 }
 
-// Fields of the user.
+// Fields of the Medicaltype.
 func (Medicaltype) Fields() []ent.Field {
-    return []ent.Field{
+	return []ent.Field{
         field.String("Type_ID"),
         field.String("Type_name"),
     }
 }
+
+// Edges of the Medicaltype.
 func (Medicaltype) Edges() []ent.Edge {
-    return []ent.Edge{
+	return []ent.Edge{
         edge.To("Medical_type", Systemequipment.Type),
     }
 }

@@ -1,18 +1,18 @@
 package schema
 
 import (
-	"time"
+	
     "github.com/facebookincubator/ent"
     "github.com/facebookincubator/ent/schema/edge"
     "github.com/facebookincubator/ent/schema/field"
 )
 
-// User schema.
+// Systemequipment holds the schema definition for the Systemequipment entity.
 type Systemequipment struct {
 	ent.Schema
 }
 
-// Fields of the user.
+// Fields of the Systemequipment.
 func (Systemequipment) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("System_ID").
@@ -20,11 +20,13 @@ func (Systemequipment) Fields() []ent.Field {
 		field.String("Medical_ID"),
 		field.String("Type_ID"),
 		field.String("PHYSICIAN_ID"),
-		field.Time("System_DATA").
-			Default(time.Now),
+		field.Time("System_DATA"),
+			
 			
 	}
 }
+
+// Edges of the Systemequipment.
 func (Systemequipment) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("owner", Physician.Type).

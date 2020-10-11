@@ -57,7 +57,7 @@ func main() {
    router := gin.Default()
    router.Use(cors.Default())
  
-   client, err := ent.Open("sqlite3", "file:ent?mode=memory&cache=shared&_fk=1")
+   client, err := ent.Open("sqlite3", "file:ent.db?&cache=shared&_fk=1")
    if err != nil {
        log.Fatalf("fail to open sqlite3: %v", err)
    }
@@ -69,15 +69,9 @@ func main() {
  
    v1 := router.Group("/api/v1")
    controllers.NewMedicalequipmentController(v1, client)
-
-   v2 := router.Group("/api/v2")
-   controllers.NewMedicaltypeController(v2, client)
-
-   v3 := router.Group("/api/v3")
-   controllers.NewPhysicianController(v3, client)
-
-   v4 := router.Group("/api/v4")
-   controllers.NewSystemequipmentController(v4, client)
+   controllers.NewMedicaltypeController(v1, client)
+   controllers.NewPhysicianController(v1, client)
+   controllers.NewSystemequipmentController(v1, client)
  
    router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
    router.Run()

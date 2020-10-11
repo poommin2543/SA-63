@@ -2,10 +2,6 @@
 
 package systemequipment
 
-import (
-	"time"
-)
-
 const (
 	// Label holds the string label denoting the systemequipment type in the database.
 	Label = "systemequipment"
@@ -74,6 +70,4 @@ var ForeignKeys = []string{
 var (
 	// SystemIDValidator is a validator for the "System_ID" field. It is called by the builders before save.
 	SystemIDValidator func(string) error
-	// DefaultSystemDATA holds the default value on creation for the System_DATA field.
-	DefaultSystemDATA func() time.Time
 )

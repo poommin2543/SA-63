@@ -5,22 +5,24 @@ import (
     "github.com/facebookincubator/ent/schema/edge"
     "github.com/facebookincubator/ent/schema/field"
 )
-// User schema.
-type Medicalequipment  struct {
-    ent.Schema
+
+// Medicalequipment holds the schema definition for the Medicalequipment entity.
+type Medicalequipment struct {
+	ent.Schema
 }
 
-// Fields of the user.
-func (Medicalequipment ) Fields() []ent.Field {
-    return []ent.Field{
+// Fields of the Medicalequipment.
+func (Medicalequipment) Fields() []ent.Field {
+	return []ent.Field{
         field.String("Medical_ID"),
         field.String("Medical_NAME"),
         field.Int("Medical_Stock"),
-       
-    }
+	}
 }
+
+// Edges of the Medicalequipment.
 func (Medicalequipment) Edges() []ent.Edge {
-    return []ent.Edge{
+	return []ent.Edge{
         edge.To("Medical_equipment", Systemequipment.Type),
     }
 }

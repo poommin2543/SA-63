@@ -53,14 +53,6 @@ func (sc *SystemequipmentCreate) SetSystemDATA(t time.Time) *SystemequipmentCrea
 	return sc
 }
 
-// SetNillableSystemDATA sets the System_DATA field if the given value is not nil.
-func (sc *SystemequipmentCreate) SetNillableSystemDATA(t *time.Time) *SystemequipmentCreate {
-	if t != nil {
-		sc.SetSystemDATA(*t)
-	}
-	return sc
-}
-
 // SetOwnerID sets the owner edge to Physician by id.
 func (sc *SystemequipmentCreate) SetOwnerID(id int) *SystemequipmentCreate {
 	sc.mutation.SetOwnerID(id)
@@ -143,8 +135,7 @@ func (sc *SystemequipmentCreate) Save(ctx context.Context) (*Systemequipment, er
 		return nil, &ValidationError{Name: "PHYSICIAN_ID", err: errors.New("ent: missing required field \"PHYSICIAN_ID\"")}
 	}
 	if _, ok := sc.mutation.SystemDATA(); !ok {
-		v := systemequipment.DefaultSystemDATA()
-		sc.mutation.SetSystemDATA(v)
+		return nil, &ValidationError{Name: "System_DATA", err: errors.New("ent: missing required field \"System_DATA\"")}
 	}
 	var (
 		err  error

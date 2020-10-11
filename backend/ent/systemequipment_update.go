@@ -61,14 +61,6 @@ func (su *SystemequipmentUpdate) SetSystemDATA(t time.Time) *SystemequipmentUpda
 	return su
 }
 
-// SetNillableSystemDATA sets the System_DATA field if the given value is not nil.
-func (su *SystemequipmentUpdate) SetNillableSystemDATA(t *time.Time) *SystemequipmentUpdate {
-	if t != nil {
-		su.SetSystemDATA(*t)
-	}
-	return su
-}
-
 // SetOwnerID sets the owner edge to Physician by id.
 func (su *SystemequipmentUpdate) SetOwnerID(id int) *SystemequipmentUpdate {
 	su.mutation.SetOwnerID(id)
@@ -409,14 +401,6 @@ func (suo *SystemequipmentUpdateOne) SetPHYSICIANID(s string) *SystemequipmentUp
 // SetSystemDATA sets the System_DATA field.
 func (suo *SystemequipmentUpdateOne) SetSystemDATA(t time.Time) *SystemequipmentUpdateOne {
 	suo.mutation.SetSystemDATA(t)
-	return suo
-}
-
-// SetNillableSystemDATA sets the System_DATA field if the given value is not nil.
-func (suo *SystemequipmentUpdateOne) SetNillableSystemDATA(t *time.Time) *SystemequipmentUpdateOne {
-	if t != nil {
-		suo.SetSystemDATA(*t)
-	}
 	return suo
 }
 

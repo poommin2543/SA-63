@@ -1,4 +1,229 @@
 basePath: /api/v1
+definitions:
+  ent.Hook: {}
+  ent.Medicalequipment:
+    properties:
+      Medical_ID:
+        description: MedicalID holds the value of the "Medical_ID" field.
+        type: string
+      Medical_NAME:
+        description: MedicalNAME holds the value of the "Medical_NAME" field.
+        type: string
+      Medical_Stock:
+        description: MedicalStock holds the value of the "Medical_Stock" field.
+        type: integer
+      debug:
+        description: debug enable a debug logging.
+        type: boolean
+      driver:
+        description: driver used for executing database requests.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.MedicalequipmentEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the MedicalequipmentQuery when eager-loading is set.
+        type: object
+      hooks:
+        $ref: '#/definitions/ent.hooks'
+        description: hooks to execute on mutations.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.MedicalequipmentEdges:
+    properties:
+      loadedTypes:
+        description: |-
+          loadedTypes holds the information for reporting if a
+          type was loaded (or requested) in eager-loading or not.
+        items:
+          type: boolean
+        type: array
+      medicalEquipment:
+        description: MedicalEquipment holds the value of the Medical_equipment edge.
+        items:
+          $ref: '#/definitions/ent.Systemequipment'
+        type: array
+    type: object
+  ent.Medicaltype:
+    properties:
+      Type_ID:
+        description: TypeID holds the value of the "Type_ID" field.
+        type: string
+      Type_name:
+        description: TypeName holds the value of the "Type_name" field.
+        type: string
+      debug:
+        description: debug enable a debug logging.
+        type: boolean
+      driver:
+        description: driver used for executing database requests.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.MedicaltypeEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the MedicaltypeQuery when eager-loading is set.
+        type: object
+      hooks:
+        $ref: '#/definitions/ent.hooks'
+        description: hooks to execute on mutations.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.MedicaltypeEdges:
+    properties:
+      loadedTypes:
+        description: |-
+          loadedTypes holds the information for reporting if a
+          type was loaded (or requested) in eager-loading or not.
+        items:
+          type: boolean
+        type: array
+      medicalType:
+        description: MedicalType holds the value of the Medical_type edge.
+        items:
+          $ref: '#/definitions/ent.Systemequipment'
+        type: array
+    type: object
+  ent.Physician:
+    properties:
+      PHYSICIAN_EMAIL:
+        description: PHYSICIANEMAIL holds the value of the "PHYSICIAN_EMAIL" field.
+        type: string
+      PHYSICIAN_ID:
+        description: PHYSICIANID holds the value of the "PHYSICIAN_ID" field.
+        type: string
+      PHYSICIAN_NAME:
+        description: PHYSICIANNAME holds the value of the "PHYSICIAN_NAME" field.
+        type: string
+      debug:
+        description: debug enable a debug logging.
+        type: boolean
+      driver:
+        description: driver used for executing database requests.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.PhysicianEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the PhysicianQuery when eager-loading is set.
+        type: object
+      hooks:
+        $ref: '#/definitions/ent.hooks'
+        description: hooks to execute on mutations.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.PhysicianEdges:
+    properties:
+      loadedTypes:
+        description: |-
+          loadedTypes holds the information for reporting if a
+          type was loaded (or requested) in eager-loading or not.
+        items:
+          type: boolean
+        type: array
+      userPhysician:
+        description: UserPhysician holds the value of the User_Physician edge.
+        items:
+          $ref: '#/definitions/ent.Systemequipment'
+        type: array
+    type: object
+  ent.Systemequipment:
+    properties:
+      Medical_ID:
+        description: MedicalID holds the value of the "Medical_ID" field.
+        type: string
+      PHYSICIAN_ID:
+        description: PHYSICIANID holds the value of the "PHYSICIAN_ID" field.
+        type: string
+      System_DATA:
+        description: SystemDATA holds the value of the "System_DATA" field.
+        type: string
+      System_ID:
+        description: SystemID holds the value of the "System_ID" field.
+        type: string
+      Type_ID:
+        description: TypeID holds the value of the "Type_ID" field.
+        type: string
+      debug:
+        description: debug enable a debug logging.
+        type: boolean
+      driver:
+        description: driver used for executing database requests.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.SystemequipmentEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the SystemequipmentQuery when eager-loading is set.
+        type: object
+      hooks:
+        $ref: '#/definitions/ent.hooks'
+        description: hooks to execute on mutations.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      medicalequipment_medical_equipment:
+        type: integer
+      medicaltype_medical_type:
+        type: integer
+      physician_user_physician:
+        type: integer
+    type: object
+  ent.SystemequipmentEdges:
+    properties:
+      loadedTypes:
+        description: |-
+          loadedTypes holds the information for reporting if a
+          type was loaded (or requested) in eager-loading or not.
+        items:
+          type: boolean
+        type: array
+      owner:
+        $ref: '#/definitions/ent.Physician'
+        description: Owner holds the value of the owner edge.
+        type: object
+      ownera:
+        $ref: '#/definitions/ent.Medicalequipment'
+        description: Ownera holds the value of the ownera edge.
+        type: object
+      ownerf:
+        $ref: '#/definitions/ent.Medicaltype'
+        description: Ownerf holds the value of the ownerf edge.
+        type: object
+    type: object
+  ent.hooks:
+    properties:
+      medicalequipment:
+        items:
+          $ref: '#/definitions/ent.Hook'
+        type: array
+      medicaltype:
+        items:
+          $ref: '#/definitions/ent.Hook'
+        type: array
+      physician:
+        items:
+          $ref: '#/definitions/ent.Hook'
+        type: array
+      systemequipment:
+        items:
+          $ref: '#/definitions/ent.Hook'
+        type: array
+    type: object
+  gin.H:
+    additionalProperties:
+      type: object
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -12,7 +237,619 @@ info:
   termsOfService: http://swagger.io/terms/
   title: SUT SA Example API
   version: "1.0"
-paths: {}
+paths:
+  /medicalequipments:
+    get:
+      description: list medicalequipment entities
+      operationId: list-medicalequipment
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Medicalequipment'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List medicalequipment entities
+    post:
+      consumes:
+      - application/json
+      description: Create medicalequipment
+      operationId: create-medicalequipment
+      parameters:
+      - description: Medicalequipment entity
+        in: body
+        name: medicalequipment
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Medicalequipment'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Medicalequipment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create medicalequipment
+  /medicalequipments/{id}:
+    delete:
+      description: get medicalequipment by ID
+      operationId: delete-medicalequipment
+      parameters:
+      - description: Medicalequipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a medicalequipment entity by ID
+    get:
+      description: get medicalequipment by ID
+      operationId: get-medicalequipment
+      parameters:
+      - description: Medicalequipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Medicalequipment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a medicalequipment entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update medicalequipment by ID
+      operationId: update-medicalequipment
+      parameters:
+      - description: Medicalequipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Medicalequipment entity
+        in: body
+        name: medicalequipment
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Medicalequipment'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Medicalequipment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a medicalequipment entity by ID
+  /medicaltypes:
+    get:
+      description: list medicaltype entities
+      operationId: list-medicaltype
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Medicaltype'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List medicaltype entities
+    post:
+      consumes:
+      - application/json
+      description: Create medicaltype
+      operationId: create-medicaltype
+      parameters:
+      - description: Medicaltype entity
+        in: body
+        name: medicaltype
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Medicaltype'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Medicaltype'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create medicaltype
+  /medicaltypes/{id}:
+    delete:
+      description: get medicaltype by ID
+      operationId: delete-medicaltype
+      parameters:
+      - description: Medicaltype ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a medicaltype entity by ID
+    get:
+      description: get medicaltype by ID
+      operationId: get-medicaltype
+      parameters:
+      - description: Medicaltype ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Medicaltype'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a medicaltype entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update medicaltype by ID
+      operationId: update-medicaltype
+      parameters:
+      - description: Medicaltype ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Medicaltype entity
+        in: body
+        name: medicaltype
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Medicaltype'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Medicaltype'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a medicaltype entity by ID
+  /physicians:
+    get:
+      description: list physician entities
+      operationId: list-physician
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Physician'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List physician entities
+    post:
+      consumes:
+      - application/json
+      description: Create physician
+      operationId: create-physician
+      parameters:
+      - description: Physician entity
+        in: body
+        name: physician
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Physician'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Physician'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create physician
+  /physicians/{id}:
+    delete:
+      description: get physician by ID
+      operationId: delete-physician
+      parameters:
+      - description: Physician ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a physician entity by ID
+    get:
+      description: get physician by ID
+      operationId: get-physician
+      parameters:
+      - description: Physician ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Physician'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a physician entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update physician by ID
+      operationId: update-physician
+      parameters:
+      - description: Physician ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Physician entity
+        in: body
+        name: physician
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Physician'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Physician'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a physician entity by ID
+  /systemequipments:
+    get:
+      description: list systemequipment entities
+      operationId: list-systemequipment
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Systemequipment'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List systemequipment entities
+    post:
+      consumes:
+      - application/json
+      description: Create systemequipment
+      operationId: create-systemequipment
+      parameters:
+      - description: Systemequipment entity
+        in: body
+        name: systemequipment
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Systemequipment'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Systemequipment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create systemequipment
+  /systemequipments/{id}:
+    delete:
+      description: get systemequipment by ID
+      operationId: delete-systemequipment
+      parameters:
+      - description: Systemequipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a systemequipment entity by ID
+    get:
+      description: get systemequipment by ID
+      operationId: get-systemequipment
+      parameters:
+      - description: Systemequipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Systemequipment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a systemequipment entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update systemequipment by ID
+      operationId: update-systemequipment
+      parameters:
+      - description: Systemequipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Systemequipment entity
+        in: body
+        name: systemequipment
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Systemequipment'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Systemequipment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a systemequipment entity by ID
 securityDefinitions:
   ApiKeyAuth:
     in: header
