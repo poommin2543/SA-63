@@ -433,7 +433,7 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*Systemequipment)
 		for i := range nodes {
-			if fk := nodes[i].physician_id; fk != nil {
+			if fk := nodes[i].physician_systemequipment; fk != nil {
 				ids = append(ids, *fk)
 				nodeids[*fk] = append(nodeids[*fk], nodes[i])
 			}
@@ -446,7 +446,7 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "physician_id" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "physician_systemequipment" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Physician = n
@@ -458,7 +458,7 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*Systemequipment)
 		for i := range nodes {
-			if fk := nodes[i].medicaltype_id; fk != nil {
+			if fk := nodes[i].medical_type_systemequipment; fk != nil {
 				ids = append(ids, *fk)
 				nodeids[*fk] = append(nodeids[*fk], nodes[i])
 			}
@@ -471,7 +471,7 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "medicaltype_id" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "medical_type_systemequipment" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Medicaltype = n
@@ -483,7 +483,7 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*Systemequipment)
 		for i := range nodes {
-			if fk := nodes[i].medicalequipment_id; fk != nil {
+			if fk := nodes[i].medical_equipment_systemequipment; fk != nil {
 				ids = append(ids, *fk)
 				nodeids[*fk] = append(nodeids[*fk], nodes[i])
 			}
@@ -496,7 +496,7 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "medicalequipment_id" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "medical_equipment_systemequipment" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Medicalequipment = n

@@ -23,10 +23,10 @@ type Systemequipment struct {
 	AddedTime time.Time `json:"added_time,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SystemequipmentQuery when eager-loading is set.
-	Edges               SystemequipmentEdges `json:"edges"`
-	medicalequipment_id *int
-	medicaltype_id      *int
-	physician_id        *int
+	Edges                             SystemequipmentEdges `json:"edges"`
+	medical_equipment_systemequipment *int
+	medical_type_systemequipment      *int
+	physician_systemequipment         *int
 }
 
 // SystemequipmentEdges holds the relations/edges for other nodes in the graph.
@@ -95,9 +95,9 @@ func (*Systemequipment) scanValues() []interface{} {
 // fkValues returns the types for scanning foreign-keys values from sql.Rows.
 func (*Systemequipment) fkValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{}, // medicalequipment_id
-		&sql.NullInt64{}, // medicaltype_id
-		&sql.NullInt64{}, // physician_id
+		&sql.NullInt64{}, // medical_equipment_systemequipment
+		&sql.NullInt64{}, // medical_type_systemequipment
+		&sql.NullInt64{}, // physician_systemequipment
 	}
 }
 
@@ -121,22 +121,22 @@ func (s *Systemequipment) assignValues(values ...interface{}) error {
 	values = values[1:]
 	if len(values) == len(systemequipment.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field medicalequipment_id", value)
+			return fmt.Errorf("unexpected type %T for edge-field medical_equipment_systemequipment", value)
 		} else if value.Valid {
-			s.medicalequipment_id = new(int)
-			*s.medicalequipment_id = int(value.Int64)
+			s.medical_equipment_systemequipment = new(int)
+			*s.medical_equipment_systemequipment = int(value.Int64)
 		}
 		if value, ok := values[1].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field medicaltype_id", value)
+			return fmt.Errorf("unexpected type %T for edge-field medical_type_systemequipment", value)
 		} else if value.Valid {
-			s.medicaltype_id = new(int)
-			*s.medicaltype_id = int(value.Int64)
+			s.medical_type_systemequipment = new(int)
+			*s.medical_type_systemequipment = int(value.Int64)
 		}
 		if value, ok := values[2].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field physician_id", value)
+			return fmt.Errorf("unexpected type %T for edge-field physician_systemequipment", value)
 		} else if value.Valid {
-			s.physician_id = new(int)
-			*s.physician_id = int(value.Int64)
+			s.physician_systemequipment = new(int)
+			*s.physician_systemequipment = int(value.Int64)
 		}
 	}
 	return nil

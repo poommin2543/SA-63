@@ -23,7 +23,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "systemequipment" package.
 	SystemequipmentInverseTable = "systemequipments"
 	// SystemequipmentColumn is the table column denoting the systemequipment relation/edge.
-	SystemequipmentColumn = "medicalequipment_id"
+	SystemequipmentColumn = "medical_equipment_systemequipment"
 )
 
 // Columns holds all SQL columns for medicalequipment fields.

@@ -22,6 +22,6 @@ func (MedicalEquipment) Fields() []ent.Field {
 // Edges of the MedicalEquipment.
 func (MedicalEquipment) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("systemequipment", Systemequipment.Type).StorageKey(edge.Column("medicalequipment_id")),
+		edge.To("systemequipment", Systemequipment.Type),
 	}
 }

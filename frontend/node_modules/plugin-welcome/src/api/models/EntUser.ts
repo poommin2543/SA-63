@@ -64,11 +64,11 @@ export interface EntUser {
     name?: string;
 }
 
-export function EntUserFromJSON(json: any): EntUser {
+export function EntUserFromJSON(json): EntUser {
     return EntUserFromJSONTyped(json, false);
 }
 
-export function EntUserFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntUser {
+export function EntUserFromJSONTyped(json, ignoreDiscriminator: boolean): EntUser {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -83,7 +83,7 @@ export function EntUserFromJSONTyped(json: any, ignoreDiscriminator: boolean): E
     };
 }
 
-export function EntUserToJSON(value?: EntUser | null): any {
+export function EntUserToJSON(value?: EntUser | null) {
     if (value === undefined) {
         return undefined;
     }

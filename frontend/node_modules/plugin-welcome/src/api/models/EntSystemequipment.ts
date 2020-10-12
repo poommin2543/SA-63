@@ -46,11 +46,11 @@ export interface EntSystemequipment {
     id?: number;
 }
 
-export function EntSystemequipmentFromJSON(json: any): EntSystemequipment {
+export function EntSystemequipmentFromJSON(json): EntSystemequipment {
     return EntSystemequipmentFromJSONTyped(json, false);
 }
 
-export function EntSystemequipmentFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntSystemequipment {
+export function EntSystemequipmentFromJSONTyped(json, ignoreDiscriminator: boolean): EntSystemequipment {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -62,7 +62,7 @@ export function EntSystemequipmentFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function EntSystemequipmentToJSON(value?: EntSystemequipment | null): any {
+export function EntSystemequipmentToJSON(value?: EntSystemequipment | null) {
     if (value === undefined) {
         return undefined;
     }

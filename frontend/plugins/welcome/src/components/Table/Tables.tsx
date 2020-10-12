@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { DefaultApi } from '../../api/apis';
+import { EntSystemequipment } from '../../api/models/EntSystemequipment';
  
 const useStyles = makeStyles({
  table: {
@@ -19,20 +20,21 @@ const useStyles = makeStyles({
 export default function ComponentsTable() {
  const classes = useStyles();
  const api = new DefaultApi();
- const [users, setUsers] = useState(Array);
+
+ const [systemequipments, setSystemequipments] = useState<EntSystemequipment[]>();
  const [loading, setLoading] = useState(true);
  
  useEffect(() => {
-   const getUsers = async () => {
-     const res = await api.listUser({ limit: 10, offset: 0 });
+   const getSystemequipments = async () => {
+     const res = await api.listSystemequipment({ limit: 10, offset: 0 });
      setLoading(false);
-     setUsers(res);
+     setSystemequipments(res);
    };
-   getUsers();
+   getSystemequipments();
  }, [loading]);
  
- const deleteUsers = async (id: number) => {
-   const res = await api.deleteUser({ id: id });
+ const deleteSystemequipments = async (id: number) => {
+   const res = await api.deleteSystemequipment({ id: id });
    setLoading(true);
  };
  
@@ -49,15 +51,16 @@ export default function ComponentsTable() {
          </TableRow>
        </TableHead>
        <TableBody>
-         {users.map(item => (
+         {systemequipments === undefined 
+          ? null
+          : systemequipments.map(item => (
            <TableRow key={item.id}>
-             <TableCell align="center">{item.id}</TableCell>
-             <TableCell align="center">{item.name}</TableCell>
-             <TableCell align="center">{item.age}</TableCell>
+             <TableCell align="center">{item.addedTime}</TableCell>
+             
              <TableCell align="center">
                <Button
                  onClick={() => {
-                   deleteUsers(item.id);
+                   deleteSystemequipments(item.id);
                  }}
                  style={{ marginLeft: 10 }}
                  variant="contained"

@@ -1,64 +1,86 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-//import HelpIcon from '@material-ui/icons/Help';
-import Hidden from '@material-ui/core/Hidden';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Grid from '@material-ui/core/Grid';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TableCell from '@material-ui/core/TableCell';
+import FormControl from '@material-ui/core/FormControl';
+
+import Hidden from '@material-ui/core/Hidden';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import Tooltip from '@material-ui/core/Tooltip';
+import Avatar from '@material-ui/core/Avatar';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-//import Footer from './components/Footer';
-//import Icon from '@material-ui/core/Icon';
-import SaveIcon from '@material-ui/icons/Save';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import DeleteIcon from '@material-ui/icons/Delete';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import ComponanceTable from '../Table';
+import Paper from '@material-ui/core/Paper';
+import SaveIcon from '@material-ui/icons/Save';
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
-const top100Films = [
-  { title: 'ใช้แล้วทิ้ง', year: 1994 },
-  { title: 'นำกลับมาใช้ใหม่', year: 1972 }
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    iconButtonAvatar: {
+      padding: 4,
+    },
+    secondaryBar: {
+      zIndex: 0,
+    },
+    button: {
+      borderColor: lightColor,
+    },
+    title: {
+      flexGrow: 1,
+    },
+  }),
+);
+
+const name = [
+  { title: 'นพ. ภูมิมินทร์ ' },
+  { title: 'นพ. พินพิมาย' }
 ];
 
-const styles = (theme: { spacing: (arg0: number) => number; palette: { common: { white: any; }; }; }) => ({
-  secondaryBar: {
-    zIndex: 0,
-  },
-  menuButton: {
-    marginLeft: -theme.spacing(1),
-  },
-  iconButtonAvatar: {
-    padding: 4,
-  },
-  link: {
-    textDecoration: 'none',
-    color: lightColor,
-    '&:hover': {
-      color: theme.palette.common.white,
-    },
-  },
-  button: {
-    borderColor: lightColor,
-  },
-});
+const top100Films = [
+  { title: 'ใช้แล้วทิ้ง' },
+  { title: 'นำกลับมาใช้ใหม่' }
+];
 
-function Header(props: { classes: any; onDrawerToggle: any; }) {
-  const { classes, onDrawerToggle } = props;
+export default function MenuAppBar() {
+  const classes = useStyles();
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAuth(event.target.checked);
+  };
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
 function HomeIcon(props:any) {
     return (
@@ -67,40 +89,31 @@ function HomeIcon(props:any) {
       </SvgIcon>
     );
   }
+
   return (
-    <React.Fragment>
+    <div className={classes.root}>
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={1} alignItems="center">
             <Hidden smUp>
             <Grid item>
-                <IconButton aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
-                </Grid>  
-                <Grid item>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={onDrawerToggle}
-                  className={classes.menuButton}
-                >
-                  <MenuIcon />
-                </IconButton>
+                
               </Grid>
             </Hidden>
             <Grid item xs />
             <Grid item>
-              <Link className={classes.link} href="#" variant="body2">
-                log out
-              </Link>
+            <Link
+            component="button"
+            variant="body2"
+            onClick={() => {
+              console.info("I'm a button.");
+            }}
+          >
+            Logout
+            </Link>
             </Grid>
             <Grid item>
-              <Tooltip title="Alerts • No alerts">
-                <IconButton color="inherit">
-                  <NotificationsIcon />
-                </IconButton>
-              </Tooltip>
+              
             </Grid>
             <Grid item>
               <IconButton color="inherit" className={classes.iconButtonAvatar}>
@@ -110,9 +123,9 @@ function HomeIcon(props:any) {
           </Grid>
         </Toolbar>
       </AppBar>
+
       <AppBar
         component="div"
-        className={classes.secondaryBar}
         color="primary"
         position="static"
         elevation={0}
@@ -129,16 +142,21 @@ function HomeIcon(props:any) {
                 style={{ marginLeft: 20 }}
                 component={RouterLink}
                 to="/"
-                >
-                  
+                >    
                 <HomeIcon color="inherit" />
                 </IconButton>
                 </Grid>  
             
             <Grid item>
-              <Button className={classes.button} variant="outlined" color="inherit" size="small">
-                นพ.ภูมิมินทร์ พินพิมาย
-              </Button>
+            <Autocomplete
+              id="combo-box-demo"
+              options={name}
+              getOptionLabel={(option) => option.title}
+              style={{ width: 200 }}
+              
+              renderInput={(params) => <TextField {...params} label=""  variant="outlined" />}
+                  
+            />
             </Grid>
             
           </Grid>
@@ -152,15 +170,11 @@ function HomeIcon(props:any) {
         elevation={0}
       >
         <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="ADD Data" />
-          <Tab textColor="inherit" label="DEL Data" />
-          
-          <Tab textColor="inherit" label="UPDATE Data" />
-          
+          <Tab textColor="inherit" label="ADD Data" />     
         </Tabs>
         
       </AppBar>
-      
+
       <AppBar
         component="div"
         className={classes.secondaryBar}
@@ -248,7 +262,7 @@ function HomeIcon(props:any) {
             <Grid item xs={12}></Grid>
             <Grid item xs={12}></Grid>
             
-    </Grid>
+        </Grid>
         </Toolbar>
       </AppBar>
       <AppBar
@@ -260,25 +274,11 @@ function HomeIcon(props:any) {
       >
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
-      
-    
+            <Grid item xs>   
             </Grid>
-            
-            
           </Grid>
         </Toolbar>
       </AppBar>
-      
-      <ComponanceTable></ComponanceTable>
-    </React.Fragment>
+    </div>
   );
 }
-
-Header.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onDrawerToggle: PropTypes.func.isRequired,
-};
-
-export default withStyles(styles)(Header);
-

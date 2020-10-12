@@ -50,9 +50,9 @@ var (
 	SystemequipmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "added_time", Type: field.TypeTime},
-		{Name: "medicalequipment_id", Type: field.TypeInt, Nullable: true},
-		{Name: "medicaltype_id", Type: field.TypeInt, Nullable: true},
-		{Name: "physician_id", Type: field.TypeInt, Nullable: true},
+		{Name: "medical_equipment_systemequipment", Type: field.TypeInt, Nullable: true},
+		{Name: "medical_type_systemequipment", Type: field.TypeInt, Nullable: true},
+		{Name: "physician_systemequipment", Type: field.TypeInt, Nullable: true},
 	}
 	// SystemequipmentsTable holds the schema information for the "systemequipments" table.
 	SystemequipmentsTable = &schema.Table{

@@ -371,13 +371,13 @@ func (pq *PhysicianQuery) sqlAll(ctx context.Context) ([]*Physician, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.physician_id
+			fk := n.physician_systemequipment
 			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "physician_id" is nil for node %v`, n.ID)
+				return nil, fmt.Errorf(`foreign-key "physician_systemequipment" is nil for node %v`, n.ID)
 			}
 			node, ok := nodeids[*fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "physician_id" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "physician_systemequipment" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.Systemequipment = append(node.Edges.Systemequipment, n)
 		}

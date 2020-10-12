@@ -45,7 +45,7 @@ func (ctl *PhysicianController) CreatePhysician(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"error": "saving failed",
 		})
-		return
+		
 	}
 
 	c.JSON(200, u)
