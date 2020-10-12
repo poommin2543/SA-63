@@ -38,10 +38,7 @@ func (ctl *SystemequipmentController) CreateSystemequipment(c *gin.Context) {
 
 	u, err := ctl.client.Systemequipment.
 		Create().
-		SetSystemID(obj.SystemID).
-		SetMedicalID(obj.MedicalID).
-		SetTypeID(obj.TypeID).
-		SetSystemDATA(obj.SystemDATA).
+		SetAddedTime(obj.AddedTime).
 		Save(context.Background())
 	if err != nil {
 		c.JSON(400, gin.H{

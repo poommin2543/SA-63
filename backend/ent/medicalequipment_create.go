@@ -13,83 +13,74 @@ import (
 	"github.com/poommin2543/app/ent/systemequipment"
 )
 
-// MedicalequipmentCreate is the builder for creating a Medicalequipment entity.
-type MedicalequipmentCreate struct {
+// MedicalEquipmentCreate is the builder for creating a MedicalEquipment entity.
+type MedicalEquipmentCreate struct {
 	config
-	mutation *MedicalequipmentMutation
+	mutation *MedicalEquipmentMutation
 	hooks    []Hook
 }
 
-// SetMedicalID sets the Medical_ID field.
-func (mc *MedicalequipmentCreate) SetMedicalID(s string) *MedicalequipmentCreate {
-	mc.mutation.SetMedicalID(s)
-	return mc
+// SetName sets the name field.
+func (mec *MedicalEquipmentCreate) SetName(s string) *MedicalEquipmentCreate {
+	mec.mutation.SetName(s)
+	return mec
 }
 
-// SetMedicalNAME sets the Medical_NAME field.
-func (mc *MedicalequipmentCreate) SetMedicalNAME(s string) *MedicalequipmentCreate {
-	mc.mutation.SetMedicalNAME(s)
-	return mc
+// SetStock sets the stock field.
+func (mec *MedicalEquipmentCreate) SetStock(i int) *MedicalEquipmentCreate {
+	mec.mutation.SetStock(i)
+	return mec
 }
 
-// SetMedicalStock sets the Medical_Stock field.
-func (mc *MedicalequipmentCreate) SetMedicalStock(i int) *MedicalequipmentCreate {
-	mc.mutation.SetMedicalStock(i)
-	return mc
+// AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
+func (mec *MedicalEquipmentCreate) AddSystemequipmentIDs(ids ...int) *MedicalEquipmentCreate {
+	mec.mutation.AddSystemequipmentIDs(ids...)
+	return mec
 }
 
-// AddMedicalEquipmentIDs adds the Medical_equipment edge to Systemequipment by ids.
-func (mc *MedicalequipmentCreate) AddMedicalEquipmentIDs(ids ...int) *MedicalequipmentCreate {
-	mc.mutation.AddMedicalEquipmentIDs(ids...)
-	return mc
-}
-
-// AddMedicalEquipment adds the Medical_equipment edges to Systemequipment.
-func (mc *MedicalequipmentCreate) AddMedicalEquipment(s ...*Systemequipment) *MedicalequipmentCreate {
+// AddSystemequipment adds the systemequipment edges to Systemequipment.
+func (mec *MedicalEquipmentCreate) AddSystemequipment(s ...*Systemequipment) *MedicalEquipmentCreate {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return mc.AddMedicalEquipmentIDs(ids...)
+	return mec.AddSystemequipmentIDs(ids...)
 }
 
-// Mutation returns the MedicalequipmentMutation object of the builder.
-func (mc *MedicalequipmentCreate) Mutation() *MedicalequipmentMutation {
-	return mc.mutation
+// Mutation returns the MedicalEquipmentMutation object of the builder.
+func (mec *MedicalEquipmentCreate) Mutation() *MedicalEquipmentMutation {
+	return mec.mutation
 }
 
-// Save creates the Medicalequipment in the database.
-func (mc *MedicalequipmentCreate) Save(ctx context.Context) (*Medicalequipment, error) {
-	if _, ok := mc.mutation.MedicalID(); !ok {
-		return nil, &ValidationError{Name: "Medical_ID", err: errors.New("ent: missing required field \"Medical_ID\"")}
+// Save creates the MedicalEquipment in the database.
+func (mec *MedicalEquipmentCreate) Save(ctx context.Context) (*MedicalEquipment, error) {
+	if _, ok := mec.mutation.Name(); !ok {
+		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
 	}
-	if _, ok := mc.mutation.MedicalNAME(); !ok {
-		return nil, &ValidationError{Name: "Medical_NAME", err: errors.New("ent: missing required field \"Medical_NAME\"")}
-	}
-	if _, ok := mc.mutation.MedicalStock(); !ok {
-		return nil, &ValidationError{Name: "Medical_Stock", err: errors.New("ent: missing required field \"Medical_Stock\"")}
+	if _, ok := mec.mutation.Stock(); !ok {
+		return nil, &ValidationError{Name: "stock", err: errors.New("ent: missing required field \"stock\"")}
 	}
 	var (
 		err  error
-		node *Medicalequipment
+		node *MedicalEquipment
 	)
-	if len(mc.hooks) == 0 {
-		node, err = mc.sqlSave(ctx)
+	if len(mec.hooks) == 0 {
+		node, err = mec.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*MedicalequipmentMutation)
+			mutation, ok := m.(*MedicalEquipmentMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			mc.mutation = mutation
-			node, err = mc.sqlSave(ctx)
+			mec.mutation = mutation
+			node, err = mec.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(mc.hooks) - 1; i >= 0; i-- {
-			mut = mc.hooks[i](mut)
+		for i := len(mec.hooks) - 1; i >= 0; i-- {
+			mut = mec.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, mc.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, mec.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -97,30 +88,30 @@ func (mc *MedicalequipmentCreate) Save(ctx context.Context) (*Medicalequipment, 
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (mc *MedicalequipmentCreate) SaveX(ctx context.Context) *Medicalequipment {
-	v, err := mc.Save(ctx)
+func (mec *MedicalEquipmentCreate) SaveX(ctx context.Context) *MedicalEquipment {
+	v, err := mec.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (mc *MedicalequipmentCreate) sqlSave(ctx context.Context) (*Medicalequipment, error) {
-	m, _spec := mc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, mc.driver, _spec); err != nil {
+func (mec *MedicalEquipmentCreate) sqlSave(ctx context.Context) (*MedicalEquipment, error) {
+	me, _spec := mec.createSpec()
+	if err := sqlgraph.CreateNode(ctx, mec.driver, _spec); err != nil {
 		if cerr, ok := isSQLConstraintError(err); ok {
 			err = cerr
 		}
 		return nil, err
 	}
 	id := _spec.ID.Value.(int64)
-	m.ID = int(id)
-	return m, nil
+	me.ID = int(id)
+	return me, nil
 }
 
-func (mc *MedicalequipmentCreate) createSpec() (*Medicalequipment, *sqlgraph.CreateSpec) {
+func (mec *MedicalEquipmentCreate) createSpec() (*MedicalEquipment, *sqlgraph.CreateSpec) {
 	var (
-		m     = &Medicalequipment{config: mc.config}
+		me    = &MedicalEquipment{config: mec.config}
 		_spec = &sqlgraph.CreateSpec{
 			Table: medicalequipment.Table,
 			ID: &sqlgraph.FieldSpec{
@@ -129,36 +120,28 @@ func (mc *MedicalequipmentCreate) createSpec() (*Medicalequipment, *sqlgraph.Cre
 			},
 		}
 	)
-	if value, ok := mc.mutation.MedicalID(); ok {
+	if value, ok := mec.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: medicalequipment.FieldMedicalID,
+			Column: medicalequipment.FieldName,
 		})
-		m.MedicalID = value
+		me.Name = value
 	}
-	if value, ok := mc.mutation.MedicalNAME(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: medicalequipment.FieldMedicalNAME,
-		})
-		m.MedicalNAME = value
-	}
-	if value, ok := mc.mutation.MedicalStock(); ok {
+	if value, ok := mec.mutation.Stock(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: medicalequipment.FieldMedicalStock,
+			Column: medicalequipment.FieldStock,
 		})
-		m.MedicalStock = value
+		me.Stock = value
 	}
-	if nodes := mc.mutation.MedicalEquipmentIDs(); len(nodes) > 0 {
+	if nodes := mec.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicalequipment.MedicalEquipmentTable,
-			Columns: []string{medicalequipment.MedicalEquipmentColumn},
+			Table:   medicalequipment.SystemequipmentTable,
+			Columns: []string{medicalequipment.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -172,5 +155,5 @@ func (mc *MedicalequipmentCreate) createSpec() (*Medicalequipment, *sqlgraph.Cre
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	return m, _spec
+	return me, _spec
 }

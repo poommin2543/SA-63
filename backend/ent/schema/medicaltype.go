@@ -1,27 +1,26 @@
 package schema
 
 import (
-    "github.com/facebookincubator/ent"
-    "github.com/facebookincubator/ent/schema/edge"
-    "github.com/facebookincubator/ent/schema/field"
+	"github.com/facebookincubator/ent"
+	"github.com/facebookincubator/ent/schema/edge"
+	"github.com/facebookincubator/ent/schema/field"
 )
 
-// Medicaltype holds the schema definition for the Medicaltype entity.
-type Medicaltype struct {
+// MedicalType holds the schema definition for the MedicalType entity.
+type MedicalType struct {
 	ent.Schema
 }
 
-// Fields of the Medicaltype.
-func (Medicaltype) Fields() []ent.Field {
+// Fields of the MedicalType.
+func (MedicalType) Fields() []ent.Field {
 	return []ent.Field{
-        field.String("Type_ID"),
-        field.String("Type_name"),
-    }
+		field.String("name"),
+	}
 }
 
-// Edges of the Medicaltype.
-func (Medicaltype) Edges() []ent.Edge {
+// Edges of the MedicalType.
+func (MedicalType) Edges() []ent.Edge {
 	return []ent.Edge{
-        edge.To("Medical_type", Systemequipment.Type),
-    }
+		edge.To("systemequipment", Systemequipment.Type).StorageKey(edge.Column("medicaltype_id")),
+	}
 }

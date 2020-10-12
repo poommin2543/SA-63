@@ -23,91 +23,67 @@ type SystemequipmentCreate struct {
 	hooks    []Hook
 }
 
-// SetSystemID sets the System_ID field.
-func (sc *SystemequipmentCreate) SetSystemID(s string) *SystemequipmentCreate {
-	sc.mutation.SetSystemID(s)
+// SetAddedTime sets the added_time field.
+func (sc *SystemequipmentCreate) SetAddedTime(t time.Time) *SystemequipmentCreate {
+	sc.mutation.SetAddedTime(t)
 	return sc
 }
 
-// SetMedicalID sets the Medical_ID field.
-func (sc *SystemequipmentCreate) SetMedicalID(s string) *SystemequipmentCreate {
-	sc.mutation.SetMedicalID(s)
+// SetPhysicianID sets the physician edge to Physician by id.
+func (sc *SystemequipmentCreate) SetPhysicianID(id int) *SystemequipmentCreate {
+	sc.mutation.SetPhysicianID(id)
 	return sc
 }
 
-// SetTypeID sets the Type_ID field.
-func (sc *SystemequipmentCreate) SetTypeID(s string) *SystemequipmentCreate {
-	sc.mutation.SetTypeID(s)
-	return sc
-}
-
-// SetPHYSICIANID sets the PHYSICIAN_ID field.
-func (sc *SystemequipmentCreate) SetPHYSICIANID(s string) *SystemequipmentCreate {
-	sc.mutation.SetPHYSICIANID(s)
-	return sc
-}
-
-// SetSystemDATA sets the System_DATA field.
-func (sc *SystemequipmentCreate) SetSystemDATA(t time.Time) *SystemequipmentCreate {
-	sc.mutation.SetSystemDATA(t)
-	return sc
-}
-
-// SetOwnerID sets the owner edge to Physician by id.
-func (sc *SystemequipmentCreate) SetOwnerID(id int) *SystemequipmentCreate {
-	sc.mutation.SetOwnerID(id)
-	return sc
-}
-
-// SetNillableOwnerID sets the owner edge to Physician by id if the given value is not nil.
-func (sc *SystemequipmentCreate) SetNillableOwnerID(id *int) *SystemequipmentCreate {
+// SetNillablePhysicianID sets the physician edge to Physician by id if the given value is not nil.
+func (sc *SystemequipmentCreate) SetNillablePhysicianID(id *int) *SystemequipmentCreate {
 	if id != nil {
-		sc = sc.SetOwnerID(*id)
+		sc = sc.SetPhysicianID(*id)
 	}
 	return sc
 }
 
-// SetOwner sets the owner edge to Physician.
-func (sc *SystemequipmentCreate) SetOwner(p *Physician) *SystemequipmentCreate {
-	return sc.SetOwnerID(p.ID)
+// SetPhysician sets the physician edge to Physician.
+func (sc *SystemequipmentCreate) SetPhysician(p *Physician) *SystemequipmentCreate {
+	return sc.SetPhysicianID(p.ID)
 }
 
-// SetOwneraID sets the ownera edge to Medicalequipment by id.
-func (sc *SystemequipmentCreate) SetOwneraID(id int) *SystemequipmentCreate {
-	sc.mutation.SetOwneraID(id)
+// SetMedicaltypeID sets the medicaltype edge to MedicalType by id.
+func (sc *SystemequipmentCreate) SetMedicaltypeID(id int) *SystemequipmentCreate {
+	sc.mutation.SetMedicaltypeID(id)
 	return sc
 }
 
-// SetNillableOwneraID sets the ownera edge to Medicalequipment by id if the given value is not nil.
-func (sc *SystemequipmentCreate) SetNillableOwneraID(id *int) *SystemequipmentCreate {
+// SetNillableMedicaltypeID sets the medicaltype edge to MedicalType by id if the given value is not nil.
+func (sc *SystemequipmentCreate) SetNillableMedicaltypeID(id *int) *SystemequipmentCreate {
 	if id != nil {
-		sc = sc.SetOwneraID(*id)
+		sc = sc.SetMedicaltypeID(*id)
 	}
 	return sc
 }
 
-// SetOwnera sets the ownera edge to Medicalequipment.
-func (sc *SystemequipmentCreate) SetOwnera(m *Medicalequipment) *SystemequipmentCreate {
-	return sc.SetOwneraID(m.ID)
+// SetMedicaltype sets the medicaltype edge to MedicalType.
+func (sc *SystemequipmentCreate) SetMedicaltype(m *MedicalType) *SystemequipmentCreate {
+	return sc.SetMedicaltypeID(m.ID)
 }
 
-// SetOwnerfID sets the ownerf edge to Medicaltype by id.
-func (sc *SystemequipmentCreate) SetOwnerfID(id int) *SystemequipmentCreate {
-	sc.mutation.SetOwnerfID(id)
+// SetMedicalequipmentID sets the medicalequipment edge to MedicalEquipment by id.
+func (sc *SystemequipmentCreate) SetMedicalequipmentID(id int) *SystemequipmentCreate {
+	sc.mutation.SetMedicalequipmentID(id)
 	return sc
 }
 
-// SetNillableOwnerfID sets the ownerf edge to Medicaltype by id if the given value is not nil.
-func (sc *SystemequipmentCreate) SetNillableOwnerfID(id *int) *SystemequipmentCreate {
+// SetNillableMedicalequipmentID sets the medicalequipment edge to MedicalEquipment by id if the given value is not nil.
+func (sc *SystemequipmentCreate) SetNillableMedicalequipmentID(id *int) *SystemequipmentCreate {
 	if id != nil {
-		sc = sc.SetOwnerfID(*id)
+		sc = sc.SetMedicalequipmentID(*id)
 	}
 	return sc
 }
 
-// SetOwnerf sets the ownerf edge to Medicaltype.
-func (sc *SystemequipmentCreate) SetOwnerf(m *Medicaltype) *SystemequipmentCreate {
-	return sc.SetOwnerfID(m.ID)
+// SetMedicalequipment sets the medicalequipment edge to MedicalEquipment.
+func (sc *SystemequipmentCreate) SetMedicalequipment(m *MedicalEquipment) *SystemequipmentCreate {
+	return sc.SetMedicalequipmentID(m.ID)
 }
 
 // Mutation returns the SystemequipmentMutation object of the builder.
@@ -117,25 +93,8 @@ func (sc *SystemequipmentCreate) Mutation() *SystemequipmentMutation {
 
 // Save creates the Systemequipment in the database.
 func (sc *SystemequipmentCreate) Save(ctx context.Context) (*Systemequipment, error) {
-	if _, ok := sc.mutation.SystemID(); !ok {
-		return nil, &ValidationError{Name: "System_ID", err: errors.New("ent: missing required field \"System_ID\"")}
-	}
-	if v, ok := sc.mutation.SystemID(); ok {
-		if err := systemequipment.SystemIDValidator(v); err != nil {
-			return nil, &ValidationError{Name: "System_ID", err: fmt.Errorf("ent: validator failed for field \"System_ID\": %w", err)}
-		}
-	}
-	if _, ok := sc.mutation.MedicalID(); !ok {
-		return nil, &ValidationError{Name: "Medical_ID", err: errors.New("ent: missing required field \"Medical_ID\"")}
-	}
-	if _, ok := sc.mutation.TypeID(); !ok {
-		return nil, &ValidationError{Name: "Type_ID", err: errors.New("ent: missing required field \"Type_ID\"")}
-	}
-	if _, ok := sc.mutation.PHYSICIANID(); !ok {
-		return nil, &ValidationError{Name: "PHYSICIAN_ID", err: errors.New("ent: missing required field \"PHYSICIAN_ID\"")}
-	}
-	if _, ok := sc.mutation.SystemDATA(); !ok {
-		return nil, &ValidationError{Name: "System_DATA", err: errors.New("ent: missing required field \"System_DATA\"")}
+	if _, ok := sc.mutation.AddedTime(); !ok {
+		return nil, &ValidationError{Name: "added_time", err: errors.New("ent: missing required field \"added_time\"")}
 	}
 	var (
 		err  error
@@ -197,52 +156,20 @@ func (sc *SystemequipmentCreate) createSpec() (*Systemequipment, *sqlgraph.Creat
 			},
 		}
 	)
-	if value, ok := sc.mutation.SystemID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldSystemID,
-		})
-		s.SystemID = value
-	}
-	if value, ok := sc.mutation.MedicalID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldMedicalID,
-		})
-		s.MedicalID = value
-	}
-	if value, ok := sc.mutation.TypeID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldTypeID,
-		})
-		s.TypeID = value
-	}
-	if value, ok := sc.mutation.PHYSICIANID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldPHYSICIANID,
-		})
-		s.PHYSICIANID = value
-	}
-	if value, ok := sc.mutation.SystemDATA(); ok {
+	if value, ok := sc.mutation.AddedTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Value:  value,
-			Column: systemequipment.FieldSystemDATA,
+			Column: systemequipment.FieldAddedTime,
 		})
-		s.SystemDATA = value
+		s.AddedTime = value
 	}
-	if nodes := sc.mutation.OwnerIDs(); len(nodes) > 0 {
+	if nodes := sc.mutation.PhysicianIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerTable,
-			Columns: []string{systemequipment.OwnerColumn},
+			Table:   systemequipment.PhysicianTable,
+			Columns: []string{systemequipment.PhysicianColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -256,17 +183,17 @@ func (sc *SystemequipmentCreate) createSpec() (*Systemequipment, *sqlgraph.Creat
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := sc.mutation.OwneraIDs(); len(nodes) > 0 {
+	if nodes := sc.mutation.MedicaltypeIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwneraTable,
-			Columns: []string{systemequipment.OwneraColumn},
+			Table:   systemequipment.MedicaltypeTable,
+			Columns: []string{systemequipment.MedicaltypeColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicalequipment.FieldID,
+					Column: medicaltype.FieldID,
 				},
 			},
 		}
@@ -275,17 +202,17 @@ func (sc *SystemequipmentCreate) createSpec() (*Systemequipment, *sqlgraph.Creat
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := sc.mutation.OwnerfIDs(); len(nodes) > 0 {
+	if nodes := sc.mutation.MedicalequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerfTable,
-			Columns: []string{systemequipment.OwnerfColumn},
+			Table:   systemequipment.MedicalequipmentTable,
+			Columns: []string{systemequipment.MedicalequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicaltype.FieldID,
+					Column: medicalequipment.FieldID,
 				},
 			},
 		}

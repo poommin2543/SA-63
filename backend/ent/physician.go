@@ -15,12 +15,10 @@ type Physician struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// PHYSICIANID holds the value of the "PHYSICIAN_ID" field.
-	PHYSICIANID string `json:"PHYSICIAN_ID,omitempty"`
-	// PHYSICIANNAME holds the value of the "PHYSICIAN_NAME" field.
-	PHYSICIANNAME string `json:"PHYSICIAN_NAME,omitempty"`
-	// PHYSICIANEMAIL holds the value of the "PHYSICIAN_EMAIL" field.
-	PHYSICIANEMAIL string `json:"PHYSICIAN_EMAIL,omitempty"`
+	// Name holds the value of the "name" field.
+	Name string `json:"name,omitempty"`
+	// Email holds the value of the "email" field.
+	Email string `json:"email,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the PhysicianQuery when eager-loading is set.
 	Edges PhysicianEdges `json:"edges"`
@@ -28,29 +26,28 @@ type Physician struct {
 
 // PhysicianEdges holds the relations/edges for other nodes in the graph.
 type PhysicianEdges struct {
-	// UserPhysician holds the value of the User_Physician edge.
-	UserPhysician []*Systemequipment
+	// Systemequipment holds the value of the systemequipment edge.
+	Systemequipment []*Systemequipment
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [1]bool
 }
 
-// UserPhysicianOrErr returns the UserPhysician value or an error if the edge
+// SystemequipmentOrErr returns the Systemequipment value or an error if the edge
 // was not loaded in eager-loading.
-func (e PhysicianEdges) UserPhysicianOrErr() ([]*Systemequipment, error) {
+func (e PhysicianEdges) SystemequipmentOrErr() ([]*Systemequipment, error) {
 	if e.loadedTypes[0] {
-		return e.UserPhysician, nil
+		return e.Systemequipment, nil
 	}
-	return nil, &NotLoadedError{edge: "User_Physician"}
+	return nil, &NotLoadedError{edge: "systemequipment"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
 func (*Physician) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // PHYSICIAN_ID
-		&sql.NullString{}, // PHYSICIAN_NAME
-		&sql.NullString{}, // PHYSICIAN_EMAIL
+		&sql.NullString{}, // name
+		&sql.NullString{}, // email
 	}
 }
 
@@ -67,26 +64,21 @@ func (ph *Physician) assignValues(values ...interface{}) error {
 	ph.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field PHYSICIAN_ID", values[0])
+		return fmt.Errorf("unexpected type %T for field name", values[0])
 	} else if value.Valid {
-		ph.PHYSICIANID = value.String
+		ph.Name = value.String
 	}
 	if value, ok := values[1].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field PHYSICIAN_NAME", values[1])
+		return fmt.Errorf("unexpected type %T for field email", values[1])
 	} else if value.Valid {
-		ph.PHYSICIANNAME = value.String
-	}
-	if value, ok := values[2].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field PHYSICIAN_EMAIL", values[2])
-	} else if value.Valid {
-		ph.PHYSICIANEMAIL = value.String
+		ph.Email = value.String
 	}
 	return nil
 }
 
-// QueryUserPhysician queries the User_Physician edge of the Physician.
-func (ph *Physician) QueryUserPhysician() *SystemequipmentQuery {
-	return (&PhysicianClient{config: ph.config}).QueryUserPhysician(ph)
+// QuerySystemequipment queries the systemequipment edge of the Physician.
+func (ph *Physician) QuerySystemequipment() *SystemequipmentQuery {
+	return (&PhysicianClient{config: ph.config}).QuerySystemequipment(ph)
 }
 
 // Update returns a builder for updating this Physician.
@@ -112,12 +104,10 @@ func (ph *Physician) String() string {
 	var builder strings.Builder
 	builder.WriteString("Physician(")
 	builder.WriteString(fmt.Sprintf("id=%v", ph.ID))
-	builder.WriteString(", PHYSICIAN_ID=")
-	builder.WriteString(ph.PHYSICIANID)
-	builder.WriteString(", PHYSICIAN_NAME=")
-	builder.WriteString(ph.PHYSICIANNAME)
-	builder.WriteString(", PHYSICIAN_EMAIL=")
-	builder.WriteString(ph.PHYSICIANEMAIL)
+	builder.WriteString(", name=")
+	builder.WriteString(ph.Name)
+	builder.WriteString(", email=")
+	builder.WriteString(ph.Email)
 	builder.WriteByte(')')
 	return builder.String()
 }

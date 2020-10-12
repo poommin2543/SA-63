@@ -31,91 +31,67 @@ func (su *SystemequipmentUpdate) Where(ps ...predicate.Systemequipment) *Systeme
 	return su
 }
 
-// SetSystemID sets the System_ID field.
-func (su *SystemequipmentUpdate) SetSystemID(s string) *SystemequipmentUpdate {
-	su.mutation.SetSystemID(s)
+// SetAddedTime sets the added_time field.
+func (su *SystemequipmentUpdate) SetAddedTime(t time.Time) *SystemequipmentUpdate {
+	su.mutation.SetAddedTime(t)
 	return su
 }
 
-// SetMedicalID sets the Medical_ID field.
-func (su *SystemequipmentUpdate) SetMedicalID(s string) *SystemequipmentUpdate {
-	su.mutation.SetMedicalID(s)
+// SetPhysicianID sets the physician edge to Physician by id.
+func (su *SystemequipmentUpdate) SetPhysicianID(id int) *SystemequipmentUpdate {
+	su.mutation.SetPhysicianID(id)
 	return su
 }
 
-// SetTypeID sets the Type_ID field.
-func (su *SystemequipmentUpdate) SetTypeID(s string) *SystemequipmentUpdate {
-	su.mutation.SetTypeID(s)
-	return su
-}
-
-// SetPHYSICIANID sets the PHYSICIAN_ID field.
-func (su *SystemequipmentUpdate) SetPHYSICIANID(s string) *SystemequipmentUpdate {
-	su.mutation.SetPHYSICIANID(s)
-	return su
-}
-
-// SetSystemDATA sets the System_DATA field.
-func (su *SystemequipmentUpdate) SetSystemDATA(t time.Time) *SystemequipmentUpdate {
-	su.mutation.SetSystemDATA(t)
-	return su
-}
-
-// SetOwnerID sets the owner edge to Physician by id.
-func (su *SystemequipmentUpdate) SetOwnerID(id int) *SystemequipmentUpdate {
-	su.mutation.SetOwnerID(id)
-	return su
-}
-
-// SetNillableOwnerID sets the owner edge to Physician by id if the given value is not nil.
-func (su *SystemequipmentUpdate) SetNillableOwnerID(id *int) *SystemequipmentUpdate {
+// SetNillablePhysicianID sets the physician edge to Physician by id if the given value is not nil.
+func (su *SystemequipmentUpdate) SetNillablePhysicianID(id *int) *SystemequipmentUpdate {
 	if id != nil {
-		su = su.SetOwnerID(*id)
+		su = su.SetPhysicianID(*id)
 	}
 	return su
 }
 
-// SetOwner sets the owner edge to Physician.
-func (su *SystemequipmentUpdate) SetOwner(p *Physician) *SystemequipmentUpdate {
-	return su.SetOwnerID(p.ID)
+// SetPhysician sets the physician edge to Physician.
+func (su *SystemequipmentUpdate) SetPhysician(p *Physician) *SystemequipmentUpdate {
+	return su.SetPhysicianID(p.ID)
 }
 
-// SetOwneraID sets the ownera edge to Medicalequipment by id.
-func (su *SystemequipmentUpdate) SetOwneraID(id int) *SystemequipmentUpdate {
-	su.mutation.SetOwneraID(id)
+// SetMedicaltypeID sets the medicaltype edge to MedicalType by id.
+func (su *SystemequipmentUpdate) SetMedicaltypeID(id int) *SystemequipmentUpdate {
+	su.mutation.SetMedicaltypeID(id)
 	return su
 }
 
-// SetNillableOwneraID sets the ownera edge to Medicalequipment by id if the given value is not nil.
-func (su *SystemequipmentUpdate) SetNillableOwneraID(id *int) *SystemequipmentUpdate {
+// SetNillableMedicaltypeID sets the medicaltype edge to MedicalType by id if the given value is not nil.
+func (su *SystemequipmentUpdate) SetNillableMedicaltypeID(id *int) *SystemequipmentUpdate {
 	if id != nil {
-		su = su.SetOwneraID(*id)
+		su = su.SetMedicaltypeID(*id)
 	}
 	return su
 }
 
-// SetOwnera sets the ownera edge to Medicalequipment.
-func (su *SystemequipmentUpdate) SetOwnera(m *Medicalequipment) *SystemequipmentUpdate {
-	return su.SetOwneraID(m.ID)
+// SetMedicaltype sets the medicaltype edge to MedicalType.
+func (su *SystemequipmentUpdate) SetMedicaltype(m *MedicalType) *SystemequipmentUpdate {
+	return su.SetMedicaltypeID(m.ID)
 }
 
-// SetOwnerfID sets the ownerf edge to Medicaltype by id.
-func (su *SystemequipmentUpdate) SetOwnerfID(id int) *SystemequipmentUpdate {
-	su.mutation.SetOwnerfID(id)
+// SetMedicalequipmentID sets the medicalequipment edge to MedicalEquipment by id.
+func (su *SystemequipmentUpdate) SetMedicalequipmentID(id int) *SystemequipmentUpdate {
+	su.mutation.SetMedicalequipmentID(id)
 	return su
 }
 
-// SetNillableOwnerfID sets the ownerf edge to Medicaltype by id if the given value is not nil.
-func (su *SystemequipmentUpdate) SetNillableOwnerfID(id *int) *SystemequipmentUpdate {
+// SetNillableMedicalequipmentID sets the medicalequipment edge to MedicalEquipment by id if the given value is not nil.
+func (su *SystemequipmentUpdate) SetNillableMedicalequipmentID(id *int) *SystemequipmentUpdate {
 	if id != nil {
-		su = su.SetOwnerfID(*id)
+		su = su.SetMedicalequipmentID(*id)
 	}
 	return su
 }
 
-// SetOwnerf sets the ownerf edge to Medicaltype.
-func (su *SystemequipmentUpdate) SetOwnerf(m *Medicaltype) *SystemequipmentUpdate {
-	return su.SetOwnerfID(m.ID)
+// SetMedicalequipment sets the medicalequipment edge to MedicalEquipment.
+func (su *SystemequipmentUpdate) SetMedicalequipment(m *MedicalEquipment) *SystemequipmentUpdate {
+	return su.SetMedicalequipmentID(m.ID)
 }
 
 // Mutation returns the SystemequipmentMutation object of the builder.
@@ -123,31 +99,26 @@ func (su *SystemequipmentUpdate) Mutation() *SystemequipmentMutation {
 	return su.mutation
 }
 
-// ClearOwner clears the owner edge to Physician.
-func (su *SystemequipmentUpdate) ClearOwner() *SystemequipmentUpdate {
-	su.mutation.ClearOwner()
+// ClearPhysician clears the physician edge to Physician.
+func (su *SystemequipmentUpdate) ClearPhysician() *SystemequipmentUpdate {
+	su.mutation.ClearPhysician()
 	return su
 }
 
-// ClearOwnera clears the ownera edge to Medicalequipment.
-func (su *SystemequipmentUpdate) ClearOwnera() *SystemequipmentUpdate {
-	su.mutation.ClearOwnera()
+// ClearMedicaltype clears the medicaltype edge to MedicalType.
+func (su *SystemequipmentUpdate) ClearMedicaltype() *SystemequipmentUpdate {
+	su.mutation.ClearMedicaltype()
 	return su
 }
 
-// ClearOwnerf clears the ownerf edge to Medicaltype.
-func (su *SystemequipmentUpdate) ClearOwnerf() *SystemequipmentUpdate {
-	su.mutation.ClearOwnerf()
+// ClearMedicalequipment clears the medicalequipment edge to MedicalEquipment.
+func (su *SystemequipmentUpdate) ClearMedicalequipment() *SystemequipmentUpdate {
+	su.mutation.ClearMedicalequipment()
 	return su
 }
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (su *SystemequipmentUpdate) Save(ctx context.Context) (int, error) {
-	if v, ok := su.mutation.SystemID(); ok {
-		if err := systemequipment.SystemIDValidator(v); err != nil {
-			return 0, &ValidationError{Name: "System_ID", err: fmt.Errorf("ent: validator failed for field \"System_ID\": %w", err)}
-		}
-	}
 
 	var (
 		err      error
@@ -216,47 +187,19 @@ func (su *SystemequipmentUpdate) sqlSave(ctx context.Context) (n int, err error)
 			}
 		}
 	}
-	if value, ok := su.mutation.SystemID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldSystemID,
-		})
-	}
-	if value, ok := su.mutation.MedicalID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldMedicalID,
-		})
-	}
-	if value, ok := su.mutation.TypeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldTypeID,
-		})
-	}
-	if value, ok := su.mutation.PHYSICIANID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldPHYSICIANID,
-		})
-	}
-	if value, ok := su.mutation.SystemDATA(); ok {
+	if value, ok := su.mutation.AddedTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Value:  value,
-			Column: systemequipment.FieldSystemDATA,
+			Column: systemequipment.FieldAddedTime,
 		})
 	}
-	if su.mutation.OwnerCleared() {
+	if su.mutation.PhysicianCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerTable,
-			Columns: []string{systemequipment.OwnerColumn},
+			Table:   systemequipment.PhysicianTable,
+			Columns: []string{systemequipment.PhysicianColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -267,12 +210,12 @@ func (su *SystemequipmentUpdate) sqlSave(ctx context.Context) (n int, err error)
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := su.mutation.OwnerIDs(); len(nodes) > 0 {
+	if nodes := su.mutation.PhysicianIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerTable,
-			Columns: []string{systemequipment.OwnerColumn},
+			Table:   systemequipment.PhysicianTable,
+			Columns: []string{systemequipment.PhysicianColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -286,33 +229,33 @@ func (su *SystemequipmentUpdate) sqlSave(ctx context.Context) (n int, err error)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if su.mutation.OwneraCleared() {
+	if su.mutation.MedicaltypeCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwneraTable,
-			Columns: []string{systemequipment.OwneraColumn},
+			Table:   systemequipment.MedicaltypeTable,
+			Columns: []string{systemequipment.MedicaltypeColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicalequipment.FieldID,
+					Column: medicaltype.FieldID,
 				},
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := su.mutation.OwneraIDs(); len(nodes) > 0 {
+	if nodes := su.mutation.MedicaltypeIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwneraTable,
-			Columns: []string{systemequipment.OwneraColumn},
+			Table:   systemequipment.MedicaltypeTable,
+			Columns: []string{systemequipment.MedicaltypeColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicalequipment.FieldID,
+					Column: medicaltype.FieldID,
 				},
 			},
 		}
@@ -321,33 +264,33 @@ func (su *SystemequipmentUpdate) sqlSave(ctx context.Context) (n int, err error)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if su.mutation.OwnerfCleared() {
+	if su.mutation.MedicalequipmentCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerfTable,
-			Columns: []string{systemequipment.OwnerfColumn},
+			Table:   systemequipment.MedicalequipmentTable,
+			Columns: []string{systemequipment.MedicalequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicaltype.FieldID,
+					Column: medicalequipment.FieldID,
 				},
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := su.mutation.OwnerfIDs(); len(nodes) > 0 {
+	if nodes := su.mutation.MedicalequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerfTable,
-			Columns: []string{systemequipment.OwnerfColumn},
+			Table:   systemequipment.MedicalequipmentTable,
+			Columns: []string{systemequipment.MedicalequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicaltype.FieldID,
+					Column: medicalequipment.FieldID,
 				},
 			},
 		}
@@ -374,91 +317,67 @@ type SystemequipmentUpdateOne struct {
 	mutation *SystemequipmentMutation
 }
 
-// SetSystemID sets the System_ID field.
-func (suo *SystemequipmentUpdateOne) SetSystemID(s string) *SystemequipmentUpdateOne {
-	suo.mutation.SetSystemID(s)
+// SetAddedTime sets the added_time field.
+func (suo *SystemequipmentUpdateOne) SetAddedTime(t time.Time) *SystemequipmentUpdateOne {
+	suo.mutation.SetAddedTime(t)
 	return suo
 }
 
-// SetMedicalID sets the Medical_ID field.
-func (suo *SystemequipmentUpdateOne) SetMedicalID(s string) *SystemequipmentUpdateOne {
-	suo.mutation.SetMedicalID(s)
+// SetPhysicianID sets the physician edge to Physician by id.
+func (suo *SystemequipmentUpdateOne) SetPhysicianID(id int) *SystemequipmentUpdateOne {
+	suo.mutation.SetPhysicianID(id)
 	return suo
 }
 
-// SetTypeID sets the Type_ID field.
-func (suo *SystemequipmentUpdateOne) SetTypeID(s string) *SystemequipmentUpdateOne {
-	suo.mutation.SetTypeID(s)
-	return suo
-}
-
-// SetPHYSICIANID sets the PHYSICIAN_ID field.
-func (suo *SystemequipmentUpdateOne) SetPHYSICIANID(s string) *SystemequipmentUpdateOne {
-	suo.mutation.SetPHYSICIANID(s)
-	return suo
-}
-
-// SetSystemDATA sets the System_DATA field.
-func (suo *SystemequipmentUpdateOne) SetSystemDATA(t time.Time) *SystemequipmentUpdateOne {
-	suo.mutation.SetSystemDATA(t)
-	return suo
-}
-
-// SetOwnerID sets the owner edge to Physician by id.
-func (suo *SystemequipmentUpdateOne) SetOwnerID(id int) *SystemequipmentUpdateOne {
-	suo.mutation.SetOwnerID(id)
-	return suo
-}
-
-// SetNillableOwnerID sets the owner edge to Physician by id if the given value is not nil.
-func (suo *SystemequipmentUpdateOne) SetNillableOwnerID(id *int) *SystemequipmentUpdateOne {
+// SetNillablePhysicianID sets the physician edge to Physician by id if the given value is not nil.
+func (suo *SystemequipmentUpdateOne) SetNillablePhysicianID(id *int) *SystemequipmentUpdateOne {
 	if id != nil {
-		suo = suo.SetOwnerID(*id)
+		suo = suo.SetPhysicianID(*id)
 	}
 	return suo
 }
 
-// SetOwner sets the owner edge to Physician.
-func (suo *SystemequipmentUpdateOne) SetOwner(p *Physician) *SystemequipmentUpdateOne {
-	return suo.SetOwnerID(p.ID)
+// SetPhysician sets the physician edge to Physician.
+func (suo *SystemequipmentUpdateOne) SetPhysician(p *Physician) *SystemequipmentUpdateOne {
+	return suo.SetPhysicianID(p.ID)
 }
 
-// SetOwneraID sets the ownera edge to Medicalequipment by id.
-func (suo *SystemequipmentUpdateOne) SetOwneraID(id int) *SystemequipmentUpdateOne {
-	suo.mutation.SetOwneraID(id)
+// SetMedicaltypeID sets the medicaltype edge to MedicalType by id.
+func (suo *SystemequipmentUpdateOne) SetMedicaltypeID(id int) *SystemequipmentUpdateOne {
+	suo.mutation.SetMedicaltypeID(id)
 	return suo
 }
 
-// SetNillableOwneraID sets the ownera edge to Medicalequipment by id if the given value is not nil.
-func (suo *SystemequipmentUpdateOne) SetNillableOwneraID(id *int) *SystemequipmentUpdateOne {
+// SetNillableMedicaltypeID sets the medicaltype edge to MedicalType by id if the given value is not nil.
+func (suo *SystemequipmentUpdateOne) SetNillableMedicaltypeID(id *int) *SystemequipmentUpdateOne {
 	if id != nil {
-		suo = suo.SetOwneraID(*id)
+		suo = suo.SetMedicaltypeID(*id)
 	}
 	return suo
 }
 
-// SetOwnera sets the ownera edge to Medicalequipment.
-func (suo *SystemequipmentUpdateOne) SetOwnera(m *Medicalequipment) *SystemequipmentUpdateOne {
-	return suo.SetOwneraID(m.ID)
+// SetMedicaltype sets the medicaltype edge to MedicalType.
+func (suo *SystemequipmentUpdateOne) SetMedicaltype(m *MedicalType) *SystemequipmentUpdateOne {
+	return suo.SetMedicaltypeID(m.ID)
 }
 
-// SetOwnerfID sets the ownerf edge to Medicaltype by id.
-func (suo *SystemequipmentUpdateOne) SetOwnerfID(id int) *SystemequipmentUpdateOne {
-	suo.mutation.SetOwnerfID(id)
+// SetMedicalequipmentID sets the medicalequipment edge to MedicalEquipment by id.
+func (suo *SystemequipmentUpdateOne) SetMedicalequipmentID(id int) *SystemequipmentUpdateOne {
+	suo.mutation.SetMedicalequipmentID(id)
 	return suo
 }
 
-// SetNillableOwnerfID sets the ownerf edge to Medicaltype by id if the given value is not nil.
-func (suo *SystemequipmentUpdateOne) SetNillableOwnerfID(id *int) *SystemequipmentUpdateOne {
+// SetNillableMedicalequipmentID sets the medicalequipment edge to MedicalEquipment by id if the given value is not nil.
+func (suo *SystemequipmentUpdateOne) SetNillableMedicalequipmentID(id *int) *SystemequipmentUpdateOne {
 	if id != nil {
-		suo = suo.SetOwnerfID(*id)
+		suo = suo.SetMedicalequipmentID(*id)
 	}
 	return suo
 }
 
-// SetOwnerf sets the ownerf edge to Medicaltype.
-func (suo *SystemequipmentUpdateOne) SetOwnerf(m *Medicaltype) *SystemequipmentUpdateOne {
-	return suo.SetOwnerfID(m.ID)
+// SetMedicalequipment sets the medicalequipment edge to MedicalEquipment.
+func (suo *SystemequipmentUpdateOne) SetMedicalequipment(m *MedicalEquipment) *SystemequipmentUpdateOne {
+	return suo.SetMedicalequipmentID(m.ID)
 }
 
 // Mutation returns the SystemequipmentMutation object of the builder.
@@ -466,31 +385,26 @@ func (suo *SystemequipmentUpdateOne) Mutation() *SystemequipmentMutation {
 	return suo.mutation
 }
 
-// ClearOwner clears the owner edge to Physician.
-func (suo *SystemequipmentUpdateOne) ClearOwner() *SystemequipmentUpdateOne {
-	suo.mutation.ClearOwner()
+// ClearPhysician clears the physician edge to Physician.
+func (suo *SystemequipmentUpdateOne) ClearPhysician() *SystemequipmentUpdateOne {
+	suo.mutation.ClearPhysician()
 	return suo
 }
 
-// ClearOwnera clears the ownera edge to Medicalequipment.
-func (suo *SystemequipmentUpdateOne) ClearOwnera() *SystemequipmentUpdateOne {
-	suo.mutation.ClearOwnera()
+// ClearMedicaltype clears the medicaltype edge to MedicalType.
+func (suo *SystemequipmentUpdateOne) ClearMedicaltype() *SystemequipmentUpdateOne {
+	suo.mutation.ClearMedicaltype()
 	return suo
 }
 
-// ClearOwnerf clears the ownerf edge to Medicaltype.
-func (suo *SystemequipmentUpdateOne) ClearOwnerf() *SystemequipmentUpdateOne {
-	suo.mutation.ClearOwnerf()
+// ClearMedicalequipment clears the medicalequipment edge to MedicalEquipment.
+func (suo *SystemequipmentUpdateOne) ClearMedicalequipment() *SystemequipmentUpdateOne {
+	suo.mutation.ClearMedicalequipment()
 	return suo
 }
 
 // Save executes the query and returns the updated entity.
 func (suo *SystemequipmentUpdateOne) Save(ctx context.Context) (*Systemequipment, error) {
-	if v, ok := suo.mutation.SystemID(); ok {
-		if err := systemequipment.SystemIDValidator(v); err != nil {
-			return nil, &ValidationError{Name: "System_ID", err: fmt.Errorf("ent: validator failed for field \"System_ID\": %w", err)}
-		}
-	}
 
 	var (
 		err  error
@@ -557,47 +471,19 @@ func (suo *SystemequipmentUpdateOne) sqlSave(ctx context.Context) (s *Systemequi
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Systemequipment.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := suo.mutation.SystemID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldSystemID,
-		})
-	}
-	if value, ok := suo.mutation.MedicalID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldMedicalID,
-		})
-	}
-	if value, ok := suo.mutation.TypeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldTypeID,
-		})
-	}
-	if value, ok := suo.mutation.PHYSICIANID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: systemequipment.FieldPHYSICIANID,
-		})
-	}
-	if value, ok := suo.mutation.SystemDATA(); ok {
+	if value, ok := suo.mutation.AddedTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Value:  value,
-			Column: systemequipment.FieldSystemDATA,
+			Column: systemequipment.FieldAddedTime,
 		})
 	}
-	if suo.mutation.OwnerCleared() {
+	if suo.mutation.PhysicianCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerTable,
-			Columns: []string{systemequipment.OwnerColumn},
+			Table:   systemequipment.PhysicianTable,
+			Columns: []string{systemequipment.PhysicianColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -608,12 +494,12 @@ func (suo *SystemequipmentUpdateOne) sqlSave(ctx context.Context) (s *Systemequi
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suo.mutation.OwnerIDs(); len(nodes) > 0 {
+	if nodes := suo.mutation.PhysicianIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerTable,
-			Columns: []string{systemequipment.OwnerColumn},
+			Table:   systemequipment.PhysicianTable,
+			Columns: []string{systemequipment.PhysicianColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -627,33 +513,33 @@ func (suo *SystemequipmentUpdateOne) sqlSave(ctx context.Context) (s *Systemequi
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if suo.mutation.OwneraCleared() {
+	if suo.mutation.MedicaltypeCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwneraTable,
-			Columns: []string{systemequipment.OwneraColumn},
+			Table:   systemequipment.MedicaltypeTable,
+			Columns: []string{systemequipment.MedicaltypeColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicalequipment.FieldID,
+					Column: medicaltype.FieldID,
 				},
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suo.mutation.OwneraIDs(); len(nodes) > 0 {
+	if nodes := suo.mutation.MedicaltypeIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwneraTable,
-			Columns: []string{systemequipment.OwneraColumn},
+			Table:   systemequipment.MedicaltypeTable,
+			Columns: []string{systemequipment.MedicaltypeColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicalequipment.FieldID,
+					Column: medicaltype.FieldID,
 				},
 			},
 		}
@@ -662,33 +548,33 @@ func (suo *SystemequipmentUpdateOne) sqlSave(ctx context.Context) (s *Systemequi
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if suo.mutation.OwnerfCleared() {
+	if suo.mutation.MedicalequipmentCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerfTable,
-			Columns: []string{systemequipment.OwnerfColumn},
+			Table:   systemequipment.MedicalequipmentTable,
+			Columns: []string{systemequipment.MedicalequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicaltype.FieldID,
+					Column: medicalequipment.FieldID,
 				},
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suo.mutation.OwnerfIDs(); len(nodes) > 0 {
+	if nodes := suo.mutation.MedicalequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   systemequipment.OwnerfTable,
-			Columns: []string{systemequipment.OwnerfColumn},
+			Table:   systemequipment.MedicalequipmentTable,
+			Columns: []string{systemequipment.MedicalequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
-					Column: medicaltype.FieldID,
+					Column: medicalequipment.FieldID,
 				},
 			},
 		}

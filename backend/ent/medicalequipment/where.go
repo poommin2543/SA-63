@@ -9,29 +9,29 @@ import (
 )
 
 // ID filters vertices based on their identifier.
-func ID(id int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func ID(id int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func IDEQ(id int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func IDNEQ(id int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldID), id))
 	})
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func IDIn(ids ...int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(ids) == 0 {
@@ -47,8 +47,8 @@ func IDIn(ids ...int) predicate.Medicalequipment {
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func IDNotIn(ids ...int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(ids) == 0 {
@@ -64,371 +64,253 @@ func IDNotIn(ids ...int) predicate.Medicalequipment {
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func IDGT(id int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldID), id))
 	})
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func IDGTE(id int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldID), id))
 	})
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func IDLT(id int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldID), id))
 	})
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func IDLTE(id int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldID), id))
 	})
 }
 
-// MedicalID applies equality check predicate on the "Medical_ID" field. It's identical to MedicalIDEQ.
-func MedicalID(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMedicalID), v))
+// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+func Name(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// MedicalNAME applies equality check predicate on the "Medical_NAME" field. It's identical to MedicalNAMEEQ.
-func MedicalNAME(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMedicalNAME), v))
+// Stock applies equality check predicate on the "stock" field. It's identical to StockEQ.
+func Stock(v int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStock), v))
 	})
 }
 
-// MedicalStock applies equality check predicate on the "Medical_Stock" field. It's identical to MedicalStockEQ.
-func MedicalStock(v int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMedicalStock), v))
+// NameEQ applies the EQ predicate on the "name" field.
+func NameEQ(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDEQ applies the EQ predicate on the "Medical_ID" field.
-func MedicalIDEQ(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMedicalID), v))
+// NameNEQ applies the NEQ predicate on the "name" field.
+func NameNEQ(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDNEQ applies the NEQ predicate on the "Medical_ID" field.
-func MedicalIDNEQ(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldMedicalID), v))
-	})
-}
-
-// MedicalIDIn applies the In predicate on the "Medical_ID" field.
-func MedicalIDIn(vs ...string) predicate.Medicalequipment {
+// NameIn applies the In predicate on the "name" field.
+func NameIn(vs ...string) predicate.MedicalEquipment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(v) == 0 {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldMedicalID), v...))
+		s.Where(sql.In(s.C(FieldName), v...))
 	})
 }
 
-// MedicalIDNotIn applies the NotIn predicate on the "Medical_ID" field.
-func MedicalIDNotIn(vs ...string) predicate.Medicalequipment {
+// NameNotIn applies the NotIn predicate on the "name" field.
+func NameNotIn(vs ...string) predicate.MedicalEquipment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(v) == 0 {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldMedicalID), v...))
+		s.Where(sql.NotIn(s.C(FieldName), v...))
 	})
 }
 
-// MedicalIDGT applies the GT predicate on the "Medical_ID" field.
-func MedicalIDGT(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldMedicalID), v))
+// NameGT applies the GT predicate on the "name" field.
+func NameGT(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDGTE applies the GTE predicate on the "Medical_ID" field.
-func MedicalIDGTE(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldMedicalID), v))
+// NameGTE applies the GTE predicate on the "name" field.
+func NameGTE(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDLT applies the LT predicate on the "Medical_ID" field.
-func MedicalIDLT(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldMedicalID), v))
+// NameLT applies the LT predicate on the "name" field.
+func NameLT(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDLTE applies the LTE predicate on the "Medical_ID" field.
-func MedicalIDLTE(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldMedicalID), v))
+// NameLTE applies the LTE predicate on the "name" field.
+func NameLTE(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDContains applies the Contains predicate on the "Medical_ID" field.
-func MedicalIDContains(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldMedicalID), v))
+// NameContains applies the Contains predicate on the "name" field.
+func NameContains(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDHasPrefix applies the HasPrefix predicate on the "Medical_ID" field.
-func MedicalIDHasPrefix(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldMedicalID), v))
+// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+func NameHasPrefix(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDHasSuffix applies the HasSuffix predicate on the "Medical_ID" field.
-func MedicalIDHasSuffix(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldMedicalID), v))
+// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+func NameHasSuffix(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDEqualFold applies the EqualFold predicate on the "Medical_ID" field.
-func MedicalIDEqualFold(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldMedicalID), v))
+// NameEqualFold applies the EqualFold predicate on the "name" field.
+func NameEqualFold(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// MedicalIDContainsFold applies the ContainsFold predicate on the "Medical_ID" field.
-func MedicalIDContainsFold(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldMedicalID), v))
+// NameContainsFold applies the ContainsFold predicate on the "name" field.
+func NameContainsFold(v string) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldName), v))
 	})
 }
 
-// MedicalNAMEEQ applies the EQ predicate on the "Medical_NAME" field.
-func MedicalNAMEEQ(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMedicalNAME), v))
+// StockEQ applies the EQ predicate on the "stock" field.
+func StockEQ(v int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStock), v))
 	})
 }
 
-// MedicalNAMENEQ applies the NEQ predicate on the "Medical_NAME" field.
-func MedicalNAMENEQ(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldMedicalNAME), v))
+// StockNEQ applies the NEQ predicate on the "stock" field.
+func StockNEQ(v int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldStock), v))
 	})
 }
 
-// MedicalNAMEIn applies the In predicate on the "Medical_NAME" field.
-func MedicalNAMEIn(vs ...string) predicate.Medicalequipment {
+// StockIn applies the In predicate on the "stock" field.
+func StockIn(vs ...int) predicate.MedicalEquipment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(v) == 0 {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldMedicalNAME), v...))
+		s.Where(sql.In(s.C(FieldStock), v...))
 	})
 }
 
-// MedicalNAMENotIn applies the NotIn predicate on the "Medical_NAME" field.
-func MedicalNAMENotIn(vs ...string) predicate.Medicalequipment {
+// StockNotIn applies the NotIn predicate on the "stock" field.
+func StockNotIn(vs ...int) predicate.MedicalEquipment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(v) == 0 {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldMedicalNAME), v...))
+		s.Where(sql.NotIn(s.C(FieldStock), v...))
 	})
 }
 
-// MedicalNAMEGT applies the GT predicate on the "Medical_NAME" field.
-func MedicalNAMEGT(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldMedicalNAME), v))
+// StockGT applies the GT predicate on the "stock" field.
+func StockGT(v int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldStock), v))
 	})
 }
 
-// MedicalNAMEGTE applies the GTE predicate on the "Medical_NAME" field.
-func MedicalNAMEGTE(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldMedicalNAME), v))
+// StockGTE applies the GTE predicate on the "stock" field.
+func StockGTE(v int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldStock), v))
 	})
 }
 
-// MedicalNAMELT applies the LT predicate on the "Medical_NAME" field.
-func MedicalNAMELT(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldMedicalNAME), v))
+// StockLT applies the LT predicate on the "stock" field.
+func StockLT(v int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldStock), v))
 	})
 }
 
-// MedicalNAMELTE applies the LTE predicate on the "Medical_NAME" field.
-func MedicalNAMELTE(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldMedicalNAME), v))
+// StockLTE applies the LTE predicate on the "stock" field.
+func StockLTE(v int) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldStock), v))
 	})
 }
 
-// MedicalNAMEContains applies the Contains predicate on the "Medical_NAME" field.
-func MedicalNAMEContains(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldMedicalNAME), v))
-	})
-}
-
-// MedicalNAMEHasPrefix applies the HasPrefix predicate on the "Medical_NAME" field.
-func MedicalNAMEHasPrefix(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldMedicalNAME), v))
-	})
-}
-
-// MedicalNAMEHasSuffix applies the HasSuffix predicate on the "Medical_NAME" field.
-func MedicalNAMEHasSuffix(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldMedicalNAME), v))
-	})
-}
-
-// MedicalNAMEEqualFold applies the EqualFold predicate on the "Medical_NAME" field.
-func MedicalNAMEEqualFold(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldMedicalNAME), v))
-	})
-}
-
-// MedicalNAMEContainsFold applies the ContainsFold predicate on the "Medical_NAME" field.
-func MedicalNAMEContainsFold(v string) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldMedicalNAME), v))
-	})
-}
-
-// MedicalStockEQ applies the EQ predicate on the "Medical_Stock" field.
-func MedicalStockEQ(v int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMedicalStock), v))
-	})
-}
-
-// MedicalStockNEQ applies the NEQ predicate on the "Medical_Stock" field.
-func MedicalStockNEQ(v int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldMedicalStock), v))
-	})
-}
-
-// MedicalStockIn applies the In predicate on the "Medical_Stock" field.
-func MedicalStockIn(vs ...int) predicate.Medicalequipment {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldMedicalStock), v...))
-	})
-}
-
-// MedicalStockNotIn applies the NotIn predicate on the "Medical_Stock" field.
-func MedicalStockNotIn(vs ...int) predicate.Medicalequipment {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldMedicalStock), v...))
-	})
-}
-
-// MedicalStockGT applies the GT predicate on the "Medical_Stock" field.
-func MedicalStockGT(v int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldMedicalStock), v))
-	})
-}
-
-// MedicalStockGTE applies the GTE predicate on the "Medical_Stock" field.
-func MedicalStockGTE(v int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldMedicalStock), v))
-	})
-}
-
-// MedicalStockLT applies the LT predicate on the "Medical_Stock" field.
-func MedicalStockLT(v int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldMedicalStock), v))
-	})
-}
-
-// MedicalStockLTE applies the LTE predicate on the "Medical_Stock" field.
-func MedicalStockLTE(v int) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldMedicalStock), v))
-	})
-}
-
-// HasMedicalEquipment applies the HasEdge predicate on the "Medical_equipment" edge.
-func HasMedicalEquipment() predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+// HasSystemequipment applies the HasEdge predicate on the "systemequipment" edge.
+func HasSystemequipment() predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(MedicalEquipmentTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, MedicalEquipmentTable, MedicalEquipmentColumn),
+			sqlgraph.To(SystemequipmentTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, SystemequipmentTable, SystemequipmentColumn),
 		)
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
 
-// HasMedicalEquipmentWith applies the HasEdge predicate on the "Medical_equipment" edge with a given conditions (other predicates).
-func HasMedicalEquipmentWith(preds ...predicate.Systemequipment) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+// HasSystemequipmentWith applies the HasEdge predicate on the "systemequipment" edge with a given conditions (other predicates).
+func HasSystemequipmentWith(preds ...predicate.Systemequipment) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(MedicalEquipmentInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, MedicalEquipmentTable, MedicalEquipmentColumn),
+			sqlgraph.To(SystemequipmentInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, SystemequipmentTable, SystemequipmentColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
@@ -439,8 +321,8 @@ func HasMedicalEquipmentWith(preds ...predicate.Systemequipment) predicate.Medic
 }
 
 // And groups list of predicates with the AND operator between them.
-func And(predicates ...predicate.Medicalequipment) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func And(predicates ...predicate.MedicalEquipment) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		s1 := s.Clone().SetP(nil)
 		for _, p := range predicates {
 			p(s1)
@@ -450,8 +332,8 @@ func And(predicates ...predicate.Medicalequipment) predicate.Medicalequipment {
 }
 
 // Or groups list of predicates with the OR operator between them.
-func Or(predicates ...predicate.Medicalequipment) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func Or(predicates ...predicate.MedicalEquipment) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		s1 := s.Clone().SetP(nil)
 		for i, p := range predicates {
 			if i > 0 {
@@ -464,8 +346,8 @@ func Or(predicates ...predicate.Medicalequipment) predicate.Medicalequipment {
 }
 
 // Not applies the not operator on the given predicate.
-func Not(p predicate.Medicalequipment) predicate.Medicalequipment {
-	return predicate.Medicalequipment(func(s *sql.Selector) {
+func Not(p predicate.MedicalEquipment) predicate.MedicalEquipment {
+	return predicate.MedicalEquipment(func(s *sql.Selector) {
 		p(s.Not())
 	})
 }

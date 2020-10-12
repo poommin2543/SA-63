@@ -4,34 +4,31 @@ package medicalequipment
 
 const (
 	// Label holds the string label denoting the medicalequipment type in the database.
-	Label = "medicalequipment"
+	Label = "medical_equipment"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldMedicalID holds the string denoting the medical_id field in the database.
-	FieldMedicalID = "medical_id"
-	// FieldMedicalNAME holds the string denoting the medical_name field in the database.
-	FieldMedicalNAME = "medical_name"
-	// FieldMedicalStock holds the string denoting the medical_stock field in the database.
-	FieldMedicalStock = "medical_stock"
+	// FieldName holds the string denoting the name field in the database.
+	FieldName = "name"
+	// FieldStock holds the string denoting the stock field in the database.
+	FieldStock = "stock"
 
-	// EdgeMedicalEquipment holds the string denoting the medical_equipment edge name in mutations.
-	EdgeMedicalEquipment = "Medical_equipment"
+	// EdgeSystemequipment holds the string denoting the systemequipment edge name in mutations.
+	EdgeSystemequipment = "systemequipment"
 
 	// Table holds the table name of the medicalequipment in the database.
-	Table = "medicalequipments"
-	// MedicalEquipmentTable is the table the holds the Medical_equipment relation/edge.
-	MedicalEquipmentTable = "systemequipments"
-	// MedicalEquipmentInverseTable is the table name for the Systemequipment entity.
+	Table = "medical_equipments"
+	// SystemequipmentTable is the table the holds the systemequipment relation/edge.
+	SystemequipmentTable = "systemequipments"
+	// SystemequipmentInverseTable is the table name for the Systemequipment entity.
 	// It exists in this package in order to avoid circular dependency with the "systemequipment" package.
-	MedicalEquipmentInverseTable = "systemequipments"
-	// MedicalEquipmentColumn is the table column denoting the Medical_equipment relation/edge.
-	MedicalEquipmentColumn = "medicalequipment_medical_equipment"
+	SystemequipmentInverseTable = "systemequipments"
+	// SystemequipmentColumn is the table column denoting the systemequipment relation/edge.
+	SystemequipmentColumn = "medicalequipment_id"
 )
 
 // Columns holds all SQL columns for medicalequipment fields.
 var Columns = []string{
 	FieldID,
-	FieldMedicalID,
-	FieldMedicalNAME,
-	FieldMedicalStock,
+	FieldName,
+	FieldStock,
 }

@@ -13,7 +13,7 @@ import (
    swaggerFiles "github.com/swaggo/files"
    ginSwagger "github.com/swaggo/gin-swagger"
 )
-// @title SUT SA Example API
+// @title SUT SA Example API 
 // @version 1.0
 // @description This is a sample server for SUT SE 2563
 // @termsOfService http://swagger.io/terms/

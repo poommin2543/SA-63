@@ -3,18 +3,22 @@
 package ent
 
 import (
+	"github.com/poommin2543/app/ent/physician"
 	"github.com/poommin2543/app/ent/schema"
-	"github.com/poommin2543/app/ent/systemequipment"
 )
 
 // The init function reads all schema descriptors with runtime
 // code (default values, validators or hooks) and stitches it
 // to their package variables.
 func init() {
-	systemequipmentFields := schema.Systemequipment{}.Fields()
-	_ = systemequipmentFields
-	// systemequipmentDescSystemID is the schema descriptor for System_ID field.
-	systemequipmentDescSystemID := systemequipmentFields[0].Descriptor()
-	// systemequipment.SystemIDValidator is a validator for the "System_ID" field. It is called by the builders before save.
-	systemequipment.SystemIDValidator = systemequipmentDescSystemID.Validators[0].(func(string) error)
+	physicianFields := schema.Physician{}.Fields()
+	_ = physicianFields
+	// physicianDescName is the schema descriptor for name field.
+	physicianDescName := physicianFields[0].Descriptor()
+	// physician.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	physician.NameValidator = physicianDescName.Validators[0].(func(string) error)
+	// physicianDescEmail is the schema descriptor for email field.
+	physicianDescEmail := physicianFields[1].Descriptor()
+	// physician.EmailValidator is a validator for the "email" field. It is called by the builders before save.
+	physician.EmailValidator = physicianDescEmail.Validators[0].(func(string) error)
 }

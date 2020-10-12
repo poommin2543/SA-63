@@ -20,37 +20,31 @@ type PhysicianCreate struct {
 	hooks    []Hook
 }
 
-// SetPHYSICIANID sets the PHYSICIAN_ID field.
-func (pc *PhysicianCreate) SetPHYSICIANID(s string) *PhysicianCreate {
-	pc.mutation.SetPHYSICIANID(s)
+// SetName sets the name field.
+func (pc *PhysicianCreate) SetName(s string) *PhysicianCreate {
+	pc.mutation.SetName(s)
 	return pc
 }
 
-// SetPHYSICIANNAME sets the PHYSICIAN_NAME field.
-func (pc *PhysicianCreate) SetPHYSICIANNAME(s string) *PhysicianCreate {
-	pc.mutation.SetPHYSICIANNAME(s)
+// SetEmail sets the email field.
+func (pc *PhysicianCreate) SetEmail(s string) *PhysicianCreate {
+	pc.mutation.SetEmail(s)
 	return pc
 }
 
-// SetPHYSICIANEMAIL sets the PHYSICIAN_EMAIL field.
-func (pc *PhysicianCreate) SetPHYSICIANEMAIL(s string) *PhysicianCreate {
-	pc.mutation.SetPHYSICIANEMAIL(s)
+// AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
+func (pc *PhysicianCreate) AddSystemequipmentIDs(ids ...int) *PhysicianCreate {
+	pc.mutation.AddSystemequipmentIDs(ids...)
 	return pc
 }
 
-// AddUserPhysicianIDs adds the User_Physician edge to Systemequipment by ids.
-func (pc *PhysicianCreate) AddUserPhysicianIDs(ids ...int) *PhysicianCreate {
-	pc.mutation.AddUserPhysicianIDs(ids...)
-	return pc
-}
-
-// AddUserPhysician adds the User_Physician edges to Systemequipment.
-func (pc *PhysicianCreate) AddUserPhysician(s ...*Systemequipment) *PhysicianCreate {
+// AddSystemequipment adds the systemequipment edges to Systemequipment.
+func (pc *PhysicianCreate) AddSystemequipment(s ...*Systemequipment) *PhysicianCreate {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return pc.AddUserPhysicianIDs(ids...)
+	return pc.AddSystemequipmentIDs(ids...)
 }
 
 // Mutation returns the PhysicianMutation object of the builder.
@@ -60,14 +54,21 @@ func (pc *PhysicianCreate) Mutation() *PhysicianMutation {
 
 // Save creates the Physician in the database.
 func (pc *PhysicianCreate) Save(ctx context.Context) (*Physician, error) {
-	if _, ok := pc.mutation.PHYSICIANID(); !ok {
-		return nil, &ValidationError{Name: "PHYSICIAN_ID", err: errors.New("ent: missing required field \"PHYSICIAN_ID\"")}
+	if _, ok := pc.mutation.Name(); !ok {
+		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
 	}
-	if _, ok := pc.mutation.PHYSICIANNAME(); !ok {
-		return nil, &ValidationError{Name: "PHYSICIAN_NAME", err: errors.New("ent: missing required field \"PHYSICIAN_NAME\"")}
+	if v, ok := pc.mutation.Name(); ok {
+		if err := physician.NameValidator(v); err != nil {
+			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+		}
 	}
-	if _, ok := pc.mutation.PHYSICIANEMAIL(); !ok {
-		return nil, &ValidationError{Name: "PHYSICIAN_EMAIL", err: errors.New("ent: missing required field \"PHYSICIAN_EMAIL\"")}
+	if _, ok := pc.mutation.Email(); !ok {
+		return nil, &ValidationError{Name: "email", err: errors.New("ent: missing required field \"email\"")}
+	}
+	if v, ok := pc.mutation.Email(); ok {
+		if err := physician.EmailValidator(v); err != nil {
+			return nil, &ValidationError{Name: "email", err: fmt.Errorf("ent: validator failed for field \"email\": %w", err)}
+		}
 	}
 	var (
 		err  error
@@ -129,36 +130,28 @@ func (pc *PhysicianCreate) createSpec() (*Physician, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := pc.mutation.PHYSICIANID(); ok {
+	if value, ok := pc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: physician.FieldPHYSICIANID,
+			Column: physician.FieldName,
 		})
-		ph.PHYSICIANID = value
+		ph.Name = value
 	}
-	if value, ok := pc.mutation.PHYSICIANNAME(); ok {
+	if value, ok := pc.mutation.Email(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: physician.FieldPHYSICIANNAME,
+			Column: physician.FieldEmail,
 		})
-		ph.PHYSICIANNAME = value
+		ph.Email = value
 	}
-	if value, ok := pc.mutation.PHYSICIANEMAIL(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: physician.FieldPHYSICIANEMAIL,
-		})
-		ph.PHYSICIANEMAIL = value
-	}
-	if nodes := pc.mutation.UserPhysicianIDs(); len(nodes) > 0 {
+	if nodes := pc.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   physician.UserPhysicianTable,
-			Columns: []string{physician.UserPhysicianColumn},
+			Table:   physician.SystemequipmentTable,
+			Columns: []string{physician.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

@@ -17,88 +17,88 @@ import (
 	"github.com/poommin2543/app/ent/systemequipment"
 )
 
-// MedicalequipmentQuery is the builder for querying Medicalequipment entities.
-type MedicalequipmentQuery struct {
+// MedicalEquipmentQuery is the builder for querying MedicalEquipment entities.
+type MedicalEquipmentQuery struct {
 	config
 	limit      *int
 	offset     *int
 	order      []OrderFunc
 	unique     []string
-	predicates []predicate.Medicalequipment
+	predicates []predicate.MedicalEquipment
 	// eager-loading edges.
-	withMedicalEquipment *SystemequipmentQuery
+	withSystemequipment *SystemequipmentQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
 }
 
 // Where adds a new predicate for the builder.
-func (mq *MedicalequipmentQuery) Where(ps ...predicate.Medicalequipment) *MedicalequipmentQuery {
-	mq.predicates = append(mq.predicates, ps...)
-	return mq
+func (meq *MedicalEquipmentQuery) Where(ps ...predicate.MedicalEquipment) *MedicalEquipmentQuery {
+	meq.predicates = append(meq.predicates, ps...)
+	return meq
 }
 
 // Limit adds a limit step to the query.
-func (mq *MedicalequipmentQuery) Limit(limit int) *MedicalequipmentQuery {
-	mq.limit = &limit
-	return mq
+func (meq *MedicalEquipmentQuery) Limit(limit int) *MedicalEquipmentQuery {
+	meq.limit = &limit
+	return meq
 }
 
 // Offset adds an offset step to the query.
-func (mq *MedicalequipmentQuery) Offset(offset int) *MedicalequipmentQuery {
-	mq.offset = &offset
-	return mq
+func (meq *MedicalEquipmentQuery) Offset(offset int) *MedicalEquipmentQuery {
+	meq.offset = &offset
+	return meq
 }
 
 // Order adds an order step to the query.
-func (mq *MedicalequipmentQuery) Order(o ...OrderFunc) *MedicalequipmentQuery {
-	mq.order = append(mq.order, o...)
-	return mq
+func (meq *MedicalEquipmentQuery) Order(o ...OrderFunc) *MedicalEquipmentQuery {
+	meq.order = append(meq.order, o...)
+	return meq
 }
 
-// QueryMedicalEquipment chains the current query on the Medical_equipment edge.
-func (mq *MedicalequipmentQuery) QueryMedicalEquipment() *SystemequipmentQuery {
-	query := &SystemequipmentQuery{config: mq.config}
+// QuerySystemequipment chains the current query on the systemequipment edge.
+func (meq *MedicalEquipmentQuery) QuerySystemequipment() *SystemequipmentQuery {
+	query := &SystemequipmentQuery{config: meq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := mq.prepareQuery(ctx); err != nil {
+		if err := meq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
 		step := sqlgraph.NewStep(
-			sqlgraph.From(medicalequipment.Table, medicalequipment.FieldID, mq.sqlQuery()),
+			sqlgraph.From(medicalequipment.Table, medicalequipment.FieldID, meq.sqlQuery()),
 			sqlgraph.To(systemequipment.Table, systemequipment.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, medicalequipment.MedicalEquipmentTable, medicalequipment.MedicalEquipmentColumn),
+			sqlgraph.Edge(sqlgraph.O2M, false, medicalequipment.SystemequipmentTable, medicalequipment.SystemequipmentColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(mq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(meq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
-// First returns the first Medicalequipment entity in the query. Returns *NotFoundError when no medicalequipment was found.
-func (mq *MedicalequipmentQuery) First(ctx context.Context) (*Medicalequipment, error) {
-	ms, err := mq.Limit(1).All(ctx)
+// First returns the first MedicalEquipment entity in the query. Returns *NotFoundError when no medicalequipment was found.
+func (meq *MedicalEquipmentQuery) First(ctx context.Context) (*MedicalEquipment, error) {
+	mes, err := meq.Limit(1).All(ctx)
 	if err != nil {
 		return nil, err
 	}
-	if len(ms) == 0 {
+	if len(mes) == 0 {
 		return nil, &NotFoundError{medicalequipment.Label}
 	}
-	return ms[0], nil
+	return mes[0], nil
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (mq *MedicalequipmentQuery) FirstX(ctx context.Context) *Medicalequipment {
-	m, err := mq.First(ctx)
+func (meq *MedicalEquipmentQuery) FirstX(ctx context.Context) *MedicalEquipment {
+	me, err := meq.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
-	return m
+	return me
 }
 
-// FirstID returns the first Medicalequipment id in the query. Returns *NotFoundError when no id was found.
-func (mq *MedicalequipmentQuery) FirstID(ctx context.Context) (id int, err error) {
+// FirstID returns the first MedicalEquipment id in the query. Returns *NotFoundError when no id was found.
+func (meq *MedicalEquipmentQuery) FirstID(ctx context.Context) (id int, err error) {
 	var ids []int
-	if ids, err = mq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = meq.Limit(1).IDs(ctx); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -109,23 +109,23 @@ func (mq *MedicalequipmentQuery) FirstID(ctx context.Context) (id int, err error
 }
 
 // FirstXID is like FirstID, but panics if an error occurs.
-func (mq *MedicalequipmentQuery) FirstXID(ctx context.Context) int {
-	id, err := mq.FirstID(ctx)
+func (meq *MedicalEquipmentQuery) FirstXID(ctx context.Context) int {
+	id, err := meq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
 	return id
 }
 
-// Only returns the only Medicalequipment entity in the query, returns an error if not exactly one entity was returned.
-func (mq *MedicalequipmentQuery) Only(ctx context.Context) (*Medicalequipment, error) {
-	ms, err := mq.Limit(2).All(ctx)
+// Only returns the only MedicalEquipment entity in the query, returns an error if not exactly one entity was returned.
+func (meq *MedicalEquipmentQuery) Only(ctx context.Context) (*MedicalEquipment, error) {
+	mes, err := meq.Limit(2).All(ctx)
 	if err != nil {
 		return nil, err
 	}
-	switch len(ms) {
+	switch len(mes) {
 	case 1:
-		return ms[0], nil
+		return mes[0], nil
 	case 0:
 		return nil, &NotFoundError{medicalequipment.Label}
 	default:
@@ -134,18 +134,18 @@ func (mq *MedicalequipmentQuery) Only(ctx context.Context) (*Medicalequipment, e
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (mq *MedicalequipmentQuery) OnlyX(ctx context.Context) *Medicalequipment {
-	m, err := mq.Only(ctx)
+func (meq *MedicalEquipmentQuery) OnlyX(ctx context.Context) *MedicalEquipment {
+	me, err := meq.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return m
+	return me
 }
 
-// OnlyID returns the only Medicalequipment id in the query, returns an error if not exactly one id was returned.
-func (mq *MedicalequipmentQuery) OnlyID(ctx context.Context) (id int, err error) {
+// OnlyID returns the only MedicalEquipment id in the query, returns an error if not exactly one id was returned.
+func (meq *MedicalEquipmentQuery) OnlyID(ctx context.Context) (id int, err error) {
 	var ids []int
-	if ids, err = mq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = meq.Limit(2).IDs(ctx); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -160,43 +160,43 @@ func (mq *MedicalequipmentQuery) OnlyID(ctx context.Context) (id int, err error)
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (mq *MedicalequipmentQuery) OnlyIDX(ctx context.Context) int {
-	id, err := mq.OnlyID(ctx)
+func (meq *MedicalEquipmentQuery) OnlyIDX(ctx context.Context) int {
+	id, err := meq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return id
 }
 
-// All executes the query and returns a list of Medicalequipments.
-func (mq *MedicalequipmentQuery) All(ctx context.Context) ([]*Medicalequipment, error) {
-	if err := mq.prepareQuery(ctx); err != nil {
+// All executes the query and returns a list of MedicalEquipments.
+func (meq *MedicalEquipmentQuery) All(ctx context.Context) ([]*MedicalEquipment, error) {
+	if err := meq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return mq.sqlAll(ctx)
+	return meq.sqlAll(ctx)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (mq *MedicalequipmentQuery) AllX(ctx context.Context) []*Medicalequipment {
-	ms, err := mq.All(ctx)
+func (meq *MedicalEquipmentQuery) AllX(ctx context.Context) []*MedicalEquipment {
+	mes, err := meq.All(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return ms
+	return mes
 }
 
-// IDs executes the query and returns a list of Medicalequipment ids.
-func (mq *MedicalequipmentQuery) IDs(ctx context.Context) ([]int, error) {
+// IDs executes the query and returns a list of MedicalEquipment ids.
+func (meq *MedicalEquipmentQuery) IDs(ctx context.Context) ([]int, error) {
 	var ids []int
-	if err := mq.Select(medicalequipment.FieldID).Scan(ctx, &ids); err != nil {
+	if err := meq.Select(medicalequipment.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (mq *MedicalequipmentQuery) IDsX(ctx context.Context) []int {
-	ids, err := mq.IDs(ctx)
+func (meq *MedicalEquipmentQuery) IDsX(ctx context.Context) []int {
+	ids, err := meq.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -204,16 +204,16 @@ func (mq *MedicalequipmentQuery) IDsX(ctx context.Context) []int {
 }
 
 // Count returns the count of the given query.
-func (mq *MedicalequipmentQuery) Count(ctx context.Context) (int, error) {
-	if err := mq.prepareQuery(ctx); err != nil {
+func (meq *MedicalEquipmentQuery) Count(ctx context.Context) (int, error) {
+	if err := meq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return mq.sqlCount(ctx)
+	return meq.sqlCount(ctx)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (mq *MedicalequipmentQuery) CountX(ctx context.Context) int {
-	count, err := mq.Count(ctx)
+func (meq *MedicalEquipmentQuery) CountX(ctx context.Context) int {
+	count, err := meq.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -221,16 +221,16 @@ func (mq *MedicalequipmentQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (mq *MedicalequipmentQuery) Exist(ctx context.Context) (bool, error) {
-	if err := mq.prepareQuery(ctx); err != nil {
+func (meq *MedicalEquipmentQuery) Exist(ctx context.Context) (bool, error) {
+	if err := meq.prepareQuery(ctx); err != nil {
 		return false, err
 	}
-	return mq.sqlExist(ctx)
+	return meq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (mq *MedicalequipmentQuery) ExistX(ctx context.Context) bool {
-	exist, err := mq.Exist(ctx)
+func (meq *MedicalEquipmentQuery) ExistX(ctx context.Context) bool {
+	exist, err := meq.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -239,29 +239,29 @@ func (mq *MedicalequipmentQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the query builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (mq *MedicalequipmentQuery) Clone() *MedicalequipmentQuery {
-	return &MedicalequipmentQuery{
-		config:     mq.config,
-		limit:      mq.limit,
-		offset:     mq.offset,
-		order:      append([]OrderFunc{}, mq.order...),
-		unique:     append([]string{}, mq.unique...),
-		predicates: append([]predicate.Medicalequipment{}, mq.predicates...),
+func (meq *MedicalEquipmentQuery) Clone() *MedicalEquipmentQuery {
+	return &MedicalEquipmentQuery{
+		config:     meq.config,
+		limit:      meq.limit,
+		offset:     meq.offset,
+		order:      append([]OrderFunc{}, meq.order...),
+		unique:     append([]string{}, meq.unique...),
+		predicates: append([]predicate.MedicalEquipment{}, meq.predicates...),
 		// clone intermediate query.
-		sql:  mq.sql.Clone(),
-		path: mq.path,
+		sql:  meq.sql.Clone(),
+		path: meq.path,
 	}
 }
 
-//  WithMedicalEquipment tells the query-builder to eager-loads the nodes that are connected to
-// the "Medical_equipment" edge. The optional arguments used to configure the query builder of the edge.
-func (mq *MedicalequipmentQuery) WithMedicalEquipment(opts ...func(*SystemequipmentQuery)) *MedicalequipmentQuery {
-	query := &SystemequipmentQuery{config: mq.config}
+//  WithSystemequipment tells the query-builder to eager-loads the nodes that are connected to
+// the "systemequipment" edge. The optional arguments used to configure the query builder of the edge.
+func (meq *MedicalEquipmentQuery) WithSystemequipment(opts ...func(*SystemequipmentQuery)) *MedicalEquipmentQuery {
+	query := &SystemequipmentQuery{config: meq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	mq.withMedicalEquipment = query
-	return mq
+	meq.withSystemequipment = query
+	return meq
 }
 
 // GroupBy used to group vertices by one or more fields/columns.
@@ -270,23 +270,23 @@ func (mq *MedicalequipmentQuery) WithMedicalEquipment(opts ...func(*Systemequipm
 // Example:
 //
 //	var v []struct {
-//		MedicalID string `json:"Medical_ID,omitempty"`
+//		Name string `json:"name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
-//	client.Medicalequipment.Query().
-//		GroupBy(medicalequipment.FieldMedicalID).
+//	client.MedicalEquipment.Query().
+//		GroupBy(medicalequipment.FieldName).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
-func (mq *MedicalequipmentQuery) GroupBy(field string, fields ...string) *MedicalequipmentGroupBy {
-	group := &MedicalequipmentGroupBy{config: mq.config}
+func (meq *MedicalEquipmentQuery) GroupBy(field string, fields ...string) *MedicalEquipmentGroupBy {
+	group := &MedicalEquipmentGroupBy{config: meq.config}
 	group.fields = append([]string{field}, fields...)
 	group.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := mq.prepareQuery(ctx); err != nil {
+		if err := meq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		return mq.sqlQuery(), nil
+		return meq.sqlQuery(), nil
 	}
 	return group
 }
@@ -296,46 +296,46 @@ func (mq *MedicalequipmentQuery) GroupBy(field string, fields ...string) *Medica
 // Example:
 //
 //	var v []struct {
-//		MedicalID string `json:"Medical_ID,omitempty"`
+//		Name string `json:"name,omitempty"`
 //	}
 //
-//	client.Medicalequipment.Query().
-//		Select(medicalequipment.FieldMedicalID).
+//	client.MedicalEquipment.Query().
+//		Select(medicalequipment.FieldName).
 //		Scan(ctx, &v)
 //
-func (mq *MedicalequipmentQuery) Select(field string, fields ...string) *MedicalequipmentSelect {
-	selector := &MedicalequipmentSelect{config: mq.config}
+func (meq *MedicalEquipmentQuery) Select(field string, fields ...string) *MedicalEquipmentSelect {
+	selector := &MedicalEquipmentSelect{config: meq.config}
 	selector.fields = append([]string{field}, fields...)
 	selector.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := mq.prepareQuery(ctx); err != nil {
+		if err := meq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		return mq.sqlQuery(), nil
+		return meq.sqlQuery(), nil
 	}
 	return selector
 }
 
-func (mq *MedicalequipmentQuery) prepareQuery(ctx context.Context) error {
-	if mq.path != nil {
-		prev, err := mq.path(ctx)
+func (meq *MedicalEquipmentQuery) prepareQuery(ctx context.Context) error {
+	if meq.path != nil {
+		prev, err := meq.path(ctx)
 		if err != nil {
 			return err
 		}
-		mq.sql = prev
+		meq.sql = prev
 	}
 	return nil
 }
 
-func (mq *MedicalequipmentQuery) sqlAll(ctx context.Context) ([]*Medicalequipment, error) {
+func (meq *MedicalEquipmentQuery) sqlAll(ctx context.Context) ([]*MedicalEquipment, error) {
 	var (
-		nodes       = []*Medicalequipment{}
-		_spec       = mq.querySpec()
+		nodes       = []*MedicalEquipment{}
+		_spec       = meq.querySpec()
 		loadedTypes = [1]bool{
-			mq.withMedicalEquipment != nil,
+			meq.withSystemequipment != nil,
 		}
 	)
 	_spec.ScanValues = func() []interface{} {
-		node := &Medicalequipment{config: mq.config}
+		node := &MedicalEquipment{config: meq.config}
 		nodes = append(nodes, node)
 		values := node.scanValues()
 		return values
@@ -348,58 +348,58 @@ func (mq *MedicalequipmentQuery) sqlAll(ctx context.Context) ([]*Medicalequipmen
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(values...)
 	}
-	if err := sqlgraph.QueryNodes(ctx, mq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, meq.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
 
-	if query := mq.withMedicalEquipment; query != nil {
+	if query := meq.withSystemequipment; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
-		nodeids := make(map[int]*Medicalequipment)
+		nodeids := make(map[int]*MedicalEquipment)
 		for i := range nodes {
 			fks = append(fks, nodes[i].ID)
 			nodeids[nodes[i].ID] = nodes[i]
 		}
 		query.withFKs = true
 		query.Where(predicate.Systemequipment(func(s *sql.Selector) {
-			s.Where(sql.InValues(medicalequipment.MedicalEquipmentColumn, fks...))
+			s.Where(sql.InValues(medicalequipment.SystemequipmentColumn, fks...))
 		}))
 		neighbors, err := query.All(ctx)
 		if err != nil {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.medicalequipment_medical_equipment
+			fk := n.medicalequipment_id
 			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "medicalequipment_medical_equipment" is nil for node %v`, n.ID)
+				return nil, fmt.Errorf(`foreign-key "medicalequipment_id" is nil for node %v`, n.ID)
 			}
 			node, ok := nodeids[*fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "medicalequipment_medical_equipment" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "medicalequipment_id" returned %v for node %v`, *fk, n.ID)
 			}
-			node.Edges.MedicalEquipment = append(node.Edges.MedicalEquipment, n)
+			node.Edges.Systemequipment = append(node.Edges.Systemequipment, n)
 		}
 	}
 
 	return nodes, nil
 }
 
-func (mq *MedicalequipmentQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := mq.querySpec()
-	return sqlgraph.CountNodes(ctx, mq.driver, _spec)
+func (meq *MedicalEquipmentQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := meq.querySpec()
+	return sqlgraph.CountNodes(ctx, meq.driver, _spec)
 }
 
-func (mq *MedicalequipmentQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := mq.sqlCount(ctx)
+func (meq *MedicalEquipmentQuery) sqlExist(ctx context.Context) (bool, error) {
+	n, err := meq.sqlCount(ctx)
 	if err != nil {
 		return false, fmt.Errorf("ent: check existence: %v", err)
 	}
 	return n > 0, nil
 }
 
-func (mq *MedicalequipmentQuery) querySpec() *sqlgraph.QuerySpec {
+func (meq *MedicalEquipmentQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := &sqlgraph.QuerySpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   medicalequipment.Table,
@@ -409,23 +409,23 @@ func (mq *MedicalequipmentQuery) querySpec() *sqlgraph.QuerySpec {
 				Column: medicalequipment.FieldID,
 			},
 		},
-		From:   mq.sql,
+		From:   meq.sql,
 		Unique: true,
 	}
-	if ps := mq.predicates; len(ps) > 0 {
+	if ps := meq.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := mq.limit; limit != nil {
+	if limit := meq.limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := mq.offset; offset != nil {
+	if offset := meq.offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := mq.order; len(ps) > 0 {
+	if ps := meq.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -435,33 +435,33 @@ func (mq *MedicalequipmentQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (mq *MedicalequipmentQuery) sqlQuery() *sql.Selector {
-	builder := sql.Dialect(mq.driver.Dialect())
+func (meq *MedicalEquipmentQuery) sqlQuery() *sql.Selector {
+	builder := sql.Dialect(meq.driver.Dialect())
 	t1 := builder.Table(medicalequipment.Table)
 	selector := builder.Select(t1.Columns(medicalequipment.Columns...)...).From(t1)
-	if mq.sql != nil {
-		selector = mq.sql
+	if meq.sql != nil {
+		selector = meq.sql
 		selector.Select(selector.Columns(medicalequipment.Columns...)...)
 	}
-	for _, p := range mq.predicates {
+	for _, p := range meq.predicates {
 		p(selector)
 	}
-	for _, p := range mq.order {
+	for _, p := range meq.order {
 		p(selector)
 	}
-	if offset := mq.offset; offset != nil {
+	if offset := meq.offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := mq.limit; limit != nil {
+	if limit := meq.limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
 }
 
-// MedicalequipmentGroupBy is the builder for group-by Medicalequipment entities.
-type MedicalequipmentGroupBy struct {
+// MedicalEquipmentGroupBy is the builder for group-by MedicalEquipment entities.
+type MedicalEquipmentGroupBy struct {
 	config
 	fields []string
 	fns    []AggregateFunc
@@ -471,43 +471,43 @@ type MedicalequipmentGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (mgb *MedicalequipmentGroupBy) Aggregate(fns ...AggregateFunc) *MedicalequipmentGroupBy {
-	mgb.fns = append(mgb.fns, fns...)
-	return mgb
+func (megb *MedicalEquipmentGroupBy) Aggregate(fns ...AggregateFunc) *MedicalEquipmentGroupBy {
+	megb.fns = append(megb.fns, fns...)
+	return megb
 }
 
 // Scan applies the group-by query and scan the result into the given value.
-func (mgb *MedicalequipmentGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := mgb.path(ctx)
+func (megb *MedicalEquipmentGroupBy) Scan(ctx context.Context, v interface{}) error {
+	query, err := megb.path(ctx)
 	if err != nil {
 		return err
 	}
-	mgb.sql = query
-	return mgb.sqlScan(ctx, v)
+	megb.sql = query
+	return megb.sqlScan(ctx, v)
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (mgb *MedicalequipmentGroupBy) ScanX(ctx context.Context, v interface{}) {
-	if err := mgb.Scan(ctx, v); err != nil {
+func (megb *MedicalEquipmentGroupBy) ScanX(ctx context.Context, v interface{}) {
+	if err := megb.Scan(ctx, v); err != nil {
 		panic(err)
 	}
 }
 
 // Strings returns list of strings from group-by. It is only allowed when querying group-by with one field.
-func (mgb *MedicalequipmentGroupBy) Strings(ctx context.Context) ([]string, error) {
-	if len(mgb.fields) > 1 {
-		return nil, errors.New("ent: MedicalequipmentGroupBy.Strings is not achievable when grouping more than 1 field")
+func (megb *MedicalEquipmentGroupBy) Strings(ctx context.Context) ([]string, error) {
+	if len(megb.fields) > 1 {
+		return nil, errors.New("ent: MedicalEquipmentGroupBy.Strings is not achievable when grouping more than 1 field")
 	}
 	var v []string
-	if err := mgb.Scan(ctx, &v); err != nil {
+	if err := megb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // StringsX is like Strings, but panics if an error occurs.
-func (mgb *MedicalequipmentGroupBy) StringsX(ctx context.Context) []string {
-	v, err := mgb.Strings(ctx)
+func (megb *MedicalEquipmentGroupBy) StringsX(ctx context.Context) []string {
+	v, err := megb.Strings(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -515,9 +515,9 @@ func (mgb *MedicalequipmentGroupBy) StringsX(ctx context.Context) []string {
 }
 
 // String returns a single string from group-by. It is only allowed when querying group-by with one field.
-func (mgb *MedicalequipmentGroupBy) String(ctx context.Context) (_ string, err error) {
+func (megb *MedicalEquipmentGroupBy) String(ctx context.Context) (_ string, err error) {
 	var v []string
-	if v, err = mgb.Strings(ctx); err != nil {
+	if v, err = megb.Strings(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -526,14 +526,14 @@ func (mgb *MedicalequipmentGroupBy) String(ctx context.Context) (_ string, err e
 	case 0:
 		err = &NotFoundError{medicalequipment.Label}
 	default:
-		err = fmt.Errorf("ent: MedicalequipmentGroupBy.Strings returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: MedicalEquipmentGroupBy.Strings returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // StringX is like String, but panics if an error occurs.
-func (mgb *MedicalequipmentGroupBy) StringX(ctx context.Context) string {
-	v, err := mgb.String(ctx)
+func (megb *MedicalEquipmentGroupBy) StringX(ctx context.Context) string {
+	v, err := megb.String(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -541,20 +541,20 @@ func (mgb *MedicalequipmentGroupBy) StringX(ctx context.Context) string {
 }
 
 // Ints returns list of ints from group-by. It is only allowed when querying group-by with one field.
-func (mgb *MedicalequipmentGroupBy) Ints(ctx context.Context) ([]int, error) {
-	if len(mgb.fields) > 1 {
-		return nil, errors.New("ent: MedicalequipmentGroupBy.Ints is not achievable when grouping more than 1 field")
+func (megb *MedicalEquipmentGroupBy) Ints(ctx context.Context) ([]int, error) {
+	if len(megb.fields) > 1 {
+		return nil, errors.New("ent: MedicalEquipmentGroupBy.Ints is not achievable when grouping more than 1 field")
 	}
 	var v []int
-	if err := mgb.Scan(ctx, &v); err != nil {
+	if err := megb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // IntsX is like Ints, but panics if an error occurs.
-func (mgb *MedicalequipmentGroupBy) IntsX(ctx context.Context) []int {
-	v, err := mgb.Ints(ctx)
+func (megb *MedicalEquipmentGroupBy) IntsX(ctx context.Context) []int {
+	v, err := megb.Ints(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -562,9 +562,9 @@ func (mgb *MedicalequipmentGroupBy) IntsX(ctx context.Context) []int {
 }
 
 // Int returns a single int from group-by. It is only allowed when querying group-by with one field.
-func (mgb *MedicalequipmentGroupBy) Int(ctx context.Context) (_ int, err error) {
+func (megb *MedicalEquipmentGroupBy) Int(ctx context.Context) (_ int, err error) {
 	var v []int
-	if v, err = mgb.Ints(ctx); err != nil {
+	if v, err = megb.Ints(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -573,14 +573,14 @@ func (mgb *MedicalequipmentGroupBy) Int(ctx context.Context) (_ int, err error) 
 	case 0:
 		err = &NotFoundError{medicalequipment.Label}
 	default:
-		err = fmt.Errorf("ent: MedicalequipmentGroupBy.Ints returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: MedicalEquipmentGroupBy.Ints returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // IntX is like Int, but panics if an error occurs.
-func (mgb *MedicalequipmentGroupBy) IntX(ctx context.Context) int {
-	v, err := mgb.Int(ctx)
+func (megb *MedicalEquipmentGroupBy) IntX(ctx context.Context) int {
+	v, err := megb.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -588,20 +588,20 @@ func (mgb *MedicalequipmentGroupBy) IntX(ctx context.Context) int {
 }
 
 // Float64s returns list of float64s from group-by. It is only allowed when querying group-by with one field.
-func (mgb *MedicalequipmentGroupBy) Float64s(ctx context.Context) ([]float64, error) {
-	if len(mgb.fields) > 1 {
-		return nil, errors.New("ent: MedicalequipmentGroupBy.Float64s is not achievable when grouping more than 1 field")
+func (megb *MedicalEquipmentGroupBy) Float64s(ctx context.Context) ([]float64, error) {
+	if len(megb.fields) > 1 {
+		return nil, errors.New("ent: MedicalEquipmentGroupBy.Float64s is not achievable when grouping more than 1 field")
 	}
 	var v []float64
-	if err := mgb.Scan(ctx, &v); err != nil {
+	if err := megb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // Float64sX is like Float64s, but panics if an error occurs.
-func (mgb *MedicalequipmentGroupBy) Float64sX(ctx context.Context) []float64 {
-	v, err := mgb.Float64s(ctx)
+func (megb *MedicalEquipmentGroupBy) Float64sX(ctx context.Context) []float64 {
+	v, err := megb.Float64s(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -609,9 +609,9 @@ func (mgb *MedicalequipmentGroupBy) Float64sX(ctx context.Context) []float64 {
 }
 
 // Float64 returns a single float64 from group-by. It is only allowed when querying group-by with one field.
-func (mgb *MedicalequipmentGroupBy) Float64(ctx context.Context) (_ float64, err error) {
+func (megb *MedicalEquipmentGroupBy) Float64(ctx context.Context) (_ float64, err error) {
 	var v []float64
-	if v, err = mgb.Float64s(ctx); err != nil {
+	if v, err = megb.Float64s(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -620,14 +620,14 @@ func (mgb *MedicalequipmentGroupBy) Float64(ctx context.Context) (_ float64, err
 	case 0:
 		err = &NotFoundError{medicalequipment.Label}
 	default:
-		err = fmt.Errorf("ent: MedicalequipmentGroupBy.Float64s returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: MedicalEquipmentGroupBy.Float64s returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // Float64X is like Float64, but panics if an error occurs.
-func (mgb *MedicalequipmentGroupBy) Float64X(ctx context.Context) float64 {
-	v, err := mgb.Float64(ctx)
+func (megb *MedicalEquipmentGroupBy) Float64X(ctx context.Context) float64 {
+	v, err := megb.Float64(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -635,20 +635,20 @@ func (mgb *MedicalequipmentGroupBy) Float64X(ctx context.Context) float64 {
 }
 
 // Bools returns list of bools from group-by. It is only allowed when querying group-by with one field.
-func (mgb *MedicalequipmentGroupBy) Bools(ctx context.Context) ([]bool, error) {
-	if len(mgb.fields) > 1 {
-		return nil, errors.New("ent: MedicalequipmentGroupBy.Bools is not achievable when grouping more than 1 field")
+func (megb *MedicalEquipmentGroupBy) Bools(ctx context.Context) ([]bool, error) {
+	if len(megb.fields) > 1 {
+		return nil, errors.New("ent: MedicalEquipmentGroupBy.Bools is not achievable when grouping more than 1 field")
 	}
 	var v []bool
-	if err := mgb.Scan(ctx, &v); err != nil {
+	if err := megb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // BoolsX is like Bools, but panics if an error occurs.
-func (mgb *MedicalequipmentGroupBy) BoolsX(ctx context.Context) []bool {
-	v, err := mgb.Bools(ctx)
+func (megb *MedicalEquipmentGroupBy) BoolsX(ctx context.Context) []bool {
+	v, err := megb.Bools(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -656,9 +656,9 @@ func (mgb *MedicalequipmentGroupBy) BoolsX(ctx context.Context) []bool {
 }
 
 // Bool returns a single bool from group-by. It is only allowed when querying group-by with one field.
-func (mgb *MedicalequipmentGroupBy) Bool(ctx context.Context) (_ bool, err error) {
+func (megb *MedicalEquipmentGroupBy) Bool(ctx context.Context) (_ bool, err error) {
 	var v []bool
-	if v, err = mgb.Bools(ctx); err != nil {
+	if v, err = megb.Bools(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -667,42 +667,42 @@ func (mgb *MedicalequipmentGroupBy) Bool(ctx context.Context) (_ bool, err error
 	case 0:
 		err = &NotFoundError{medicalequipment.Label}
 	default:
-		err = fmt.Errorf("ent: MedicalequipmentGroupBy.Bools returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: MedicalEquipmentGroupBy.Bools returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // BoolX is like Bool, but panics if an error occurs.
-func (mgb *MedicalequipmentGroupBy) BoolX(ctx context.Context) bool {
-	v, err := mgb.Bool(ctx)
+func (megb *MedicalEquipmentGroupBy) BoolX(ctx context.Context) bool {
+	v, err := megb.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (mgb *MedicalequipmentGroupBy) sqlScan(ctx context.Context, v interface{}) error {
+func (megb *MedicalEquipmentGroupBy) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := mgb.sqlQuery().Query()
-	if err := mgb.driver.Query(ctx, query, args, rows); err != nil {
+	query, args := megb.sqlQuery().Query()
+	if err := megb.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (mgb *MedicalequipmentGroupBy) sqlQuery() *sql.Selector {
-	selector := mgb.sql
-	columns := make([]string, 0, len(mgb.fields)+len(mgb.fns))
-	columns = append(columns, mgb.fields...)
-	for _, fn := range mgb.fns {
+func (megb *MedicalEquipmentGroupBy) sqlQuery() *sql.Selector {
+	selector := megb.sql
+	columns := make([]string, 0, len(megb.fields)+len(megb.fns))
+	columns = append(columns, megb.fields...)
+	for _, fn := range megb.fns {
 		columns = append(columns, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(mgb.fields...)
+	return selector.Select(columns...).GroupBy(megb.fields...)
 }
 
-// MedicalequipmentSelect is the builder for select fields of Medicalequipment entities.
-type MedicalequipmentSelect struct {
+// MedicalEquipmentSelect is the builder for select fields of MedicalEquipment entities.
+type MedicalEquipmentSelect struct {
 	config
 	fields []string
 	// intermediate query (i.e. traversal path).
@@ -711,37 +711,37 @@ type MedicalequipmentSelect struct {
 }
 
 // Scan applies the selector query and scan the result into the given value.
-func (ms *MedicalequipmentSelect) Scan(ctx context.Context, v interface{}) error {
-	query, err := ms.path(ctx)
+func (mes *MedicalEquipmentSelect) Scan(ctx context.Context, v interface{}) error {
+	query, err := mes.path(ctx)
 	if err != nil {
 		return err
 	}
-	ms.sql = query
-	return ms.sqlScan(ctx, v)
+	mes.sql = query
+	return mes.sqlScan(ctx, v)
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (ms *MedicalequipmentSelect) ScanX(ctx context.Context, v interface{}) {
-	if err := ms.Scan(ctx, v); err != nil {
+func (mes *MedicalEquipmentSelect) ScanX(ctx context.Context, v interface{}) {
+	if err := mes.Scan(ctx, v); err != nil {
 		panic(err)
 	}
 }
 
 // Strings returns list of strings from selector. It is only allowed when selecting one field.
-func (ms *MedicalequipmentSelect) Strings(ctx context.Context) ([]string, error) {
-	if len(ms.fields) > 1 {
-		return nil, errors.New("ent: MedicalequipmentSelect.Strings is not achievable when selecting more than 1 field")
+func (mes *MedicalEquipmentSelect) Strings(ctx context.Context) ([]string, error) {
+	if len(mes.fields) > 1 {
+		return nil, errors.New("ent: MedicalEquipmentSelect.Strings is not achievable when selecting more than 1 field")
 	}
 	var v []string
-	if err := ms.Scan(ctx, &v); err != nil {
+	if err := mes.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // StringsX is like Strings, but panics if an error occurs.
-func (ms *MedicalequipmentSelect) StringsX(ctx context.Context) []string {
-	v, err := ms.Strings(ctx)
+func (mes *MedicalEquipmentSelect) StringsX(ctx context.Context) []string {
+	v, err := mes.Strings(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -749,9 +749,9 @@ func (ms *MedicalequipmentSelect) StringsX(ctx context.Context) []string {
 }
 
 // String returns a single string from selector. It is only allowed when selecting one field.
-func (ms *MedicalequipmentSelect) String(ctx context.Context) (_ string, err error) {
+func (mes *MedicalEquipmentSelect) String(ctx context.Context) (_ string, err error) {
 	var v []string
-	if v, err = ms.Strings(ctx); err != nil {
+	if v, err = mes.Strings(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -760,14 +760,14 @@ func (ms *MedicalequipmentSelect) String(ctx context.Context) (_ string, err err
 	case 0:
 		err = &NotFoundError{medicalequipment.Label}
 	default:
-		err = fmt.Errorf("ent: MedicalequipmentSelect.Strings returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: MedicalEquipmentSelect.Strings returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // StringX is like String, but panics if an error occurs.
-func (ms *MedicalequipmentSelect) StringX(ctx context.Context) string {
-	v, err := ms.String(ctx)
+func (mes *MedicalEquipmentSelect) StringX(ctx context.Context) string {
+	v, err := mes.String(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -775,20 +775,20 @@ func (ms *MedicalequipmentSelect) StringX(ctx context.Context) string {
 }
 
 // Ints returns list of ints from selector. It is only allowed when selecting one field.
-func (ms *MedicalequipmentSelect) Ints(ctx context.Context) ([]int, error) {
-	if len(ms.fields) > 1 {
-		return nil, errors.New("ent: MedicalequipmentSelect.Ints is not achievable when selecting more than 1 field")
+func (mes *MedicalEquipmentSelect) Ints(ctx context.Context) ([]int, error) {
+	if len(mes.fields) > 1 {
+		return nil, errors.New("ent: MedicalEquipmentSelect.Ints is not achievable when selecting more than 1 field")
 	}
 	var v []int
-	if err := ms.Scan(ctx, &v); err != nil {
+	if err := mes.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // IntsX is like Ints, but panics if an error occurs.
-func (ms *MedicalequipmentSelect) IntsX(ctx context.Context) []int {
-	v, err := ms.Ints(ctx)
+func (mes *MedicalEquipmentSelect) IntsX(ctx context.Context) []int {
+	v, err := mes.Ints(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -796,9 +796,9 @@ func (ms *MedicalequipmentSelect) IntsX(ctx context.Context) []int {
 }
 
 // Int returns a single int from selector. It is only allowed when selecting one field.
-func (ms *MedicalequipmentSelect) Int(ctx context.Context) (_ int, err error) {
+func (mes *MedicalEquipmentSelect) Int(ctx context.Context) (_ int, err error) {
 	var v []int
-	if v, err = ms.Ints(ctx); err != nil {
+	if v, err = mes.Ints(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -807,14 +807,14 @@ func (ms *MedicalequipmentSelect) Int(ctx context.Context) (_ int, err error) {
 	case 0:
 		err = &NotFoundError{medicalequipment.Label}
 	default:
-		err = fmt.Errorf("ent: MedicalequipmentSelect.Ints returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: MedicalEquipmentSelect.Ints returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // IntX is like Int, but panics if an error occurs.
-func (ms *MedicalequipmentSelect) IntX(ctx context.Context) int {
-	v, err := ms.Int(ctx)
+func (mes *MedicalEquipmentSelect) IntX(ctx context.Context) int {
+	v, err := mes.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -822,20 +822,20 @@ func (ms *MedicalequipmentSelect) IntX(ctx context.Context) int {
 }
 
 // Float64s returns list of float64s from selector. It is only allowed when selecting one field.
-func (ms *MedicalequipmentSelect) Float64s(ctx context.Context) ([]float64, error) {
-	if len(ms.fields) > 1 {
-		return nil, errors.New("ent: MedicalequipmentSelect.Float64s is not achievable when selecting more than 1 field")
+func (mes *MedicalEquipmentSelect) Float64s(ctx context.Context) ([]float64, error) {
+	if len(mes.fields) > 1 {
+		return nil, errors.New("ent: MedicalEquipmentSelect.Float64s is not achievable when selecting more than 1 field")
 	}
 	var v []float64
-	if err := ms.Scan(ctx, &v); err != nil {
+	if err := mes.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // Float64sX is like Float64s, but panics if an error occurs.
-func (ms *MedicalequipmentSelect) Float64sX(ctx context.Context) []float64 {
-	v, err := ms.Float64s(ctx)
+func (mes *MedicalEquipmentSelect) Float64sX(ctx context.Context) []float64 {
+	v, err := mes.Float64s(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -843,9 +843,9 @@ func (ms *MedicalequipmentSelect) Float64sX(ctx context.Context) []float64 {
 }
 
 // Float64 returns a single float64 from selector. It is only allowed when selecting one field.
-func (ms *MedicalequipmentSelect) Float64(ctx context.Context) (_ float64, err error) {
+func (mes *MedicalEquipmentSelect) Float64(ctx context.Context) (_ float64, err error) {
 	var v []float64
-	if v, err = ms.Float64s(ctx); err != nil {
+	if v, err = mes.Float64s(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -854,14 +854,14 @@ func (ms *MedicalequipmentSelect) Float64(ctx context.Context) (_ float64, err e
 	case 0:
 		err = &NotFoundError{medicalequipment.Label}
 	default:
-		err = fmt.Errorf("ent: MedicalequipmentSelect.Float64s returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: MedicalEquipmentSelect.Float64s returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // Float64X is like Float64, but panics if an error occurs.
-func (ms *MedicalequipmentSelect) Float64X(ctx context.Context) float64 {
-	v, err := ms.Float64(ctx)
+func (mes *MedicalEquipmentSelect) Float64X(ctx context.Context) float64 {
+	v, err := mes.Float64(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -869,20 +869,20 @@ func (ms *MedicalequipmentSelect) Float64X(ctx context.Context) float64 {
 }
 
 // Bools returns list of bools from selector. It is only allowed when selecting one field.
-func (ms *MedicalequipmentSelect) Bools(ctx context.Context) ([]bool, error) {
-	if len(ms.fields) > 1 {
-		return nil, errors.New("ent: MedicalequipmentSelect.Bools is not achievable when selecting more than 1 field")
+func (mes *MedicalEquipmentSelect) Bools(ctx context.Context) ([]bool, error) {
+	if len(mes.fields) > 1 {
+		return nil, errors.New("ent: MedicalEquipmentSelect.Bools is not achievable when selecting more than 1 field")
 	}
 	var v []bool
-	if err := ms.Scan(ctx, &v); err != nil {
+	if err := mes.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // BoolsX is like Bools, but panics if an error occurs.
-func (ms *MedicalequipmentSelect) BoolsX(ctx context.Context) []bool {
-	v, err := ms.Bools(ctx)
+func (mes *MedicalEquipmentSelect) BoolsX(ctx context.Context) []bool {
+	v, err := mes.Bools(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -890,9 +890,9 @@ func (ms *MedicalequipmentSelect) BoolsX(ctx context.Context) []bool {
 }
 
 // Bool returns a single bool from selector. It is only allowed when selecting one field.
-func (ms *MedicalequipmentSelect) Bool(ctx context.Context) (_ bool, err error) {
+func (mes *MedicalEquipmentSelect) Bool(ctx context.Context) (_ bool, err error) {
 	var v []bool
-	if v, err = ms.Bools(ctx); err != nil {
+	if v, err = mes.Bools(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -901,32 +901,32 @@ func (ms *MedicalequipmentSelect) Bool(ctx context.Context) (_ bool, err error) 
 	case 0:
 		err = &NotFoundError{medicalequipment.Label}
 	default:
-		err = fmt.Errorf("ent: MedicalequipmentSelect.Bools returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: MedicalEquipmentSelect.Bools returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // BoolX is like Bool, but panics if an error occurs.
-func (ms *MedicalequipmentSelect) BoolX(ctx context.Context) bool {
-	v, err := ms.Bool(ctx)
+func (mes *MedicalEquipmentSelect) BoolX(ctx context.Context) bool {
+	v, err := mes.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (ms *MedicalequipmentSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (mes *MedicalEquipmentSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := ms.sqlQuery().Query()
-	if err := ms.driver.Query(ctx, query, args, rows); err != nil {
+	query, args := mes.sqlQuery().Query()
+	if err := mes.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (ms *MedicalequipmentSelect) sqlQuery() sql.Querier {
-	selector := ms.sql
-	selector.Select(selector.Columns(ms.fields...)...)
+func (mes *MedicalEquipmentSelect) sqlQuery() sql.Querier {
+	selector := mes.sql
+	selector.Select(selector.Columns(mes.fields...)...)
 	return selector
 }

@@ -13,74 +13,65 @@ import (
 	"github.com/poommin2543/app/ent/systemequipment"
 )
 
-// MedicaltypeCreate is the builder for creating a Medicaltype entity.
-type MedicaltypeCreate struct {
+// MedicalTypeCreate is the builder for creating a MedicalType entity.
+type MedicalTypeCreate struct {
 	config
-	mutation *MedicaltypeMutation
+	mutation *MedicalTypeMutation
 	hooks    []Hook
 }
 
-// SetTypeID sets the Type_ID field.
-func (mc *MedicaltypeCreate) SetTypeID(s string) *MedicaltypeCreate {
-	mc.mutation.SetTypeID(s)
-	return mc
+// SetName sets the name field.
+func (mtc *MedicalTypeCreate) SetName(s string) *MedicalTypeCreate {
+	mtc.mutation.SetName(s)
+	return mtc
 }
 
-// SetTypeName sets the Type_name field.
-func (mc *MedicaltypeCreate) SetTypeName(s string) *MedicaltypeCreate {
-	mc.mutation.SetTypeName(s)
-	return mc
+// AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
+func (mtc *MedicalTypeCreate) AddSystemequipmentIDs(ids ...int) *MedicalTypeCreate {
+	mtc.mutation.AddSystemequipmentIDs(ids...)
+	return mtc
 }
 
-// AddMedicalTypeIDs adds the Medical_type edge to Systemequipment by ids.
-func (mc *MedicaltypeCreate) AddMedicalTypeIDs(ids ...int) *MedicaltypeCreate {
-	mc.mutation.AddMedicalTypeIDs(ids...)
-	return mc
-}
-
-// AddMedicalType adds the Medical_type edges to Systemequipment.
-func (mc *MedicaltypeCreate) AddMedicalType(s ...*Systemequipment) *MedicaltypeCreate {
+// AddSystemequipment adds the systemequipment edges to Systemequipment.
+func (mtc *MedicalTypeCreate) AddSystemequipment(s ...*Systemequipment) *MedicalTypeCreate {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return mc.AddMedicalTypeIDs(ids...)
+	return mtc.AddSystemequipmentIDs(ids...)
 }
 
-// Mutation returns the MedicaltypeMutation object of the builder.
-func (mc *MedicaltypeCreate) Mutation() *MedicaltypeMutation {
-	return mc.mutation
+// Mutation returns the MedicalTypeMutation object of the builder.
+func (mtc *MedicalTypeCreate) Mutation() *MedicalTypeMutation {
+	return mtc.mutation
 }
 
-// Save creates the Medicaltype in the database.
-func (mc *MedicaltypeCreate) Save(ctx context.Context) (*Medicaltype, error) {
-	if _, ok := mc.mutation.TypeID(); !ok {
-		return nil, &ValidationError{Name: "Type_ID", err: errors.New("ent: missing required field \"Type_ID\"")}
-	}
-	if _, ok := mc.mutation.TypeName(); !ok {
-		return nil, &ValidationError{Name: "Type_name", err: errors.New("ent: missing required field \"Type_name\"")}
+// Save creates the MedicalType in the database.
+func (mtc *MedicalTypeCreate) Save(ctx context.Context) (*MedicalType, error) {
+	if _, ok := mtc.mutation.Name(); !ok {
+		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
 	}
 	var (
 		err  error
-		node *Medicaltype
+		node *MedicalType
 	)
-	if len(mc.hooks) == 0 {
-		node, err = mc.sqlSave(ctx)
+	if len(mtc.hooks) == 0 {
+		node, err = mtc.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*MedicaltypeMutation)
+			mutation, ok := m.(*MedicalTypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			mc.mutation = mutation
-			node, err = mc.sqlSave(ctx)
+			mtc.mutation = mutation
+			node, err = mtc.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(mc.hooks) - 1; i >= 0; i-- {
-			mut = mc.hooks[i](mut)
+		for i := len(mtc.hooks) - 1; i >= 0; i-- {
+			mut = mtc.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, mc.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, mtc.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -88,30 +79,30 @@ func (mc *MedicaltypeCreate) Save(ctx context.Context) (*Medicaltype, error) {
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (mc *MedicaltypeCreate) SaveX(ctx context.Context) *Medicaltype {
-	v, err := mc.Save(ctx)
+func (mtc *MedicalTypeCreate) SaveX(ctx context.Context) *MedicalType {
+	v, err := mtc.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (mc *MedicaltypeCreate) sqlSave(ctx context.Context) (*Medicaltype, error) {
-	m, _spec := mc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, mc.driver, _spec); err != nil {
+func (mtc *MedicalTypeCreate) sqlSave(ctx context.Context) (*MedicalType, error) {
+	mt, _spec := mtc.createSpec()
+	if err := sqlgraph.CreateNode(ctx, mtc.driver, _spec); err != nil {
 		if cerr, ok := isSQLConstraintError(err); ok {
 			err = cerr
 		}
 		return nil, err
 	}
 	id := _spec.ID.Value.(int64)
-	m.ID = int(id)
-	return m, nil
+	mt.ID = int(id)
+	return mt, nil
 }
 
-func (mc *MedicaltypeCreate) createSpec() (*Medicaltype, *sqlgraph.CreateSpec) {
+func (mtc *MedicalTypeCreate) createSpec() (*MedicalType, *sqlgraph.CreateSpec) {
 	var (
-		m     = &Medicaltype{config: mc.config}
+		mt    = &MedicalType{config: mtc.config}
 		_spec = &sqlgraph.CreateSpec{
 			Table: medicaltype.Table,
 			ID: &sqlgraph.FieldSpec{
@@ -120,28 +111,20 @@ func (mc *MedicaltypeCreate) createSpec() (*Medicaltype, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := mc.mutation.TypeID(); ok {
+	if value, ok := mtc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: medicaltype.FieldTypeID,
+			Column: medicaltype.FieldName,
 		})
-		m.TypeID = value
+		mt.Name = value
 	}
-	if value, ok := mc.mutation.TypeName(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: medicaltype.FieldTypeName,
-		})
-		m.TypeName = value
-	}
-	if nodes := mc.mutation.MedicalTypeIDs(); len(nodes) > 0 {
+	if nodes := mtc.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicaltype.MedicalTypeTable,
-			Columns: []string{medicaltype.MedicalTypeColumn},
+			Table:   medicaltype.SystemequipmentTable,
+			Columns: []string{medicaltype.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -155,5 +138,5 @@ func (mc *MedicaltypeCreate) createSpec() (*Medicaltype, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	return m, _spec
+	return mt, _spec
 }

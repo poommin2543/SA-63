@@ -26,7 +26,7 @@ type PhysicianQuery struct {
 	unique     []string
 	predicates []predicate.Physician
 	// eager-loading edges.
-	withUserPhysician *SystemequipmentQuery
+	withSystemequipment *SystemequipmentQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -56,8 +56,8 @@ func (pq *PhysicianQuery) Order(o ...OrderFunc) *PhysicianQuery {
 	return pq
 }
 
-// QueryUserPhysician chains the current query on the User_Physician edge.
-func (pq *PhysicianQuery) QueryUserPhysician() *SystemequipmentQuery {
+// QuerySystemequipment chains the current query on the systemequipment edge.
+func (pq *PhysicianQuery) QuerySystemequipment() *SystemequipmentQuery {
 	query := &SystemequipmentQuery{config: pq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := pq.prepareQuery(ctx); err != nil {
@@ -66,7 +66,7 @@ func (pq *PhysicianQuery) QueryUserPhysician() *SystemequipmentQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(physician.Table, physician.FieldID, pq.sqlQuery()),
 			sqlgraph.To(systemequipment.Table, systemequipment.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, physician.UserPhysicianTable, physician.UserPhysicianColumn),
+			sqlgraph.Edge(sqlgraph.O2M, false, physician.SystemequipmentTable, physician.SystemequipmentColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
 		return fromU, nil
@@ -253,14 +253,14 @@ func (pq *PhysicianQuery) Clone() *PhysicianQuery {
 	}
 }
 
-//  WithUserPhysician tells the query-builder to eager-loads the nodes that are connected to
-// the "User_Physician" edge. The optional arguments used to configure the query builder of the edge.
-func (pq *PhysicianQuery) WithUserPhysician(opts ...func(*SystemequipmentQuery)) *PhysicianQuery {
+//  WithSystemequipment tells the query-builder to eager-loads the nodes that are connected to
+// the "systemequipment" edge. The optional arguments used to configure the query builder of the edge.
+func (pq *PhysicianQuery) WithSystemequipment(opts ...func(*SystemequipmentQuery)) *PhysicianQuery {
 	query := &SystemequipmentQuery{config: pq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	pq.withUserPhysician = query
+	pq.withSystemequipment = query
 	return pq
 }
 
@@ -270,12 +270,12 @@ func (pq *PhysicianQuery) WithUserPhysician(opts ...func(*SystemequipmentQuery))
 // Example:
 //
 //	var v []struct {
-//		PHYSICIANID string `json:"PHYSICIAN_ID,omitempty"`
+//		Name string `json:"name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Physician.Query().
-//		GroupBy(physician.FieldPHYSICIANID).
+//		GroupBy(physician.FieldName).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -296,11 +296,11 @@ func (pq *PhysicianQuery) GroupBy(field string, fields ...string) *PhysicianGrou
 // Example:
 //
 //	var v []struct {
-//		PHYSICIANID string `json:"PHYSICIAN_ID,omitempty"`
+//		Name string `json:"name,omitempty"`
 //	}
 //
 //	client.Physician.Query().
-//		Select(physician.FieldPHYSICIANID).
+//		Select(physician.FieldName).
 //		Scan(ctx, &v)
 //
 func (pq *PhysicianQuery) Select(field string, fields ...string) *PhysicianSelect {
@@ -331,7 +331,7 @@ func (pq *PhysicianQuery) sqlAll(ctx context.Context) ([]*Physician, error) {
 		nodes       = []*Physician{}
 		_spec       = pq.querySpec()
 		loadedTypes = [1]bool{
-			pq.withUserPhysician != nil,
+			pq.withSystemequipment != nil,
 		}
 	)
 	_spec.ScanValues = func() []interface{} {
@@ -355,7 +355,7 @@ func (pq *PhysicianQuery) sqlAll(ctx context.Context) ([]*Physician, error) {
 		return nodes, nil
 	}
 
-	if query := pq.withUserPhysician; query != nil {
+	if query := pq.withSystemequipment; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
 		nodeids := make(map[int]*Physician)
 		for i := range nodes {
@@ -364,22 +364,22 @@ func (pq *PhysicianQuery) sqlAll(ctx context.Context) ([]*Physician, error) {
 		}
 		query.withFKs = true
 		query.Where(predicate.Systemequipment(func(s *sql.Selector) {
-			s.Where(sql.InValues(physician.UserPhysicianColumn, fks...))
+			s.Where(sql.InValues(physician.SystemequipmentColumn, fks...))
 		}))
 		neighbors, err := query.All(ctx)
 		if err != nil {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.physician_user_physician
+			fk := n.physician_id
 			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "physician_user_physician" is nil for node %v`, n.ID)
+				return nil, fmt.Errorf(`foreign-key "physician_id" is nil for node %v`, n.ID)
 			}
 			node, ok := nodeids[*fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "physician_user_physician" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "physician_id" returned %v for node %v`, *fk, n.ID)
 			}
-			node.Edges.UserPhysician = append(node.Edges.UserPhysician, n)
+			node.Edges.Systemequipment = append(node.Edges.Systemequipment, n)
 		}
 	}
 

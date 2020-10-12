@@ -91,43 +91,36 @@ func IDLTE(id int) predicate.Physician {
 	})
 }
 
-// PHYSICIANID applies equality check predicate on the "PHYSICIAN_ID" field. It's identical to PHYSICIANIDEQ.
-func PHYSICIANID(v string) predicate.Physician {
+// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+func Name(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANNAME applies equality check predicate on the "PHYSICIAN_NAME" field. It's identical to PHYSICIANNAMEEQ.
-func PHYSICIANNAME(v string) predicate.Physician {
+// Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
+func Email(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.EQ(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANEMAIL applies equality check predicate on the "PHYSICIAN_EMAIL" field. It's identical to PHYSICIANEMAILEQ.
-func PHYSICIANEMAIL(v string) predicate.Physician {
+// NameEQ applies the EQ predicate on the "name" field.
+func NameEQ(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPHYSICIANEMAIL), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDEQ applies the EQ predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDEQ(v string) predicate.Physician {
+// NameNEQ applies the NEQ predicate on the "name" field.
+func NameNEQ(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDNEQ applies the NEQ predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDNEQ(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPHYSICIANID), v))
-	})
-}
-
-// PHYSICIANIDIn applies the In predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDIn(vs ...string) predicate.Physician {
+// NameIn applies the In predicate on the "name" field.
+func NameIn(vs ...string) predicate.Physician {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -139,12 +132,12 @@ func PHYSICIANIDIn(vs ...string) predicate.Physician {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldPHYSICIANID), v...))
+		s.Where(sql.In(s.C(FieldName), v...))
 	})
 }
 
-// PHYSICIANIDNotIn applies the NotIn predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDNotIn(vs ...string) predicate.Physician {
+// NameNotIn applies the NotIn predicate on the "name" field.
+func NameNotIn(vs ...string) predicate.Physician {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -156,89 +149,89 @@ func PHYSICIANIDNotIn(vs ...string) predicate.Physician {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldPHYSICIANID), v...))
+		s.Where(sql.NotIn(s.C(FieldName), v...))
 	})
 }
 
-// PHYSICIANIDGT applies the GT predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDGT(v string) predicate.Physician {
+// NameGT applies the GT predicate on the "name" field.
+func NameGT(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDGTE applies the GTE predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDGTE(v string) predicate.Physician {
+// NameGTE applies the GTE predicate on the "name" field.
+func NameGTE(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDLT applies the LT predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDLT(v string) predicate.Physician {
+// NameLT applies the LT predicate on the "name" field.
+func NameLT(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDLTE applies the LTE predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDLTE(v string) predicate.Physician {
+// NameLTE applies the LTE predicate on the "name" field.
+func NameLTE(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDContains applies the Contains predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDContains(v string) predicate.Physician {
+// NameContains applies the Contains predicate on the "name" field.
+func NameContains(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDHasPrefix applies the HasPrefix predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDHasPrefix(v string) predicate.Physician {
+// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+func NameHasPrefix(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDHasSuffix applies the HasSuffix predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDHasSuffix(v string) predicate.Physician {
+// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+func NameHasSuffix(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDEqualFold applies the EqualFold predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDEqualFold(v string) predicate.Physician {
+// NameEqualFold applies the EqualFold predicate on the "name" field.
+func NameEqualFold(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANIDContainsFold applies the ContainsFold predicate on the "PHYSICIAN_ID" field.
-func PHYSICIANIDContainsFold(v string) predicate.Physician {
+// NameContainsFold applies the ContainsFold predicate on the "name" field.
+func NameContainsFold(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldPHYSICIANID), v))
+		s.Where(sql.ContainsFold(s.C(FieldName), v))
 	})
 }
 
-// PHYSICIANNAMEEQ applies the EQ predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMEEQ(v string) predicate.Physician {
+// EmailEQ applies the EQ predicate on the "email" field.
+func EmailEQ(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.EQ(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMENEQ applies the NEQ predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMENEQ(v string) predicate.Physician {
+// EmailNEQ applies the NEQ predicate on the "email" field.
+func EmailNEQ(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.NEQ(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMEIn applies the In predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMEIn(vs ...string) predicate.Physician {
+// EmailIn applies the In predicate on the "email" field.
+func EmailIn(vs ...string) predicate.Physician {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -250,12 +243,12 @@ func PHYSICIANNAMEIn(vs ...string) predicate.Physician {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldPHYSICIANNAME), v...))
+		s.Where(sql.In(s.C(FieldEmail), v...))
 	})
 }
 
-// PHYSICIANNAMENotIn applies the NotIn predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMENotIn(vs ...string) predicate.Physician {
+// EmailNotIn applies the NotIn predicate on the "email" field.
+func EmailNotIn(vs ...string) predicate.Physician {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -267,203 +260,92 @@ func PHYSICIANNAMENotIn(vs ...string) predicate.Physician {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldPHYSICIANNAME), v...))
+		s.Where(sql.NotIn(s.C(FieldEmail), v...))
 	})
 }
 
-// PHYSICIANNAMEGT applies the GT predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMEGT(v string) predicate.Physician {
+// EmailGT applies the GT predicate on the "email" field.
+func EmailGT(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.GT(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMEGTE applies the GTE predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMEGTE(v string) predicate.Physician {
+// EmailGTE applies the GTE predicate on the "email" field.
+func EmailGTE(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.GTE(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMELT applies the LT predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMELT(v string) predicate.Physician {
+// EmailLT applies the LT predicate on the "email" field.
+func EmailLT(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.LT(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMELTE applies the LTE predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMELTE(v string) predicate.Physician {
+// EmailLTE applies the LTE predicate on the "email" field.
+func EmailLTE(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.LTE(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMEContains applies the Contains predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMEContains(v string) predicate.Physician {
+// EmailContains applies the Contains predicate on the "email" field.
+func EmailContains(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.Contains(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMEHasPrefix applies the HasPrefix predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMEHasPrefix(v string) predicate.Physician {
+// EmailHasPrefix applies the HasPrefix predicate on the "email" field.
+func EmailHasPrefix(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.HasPrefix(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMEHasSuffix applies the HasSuffix predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMEHasSuffix(v string) predicate.Physician {
+// EmailHasSuffix applies the HasSuffix predicate on the "email" field.
+func EmailHasSuffix(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.HasSuffix(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMEEqualFold applies the EqualFold predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMEEqualFold(v string) predicate.Physician {
+// EmailEqualFold applies the EqualFold predicate on the "email" field.
+func EmailEqualFold(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.EqualFold(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANNAMEContainsFold applies the ContainsFold predicate on the "PHYSICIAN_NAME" field.
-func PHYSICIANNAMEContainsFold(v string) predicate.Physician {
+// EmailContainsFold applies the ContainsFold predicate on the "email" field.
+func EmailContainsFold(v string) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldPHYSICIANNAME), v))
+		s.Where(sql.ContainsFold(s.C(FieldEmail), v))
 	})
 }
 
-// PHYSICIANEMAILEQ applies the EQ predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILEQ(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILNEQ applies the NEQ predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILNEQ(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILIn applies the In predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILIn(vs ...string) predicate.Physician {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Physician(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldPHYSICIANEMAIL), v...))
-	})
-}
-
-// PHYSICIANEMAILNotIn applies the NotIn predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILNotIn(vs ...string) predicate.Physician {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Physician(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldPHYSICIANEMAIL), v...))
-	})
-}
-
-// PHYSICIANEMAILGT applies the GT predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILGT(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILGTE applies the GTE predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILGTE(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILLT applies the LT predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILLT(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILLTE applies the LTE predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILLTE(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILContains applies the Contains predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILContains(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILHasPrefix applies the HasPrefix predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILHasPrefix(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILHasSuffix applies the HasSuffix predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILHasSuffix(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILEqualFold applies the EqualFold predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILEqualFold(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// PHYSICIANEMAILContainsFold applies the ContainsFold predicate on the "PHYSICIAN_EMAIL" field.
-func PHYSICIANEMAILContainsFold(v string) predicate.Physician {
-	return predicate.Physician(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldPHYSICIANEMAIL), v))
-	})
-}
-
-// HasUserPhysician applies the HasEdge predicate on the "User_Physician" edge.
-func HasUserPhysician() predicate.Physician {
+// HasSystemequipment applies the HasEdge predicate on the "systemequipment" edge.
+func HasSystemequipment() predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(UserPhysicianTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, UserPhysicianTable, UserPhysicianColumn),
+			sqlgraph.To(SystemequipmentTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, SystemequipmentTable, SystemequipmentColumn),
 		)
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
 
-// HasUserPhysicianWith applies the HasEdge predicate on the "User_Physician" edge with a given conditions (other predicates).
-func HasUserPhysicianWith(preds ...predicate.Systemequipment) predicate.Physician {
+// HasSystemequipmentWith applies the HasEdge predicate on the "systemequipment" edge with a given conditions (other predicates).
+func HasSystemequipmentWith(preds ...predicate.Systemequipment) predicate.Physician {
 	return predicate.Physician(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(UserPhysicianInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, UserPhysicianTable, UserPhysicianColumn),
+			sqlgraph.To(SystemequipmentInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, SystemequipmentTable, SystemequipmentColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

@@ -28,37 +28,31 @@ func (pu *PhysicianUpdate) Where(ps ...predicate.Physician) *PhysicianUpdate {
 	return pu
 }
 
-// SetPHYSICIANID sets the PHYSICIAN_ID field.
-func (pu *PhysicianUpdate) SetPHYSICIANID(s string) *PhysicianUpdate {
-	pu.mutation.SetPHYSICIANID(s)
+// SetName sets the name field.
+func (pu *PhysicianUpdate) SetName(s string) *PhysicianUpdate {
+	pu.mutation.SetName(s)
 	return pu
 }
 
-// SetPHYSICIANNAME sets the PHYSICIAN_NAME field.
-func (pu *PhysicianUpdate) SetPHYSICIANNAME(s string) *PhysicianUpdate {
-	pu.mutation.SetPHYSICIANNAME(s)
+// SetEmail sets the email field.
+func (pu *PhysicianUpdate) SetEmail(s string) *PhysicianUpdate {
+	pu.mutation.SetEmail(s)
 	return pu
 }
 
-// SetPHYSICIANEMAIL sets the PHYSICIAN_EMAIL field.
-func (pu *PhysicianUpdate) SetPHYSICIANEMAIL(s string) *PhysicianUpdate {
-	pu.mutation.SetPHYSICIANEMAIL(s)
+// AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
+func (pu *PhysicianUpdate) AddSystemequipmentIDs(ids ...int) *PhysicianUpdate {
+	pu.mutation.AddSystemequipmentIDs(ids...)
 	return pu
 }
 
-// AddUserPhysicianIDs adds the User_Physician edge to Systemequipment by ids.
-func (pu *PhysicianUpdate) AddUserPhysicianIDs(ids ...int) *PhysicianUpdate {
-	pu.mutation.AddUserPhysicianIDs(ids...)
-	return pu
-}
-
-// AddUserPhysician adds the User_Physician edges to Systemequipment.
-func (pu *PhysicianUpdate) AddUserPhysician(s ...*Systemequipment) *PhysicianUpdate {
+// AddSystemequipment adds the systemequipment edges to Systemequipment.
+func (pu *PhysicianUpdate) AddSystemequipment(s ...*Systemequipment) *PhysicianUpdate {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return pu.AddUserPhysicianIDs(ids...)
+	return pu.AddSystemequipmentIDs(ids...)
 }
 
 // Mutation returns the PhysicianMutation object of the builder.
@@ -66,23 +60,33 @@ func (pu *PhysicianUpdate) Mutation() *PhysicianMutation {
 	return pu.mutation
 }
 
-// RemoveUserPhysicianIDs removes the User_Physician edge to Systemequipment by ids.
-func (pu *PhysicianUpdate) RemoveUserPhysicianIDs(ids ...int) *PhysicianUpdate {
-	pu.mutation.RemoveUserPhysicianIDs(ids...)
+// RemoveSystemequipmentIDs removes the systemequipment edge to Systemequipment by ids.
+func (pu *PhysicianUpdate) RemoveSystemequipmentIDs(ids ...int) *PhysicianUpdate {
+	pu.mutation.RemoveSystemequipmentIDs(ids...)
 	return pu
 }
 
-// RemoveUserPhysician removes User_Physician edges to Systemequipment.
-func (pu *PhysicianUpdate) RemoveUserPhysician(s ...*Systemequipment) *PhysicianUpdate {
+// RemoveSystemequipment removes systemequipment edges to Systemequipment.
+func (pu *PhysicianUpdate) RemoveSystemequipment(s ...*Systemequipment) *PhysicianUpdate {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return pu.RemoveUserPhysicianIDs(ids...)
+	return pu.RemoveSystemequipmentIDs(ids...)
 }
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (pu *PhysicianUpdate) Save(ctx context.Context) (int, error) {
+	if v, ok := pu.mutation.Name(); ok {
+		if err := physician.NameValidator(v); err != nil {
+			return 0, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+		}
+	}
+	if v, ok := pu.mutation.Email(); ok {
+		if err := physician.EmailValidator(v); err != nil {
+			return 0, &ValidationError{Name: "email", err: fmt.Errorf("ent: validator failed for field \"email\": %w", err)}
+		}
+	}
 
 	var (
 		err      error
@@ -151,33 +155,26 @@ func (pu *PhysicianUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := pu.mutation.PHYSICIANID(); ok {
+	if value, ok := pu.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: physician.FieldPHYSICIANID,
+			Column: physician.FieldName,
 		})
 	}
-	if value, ok := pu.mutation.PHYSICIANNAME(); ok {
+	if value, ok := pu.mutation.Email(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: physician.FieldPHYSICIANNAME,
+			Column: physician.FieldEmail,
 		})
 	}
-	if value, ok := pu.mutation.PHYSICIANEMAIL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: physician.FieldPHYSICIANEMAIL,
-		})
-	}
-	if nodes := pu.mutation.RemovedUserPhysicianIDs(); len(nodes) > 0 {
+	if nodes := pu.mutation.RemovedSystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   physician.UserPhysicianTable,
-			Columns: []string{physician.UserPhysicianColumn},
+			Table:   physician.SystemequipmentTable,
+			Columns: []string{physician.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -191,12 +188,12 @@ func (pu *PhysicianUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := pu.mutation.UserPhysicianIDs(); len(nodes) > 0 {
+	if nodes := pu.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   physician.UserPhysicianTable,
-			Columns: []string{physician.UserPhysicianColumn},
+			Table:   physician.SystemequipmentTable,
+			Columns: []string{physician.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -228,37 +225,31 @@ type PhysicianUpdateOne struct {
 	mutation *PhysicianMutation
 }
 
-// SetPHYSICIANID sets the PHYSICIAN_ID field.
-func (puo *PhysicianUpdateOne) SetPHYSICIANID(s string) *PhysicianUpdateOne {
-	puo.mutation.SetPHYSICIANID(s)
+// SetName sets the name field.
+func (puo *PhysicianUpdateOne) SetName(s string) *PhysicianUpdateOne {
+	puo.mutation.SetName(s)
 	return puo
 }
 
-// SetPHYSICIANNAME sets the PHYSICIAN_NAME field.
-func (puo *PhysicianUpdateOne) SetPHYSICIANNAME(s string) *PhysicianUpdateOne {
-	puo.mutation.SetPHYSICIANNAME(s)
+// SetEmail sets the email field.
+func (puo *PhysicianUpdateOne) SetEmail(s string) *PhysicianUpdateOne {
+	puo.mutation.SetEmail(s)
 	return puo
 }
 
-// SetPHYSICIANEMAIL sets the PHYSICIAN_EMAIL field.
-func (puo *PhysicianUpdateOne) SetPHYSICIANEMAIL(s string) *PhysicianUpdateOne {
-	puo.mutation.SetPHYSICIANEMAIL(s)
+// AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
+func (puo *PhysicianUpdateOne) AddSystemequipmentIDs(ids ...int) *PhysicianUpdateOne {
+	puo.mutation.AddSystemequipmentIDs(ids...)
 	return puo
 }
 
-// AddUserPhysicianIDs adds the User_Physician edge to Systemequipment by ids.
-func (puo *PhysicianUpdateOne) AddUserPhysicianIDs(ids ...int) *PhysicianUpdateOne {
-	puo.mutation.AddUserPhysicianIDs(ids...)
-	return puo
-}
-
-// AddUserPhysician adds the User_Physician edges to Systemequipment.
-func (puo *PhysicianUpdateOne) AddUserPhysician(s ...*Systemequipment) *PhysicianUpdateOne {
+// AddSystemequipment adds the systemequipment edges to Systemequipment.
+func (puo *PhysicianUpdateOne) AddSystemequipment(s ...*Systemequipment) *PhysicianUpdateOne {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return puo.AddUserPhysicianIDs(ids...)
+	return puo.AddSystemequipmentIDs(ids...)
 }
 
 // Mutation returns the PhysicianMutation object of the builder.
@@ -266,23 +257,33 @@ func (puo *PhysicianUpdateOne) Mutation() *PhysicianMutation {
 	return puo.mutation
 }
 
-// RemoveUserPhysicianIDs removes the User_Physician edge to Systemequipment by ids.
-func (puo *PhysicianUpdateOne) RemoveUserPhysicianIDs(ids ...int) *PhysicianUpdateOne {
-	puo.mutation.RemoveUserPhysicianIDs(ids...)
+// RemoveSystemequipmentIDs removes the systemequipment edge to Systemequipment by ids.
+func (puo *PhysicianUpdateOne) RemoveSystemequipmentIDs(ids ...int) *PhysicianUpdateOne {
+	puo.mutation.RemoveSystemequipmentIDs(ids...)
 	return puo
 }
 
-// RemoveUserPhysician removes User_Physician edges to Systemequipment.
-func (puo *PhysicianUpdateOne) RemoveUserPhysician(s ...*Systemequipment) *PhysicianUpdateOne {
+// RemoveSystemequipment removes systemequipment edges to Systemequipment.
+func (puo *PhysicianUpdateOne) RemoveSystemequipment(s ...*Systemequipment) *PhysicianUpdateOne {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return puo.RemoveUserPhysicianIDs(ids...)
+	return puo.RemoveSystemequipmentIDs(ids...)
 }
 
 // Save executes the query and returns the updated entity.
 func (puo *PhysicianUpdateOne) Save(ctx context.Context) (*Physician, error) {
+	if v, ok := puo.mutation.Name(); ok {
+		if err := physician.NameValidator(v); err != nil {
+			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+		}
+	}
+	if v, ok := puo.mutation.Email(); ok {
+		if err := physician.EmailValidator(v); err != nil {
+			return nil, &ValidationError{Name: "email", err: fmt.Errorf("ent: validator failed for field \"email\": %w", err)}
+		}
+	}
 
 	var (
 		err  error
@@ -349,33 +350,26 @@ func (puo *PhysicianUpdateOne) sqlSave(ctx context.Context) (ph *Physician, err 
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Physician.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := puo.mutation.PHYSICIANID(); ok {
+	if value, ok := puo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: physician.FieldPHYSICIANID,
+			Column: physician.FieldName,
 		})
 	}
-	if value, ok := puo.mutation.PHYSICIANNAME(); ok {
+	if value, ok := puo.mutation.Email(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: physician.FieldPHYSICIANNAME,
+			Column: physician.FieldEmail,
 		})
 	}
-	if value, ok := puo.mutation.PHYSICIANEMAIL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: physician.FieldPHYSICIANEMAIL,
-		})
-	}
-	if nodes := puo.mutation.RemovedUserPhysicianIDs(); len(nodes) > 0 {
+	if nodes := puo.mutation.RemovedSystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   physician.UserPhysicianTable,
-			Columns: []string{physician.UserPhysicianColumn},
+			Table:   physician.SystemequipmentTable,
+			Columns: []string{physician.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -389,12 +383,12 @@ func (puo *PhysicianUpdateOne) sqlSave(ctx context.Context) (ph *Physician, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := puo.mutation.UserPhysicianIDs(); len(nodes) > 0 {
+	if nodes := puo.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   physician.UserPhysicianTable,
-			Columns: []string{physician.UserPhysicianColumn},
+			Table:   physician.SystemequipmentTable,
+			Columns: []string{physician.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

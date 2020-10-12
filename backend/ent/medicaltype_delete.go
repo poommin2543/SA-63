@@ -13,43 +13,43 @@ import (
 	"github.com/poommin2543/app/ent/predicate"
 )
 
-// MedicaltypeDelete is the builder for deleting a Medicaltype entity.
-type MedicaltypeDelete struct {
+// MedicalTypeDelete is the builder for deleting a MedicalType entity.
+type MedicalTypeDelete struct {
 	config
 	hooks      []Hook
-	mutation   *MedicaltypeMutation
-	predicates []predicate.Medicaltype
+	mutation   *MedicalTypeMutation
+	predicates []predicate.MedicalType
 }
 
 // Where adds a new predicate to the delete builder.
-func (md *MedicaltypeDelete) Where(ps ...predicate.Medicaltype) *MedicaltypeDelete {
-	md.predicates = append(md.predicates, ps...)
-	return md
+func (mtd *MedicalTypeDelete) Where(ps ...predicate.MedicalType) *MedicalTypeDelete {
+	mtd.predicates = append(mtd.predicates, ps...)
+	return mtd
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (md *MedicaltypeDelete) Exec(ctx context.Context) (int, error) {
+func (mtd *MedicalTypeDelete) Exec(ctx context.Context) (int, error) {
 	var (
 		err      error
 		affected int
 	)
-	if len(md.hooks) == 0 {
-		affected, err = md.sqlExec(ctx)
+	if len(mtd.hooks) == 0 {
+		affected, err = mtd.sqlExec(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*MedicaltypeMutation)
+			mutation, ok := m.(*MedicalTypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			md.mutation = mutation
-			affected, err = md.sqlExec(ctx)
+			mtd.mutation = mutation
+			affected, err = mtd.sqlExec(ctx)
 			mutation.done = true
 			return affected, err
 		})
-		for i := len(md.hooks) - 1; i >= 0; i-- {
-			mut = md.hooks[i](mut)
+		for i := len(mtd.hooks) - 1; i >= 0; i-- {
+			mut = mtd.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, md.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, mtd.mutation); err != nil {
 			return 0, err
 		}
 	}
@@ -57,15 +57,15 @@ func (md *MedicaltypeDelete) Exec(ctx context.Context) (int, error) {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (md *MedicaltypeDelete) ExecX(ctx context.Context) int {
-	n, err := md.Exec(ctx)
+func (mtd *MedicalTypeDelete) ExecX(ctx context.Context) int {
+	n, err := mtd.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (md *MedicaltypeDelete) sqlExec(ctx context.Context) (int, error) {
+func (mtd *MedicalTypeDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := &sqlgraph.DeleteSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table: medicaltype.Table,
@@ -75,24 +75,24 @@ func (md *MedicaltypeDelete) sqlExec(ctx context.Context) (int, error) {
 			},
 		},
 	}
-	if ps := md.predicates; len(ps) > 0 {
+	if ps := mtd.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	return sqlgraph.DeleteNodes(ctx, md.driver, _spec)
+	return sqlgraph.DeleteNodes(ctx, mtd.driver, _spec)
 }
 
-// MedicaltypeDeleteOne is the builder for deleting a single Medicaltype entity.
-type MedicaltypeDeleteOne struct {
-	md *MedicaltypeDelete
+// MedicalTypeDeleteOne is the builder for deleting a single MedicalType entity.
+type MedicalTypeDeleteOne struct {
+	mtd *MedicalTypeDelete
 }
 
 // Exec executes the deletion query.
-func (mdo *MedicaltypeDeleteOne) Exec(ctx context.Context) error {
-	n, err := mdo.md.Exec(ctx)
+func (mtdo *MedicalTypeDeleteOne) Exec(ctx context.Context) error {
+	n, err := mtdo.mtd.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -104,6 +104,6 @@ func (mdo *MedicaltypeDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (mdo *MedicaltypeDeleteOne) ExecX(ctx context.Context) {
-	mdo.md.ExecX(ctx)
+func (mtdo *MedicalTypeDeleteOne) ExecX(ctx context.Context) {
+	mtdo.mtd.ExecX(ctx)
 }

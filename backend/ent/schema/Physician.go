@@ -1,9 +1,9 @@
 package schema
 
 import (
-    "github.com/facebookincubator/ent"
-    "github.com/facebookincubator/ent/schema/edge"
-    "github.com/facebookincubator/ent/schema/field"
+	"github.com/facebookincubator/ent"
+	"github.com/facebookincubator/ent/schema/edge"
+	"github.com/facebookincubator/ent/schema/field"
 )
 
 // Physician holds the schema definition for the Physician entity.
@@ -14,16 +14,14 @@ type Physician struct {
 // Fields of the Physician.
 func (Physician) Fields() []ent.Field {
 	return []ent.Field{
-
-		field.String("PHYSICIAN_ID"),
-		field.String("PHYSICIAN_NAME"),
-		field.String("PHYSICIAN_EMAIL"),
+		field.String("name").NotEmpty(),
+		field.String("email").NotEmpty(),
 	}
 }
 
 // Edges of the Physician.
 func (Physician) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("User_Physician", Systemequipment.Type),
+		edge.To("systemequipment", Systemequipment.Type).StorageKey(edge.Column("physician_id")),
 	}
 }

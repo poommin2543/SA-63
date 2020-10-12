@@ -14,91 +14,85 @@ import (
 	"github.com/poommin2543/app/ent/systemequipment"
 )
 
-// MedicaltypeUpdate is the builder for updating Medicaltype entities.
-type MedicaltypeUpdate struct {
+// MedicalTypeUpdate is the builder for updating MedicalType entities.
+type MedicalTypeUpdate struct {
 	config
 	hooks      []Hook
-	mutation   *MedicaltypeMutation
-	predicates []predicate.Medicaltype
+	mutation   *MedicalTypeMutation
+	predicates []predicate.MedicalType
 }
 
 // Where adds a new predicate for the builder.
-func (mu *MedicaltypeUpdate) Where(ps ...predicate.Medicaltype) *MedicaltypeUpdate {
-	mu.predicates = append(mu.predicates, ps...)
-	return mu
+func (mtu *MedicalTypeUpdate) Where(ps ...predicate.MedicalType) *MedicalTypeUpdate {
+	mtu.predicates = append(mtu.predicates, ps...)
+	return mtu
 }
 
-// SetTypeID sets the Type_ID field.
-func (mu *MedicaltypeUpdate) SetTypeID(s string) *MedicaltypeUpdate {
-	mu.mutation.SetTypeID(s)
-	return mu
+// SetName sets the name field.
+func (mtu *MedicalTypeUpdate) SetName(s string) *MedicalTypeUpdate {
+	mtu.mutation.SetName(s)
+	return mtu
 }
 
-// SetTypeName sets the Type_name field.
-func (mu *MedicaltypeUpdate) SetTypeName(s string) *MedicaltypeUpdate {
-	mu.mutation.SetTypeName(s)
-	return mu
+// AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
+func (mtu *MedicalTypeUpdate) AddSystemequipmentIDs(ids ...int) *MedicalTypeUpdate {
+	mtu.mutation.AddSystemequipmentIDs(ids...)
+	return mtu
 }
 
-// AddMedicalTypeIDs adds the Medical_type edge to Systemequipment by ids.
-func (mu *MedicaltypeUpdate) AddMedicalTypeIDs(ids ...int) *MedicaltypeUpdate {
-	mu.mutation.AddMedicalTypeIDs(ids...)
-	return mu
-}
-
-// AddMedicalType adds the Medical_type edges to Systemequipment.
-func (mu *MedicaltypeUpdate) AddMedicalType(s ...*Systemequipment) *MedicaltypeUpdate {
+// AddSystemequipment adds the systemequipment edges to Systemequipment.
+func (mtu *MedicalTypeUpdate) AddSystemequipment(s ...*Systemequipment) *MedicalTypeUpdate {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return mu.AddMedicalTypeIDs(ids...)
+	return mtu.AddSystemequipmentIDs(ids...)
 }
 
-// Mutation returns the MedicaltypeMutation object of the builder.
-func (mu *MedicaltypeUpdate) Mutation() *MedicaltypeMutation {
-	return mu.mutation
+// Mutation returns the MedicalTypeMutation object of the builder.
+func (mtu *MedicalTypeUpdate) Mutation() *MedicalTypeMutation {
+	return mtu.mutation
 }
 
-// RemoveMedicalTypeIDs removes the Medical_type edge to Systemequipment by ids.
-func (mu *MedicaltypeUpdate) RemoveMedicalTypeIDs(ids ...int) *MedicaltypeUpdate {
-	mu.mutation.RemoveMedicalTypeIDs(ids...)
-	return mu
+// RemoveSystemequipmentIDs removes the systemequipment edge to Systemequipment by ids.
+func (mtu *MedicalTypeUpdate) RemoveSystemequipmentIDs(ids ...int) *MedicalTypeUpdate {
+	mtu.mutation.RemoveSystemequipmentIDs(ids...)
+	return mtu
 }
 
-// RemoveMedicalType removes Medical_type edges to Systemequipment.
-func (mu *MedicaltypeUpdate) RemoveMedicalType(s ...*Systemequipment) *MedicaltypeUpdate {
+// RemoveSystemequipment removes systemequipment edges to Systemequipment.
+func (mtu *MedicalTypeUpdate) RemoveSystemequipment(s ...*Systemequipment) *MedicalTypeUpdate {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return mu.RemoveMedicalTypeIDs(ids...)
+	return mtu.RemoveSystemequipmentIDs(ids...)
 }
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
-func (mu *MedicaltypeUpdate) Save(ctx context.Context) (int, error) {
+func (mtu *MedicalTypeUpdate) Save(ctx context.Context) (int, error) {
 
 	var (
 		err      error
 		affected int
 	)
-	if len(mu.hooks) == 0 {
-		affected, err = mu.sqlSave(ctx)
+	if len(mtu.hooks) == 0 {
+		affected, err = mtu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*MedicaltypeMutation)
+			mutation, ok := m.(*MedicalTypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			mu.mutation = mutation
-			affected, err = mu.sqlSave(ctx)
+			mtu.mutation = mutation
+			affected, err = mtu.sqlSave(ctx)
 			mutation.done = true
 			return affected, err
 		})
-		for i := len(mu.hooks) - 1; i >= 0; i-- {
-			mut = mu.hooks[i](mut)
+		for i := len(mtu.hooks) - 1; i >= 0; i-- {
+			mut = mtu.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, mu.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, mtu.mutation); err != nil {
 			return 0, err
 		}
 	}
@@ -106,8 +100,8 @@ func (mu *MedicaltypeUpdate) Save(ctx context.Context) (int, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (mu *MedicaltypeUpdate) SaveX(ctx context.Context) int {
-	affected, err := mu.Save(ctx)
+func (mtu *MedicalTypeUpdate) SaveX(ctx context.Context) int {
+	affected, err := mtu.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -115,19 +109,19 @@ func (mu *MedicaltypeUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (mu *MedicaltypeUpdate) Exec(ctx context.Context) error {
-	_, err := mu.Save(ctx)
+func (mtu *MedicalTypeUpdate) Exec(ctx context.Context) error {
+	_, err := mtu.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (mu *MedicaltypeUpdate) ExecX(ctx context.Context) {
-	if err := mu.Exec(ctx); err != nil {
+func (mtu *MedicalTypeUpdate) ExecX(ctx context.Context) {
+	if err := mtu.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (mu *MedicaltypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (mtu *MedicalTypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   medicaltype.Table,
@@ -138,33 +132,26 @@ func (mu *MedicaltypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			},
 		},
 	}
-	if ps := mu.predicates; len(ps) > 0 {
+	if ps := mtu.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := mu.mutation.TypeID(); ok {
+	if value, ok := mtu.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: medicaltype.FieldTypeID,
+			Column: medicaltype.FieldName,
 		})
 	}
-	if value, ok := mu.mutation.TypeName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: medicaltype.FieldTypeName,
-		})
-	}
-	if nodes := mu.mutation.RemovedMedicalTypeIDs(); len(nodes) > 0 {
+	if nodes := mtu.mutation.RemovedSystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicaltype.MedicalTypeTable,
-			Columns: []string{medicaltype.MedicalTypeColumn},
+			Table:   medicaltype.SystemequipmentTable,
+			Columns: []string{medicaltype.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -178,12 +165,12 @@ func (mu *MedicaltypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := mu.mutation.MedicalTypeIDs(); len(nodes) > 0 {
+	if nodes := mtu.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicaltype.MedicalTypeTable,
-			Columns: []string{medicaltype.MedicalTypeColumn},
+			Table:   medicaltype.SystemequipmentTable,
+			Columns: []string{medicaltype.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -197,7 +184,7 @@ func (mu *MedicaltypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, mu.driver, _spec); err != nil {
+	if n, err = sqlgraph.UpdateNodes(ctx, mtu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{medicaltype.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
@@ -208,84 +195,78 @@ func (mu *MedicaltypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	return n, nil
 }
 
-// MedicaltypeUpdateOne is the builder for updating a single Medicaltype entity.
-type MedicaltypeUpdateOne struct {
+// MedicalTypeUpdateOne is the builder for updating a single MedicalType entity.
+type MedicalTypeUpdateOne struct {
 	config
 	hooks    []Hook
-	mutation *MedicaltypeMutation
+	mutation *MedicalTypeMutation
 }
 
-// SetTypeID sets the Type_ID field.
-func (muo *MedicaltypeUpdateOne) SetTypeID(s string) *MedicaltypeUpdateOne {
-	muo.mutation.SetTypeID(s)
-	return muo
+// SetName sets the name field.
+func (mtuo *MedicalTypeUpdateOne) SetName(s string) *MedicalTypeUpdateOne {
+	mtuo.mutation.SetName(s)
+	return mtuo
 }
 
-// SetTypeName sets the Type_name field.
-func (muo *MedicaltypeUpdateOne) SetTypeName(s string) *MedicaltypeUpdateOne {
-	muo.mutation.SetTypeName(s)
-	return muo
+// AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
+func (mtuo *MedicalTypeUpdateOne) AddSystemequipmentIDs(ids ...int) *MedicalTypeUpdateOne {
+	mtuo.mutation.AddSystemequipmentIDs(ids...)
+	return mtuo
 }
 
-// AddMedicalTypeIDs adds the Medical_type edge to Systemequipment by ids.
-func (muo *MedicaltypeUpdateOne) AddMedicalTypeIDs(ids ...int) *MedicaltypeUpdateOne {
-	muo.mutation.AddMedicalTypeIDs(ids...)
-	return muo
-}
-
-// AddMedicalType adds the Medical_type edges to Systemequipment.
-func (muo *MedicaltypeUpdateOne) AddMedicalType(s ...*Systemequipment) *MedicaltypeUpdateOne {
+// AddSystemequipment adds the systemequipment edges to Systemequipment.
+func (mtuo *MedicalTypeUpdateOne) AddSystemequipment(s ...*Systemequipment) *MedicalTypeUpdateOne {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return muo.AddMedicalTypeIDs(ids...)
+	return mtuo.AddSystemequipmentIDs(ids...)
 }
 
-// Mutation returns the MedicaltypeMutation object of the builder.
-func (muo *MedicaltypeUpdateOne) Mutation() *MedicaltypeMutation {
-	return muo.mutation
+// Mutation returns the MedicalTypeMutation object of the builder.
+func (mtuo *MedicalTypeUpdateOne) Mutation() *MedicalTypeMutation {
+	return mtuo.mutation
 }
 
-// RemoveMedicalTypeIDs removes the Medical_type edge to Systemequipment by ids.
-func (muo *MedicaltypeUpdateOne) RemoveMedicalTypeIDs(ids ...int) *MedicaltypeUpdateOne {
-	muo.mutation.RemoveMedicalTypeIDs(ids...)
-	return muo
+// RemoveSystemequipmentIDs removes the systemequipment edge to Systemequipment by ids.
+func (mtuo *MedicalTypeUpdateOne) RemoveSystemequipmentIDs(ids ...int) *MedicalTypeUpdateOne {
+	mtuo.mutation.RemoveSystemequipmentIDs(ids...)
+	return mtuo
 }
 
-// RemoveMedicalType removes Medical_type edges to Systemequipment.
-func (muo *MedicaltypeUpdateOne) RemoveMedicalType(s ...*Systemequipment) *MedicaltypeUpdateOne {
+// RemoveSystemequipment removes systemequipment edges to Systemequipment.
+func (mtuo *MedicalTypeUpdateOne) RemoveSystemequipment(s ...*Systemequipment) *MedicalTypeUpdateOne {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return muo.RemoveMedicalTypeIDs(ids...)
+	return mtuo.RemoveSystemequipmentIDs(ids...)
 }
 
 // Save executes the query and returns the updated entity.
-func (muo *MedicaltypeUpdateOne) Save(ctx context.Context) (*Medicaltype, error) {
+func (mtuo *MedicalTypeUpdateOne) Save(ctx context.Context) (*MedicalType, error) {
 
 	var (
 		err  error
-		node *Medicaltype
+		node *MedicalType
 	)
-	if len(muo.hooks) == 0 {
-		node, err = muo.sqlSave(ctx)
+	if len(mtuo.hooks) == 0 {
+		node, err = mtuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*MedicaltypeMutation)
+			mutation, ok := m.(*MedicalTypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			muo.mutation = mutation
-			node, err = muo.sqlSave(ctx)
+			mtuo.mutation = mutation
+			node, err = mtuo.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(muo.hooks) - 1; i >= 0; i-- {
-			mut = muo.hooks[i](mut)
+		for i := len(mtuo.hooks) - 1; i >= 0; i-- {
+			mut = mtuo.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, muo.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, mtuo.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -293,28 +274,28 @@ func (muo *MedicaltypeUpdateOne) Save(ctx context.Context) (*Medicaltype, error)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (muo *MedicaltypeUpdateOne) SaveX(ctx context.Context) *Medicaltype {
-	m, err := muo.Save(ctx)
+func (mtuo *MedicalTypeUpdateOne) SaveX(ctx context.Context) *MedicalType {
+	mt, err := mtuo.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return m
+	return mt
 }
 
 // Exec executes the query on the entity.
-func (muo *MedicaltypeUpdateOne) Exec(ctx context.Context) error {
-	_, err := muo.Save(ctx)
+func (mtuo *MedicalTypeUpdateOne) Exec(ctx context.Context) error {
+	_, err := mtuo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (muo *MedicaltypeUpdateOne) ExecX(ctx context.Context) {
-	if err := muo.Exec(ctx); err != nil {
+func (mtuo *MedicalTypeUpdateOne) ExecX(ctx context.Context) {
+	if err := mtuo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (muo *MedicaltypeUpdateOne) sqlSave(ctx context.Context) (m *Medicaltype, err error) {
+func (mtuo *MedicalTypeUpdateOne) sqlSave(ctx context.Context) (mt *MedicalType, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   medicaltype.Table,
@@ -325,31 +306,24 @@ func (muo *MedicaltypeUpdateOne) sqlSave(ctx context.Context) (m *Medicaltype, e
 			},
 		},
 	}
-	id, ok := muo.mutation.ID()
+	id, ok := mtuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Medicaltype.ID for update")}
+		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing MedicalType.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := muo.mutation.TypeID(); ok {
+	if value, ok := mtuo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: medicaltype.FieldTypeID,
+			Column: medicaltype.FieldName,
 		})
 	}
-	if value, ok := muo.mutation.TypeName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: medicaltype.FieldTypeName,
-		})
-	}
-	if nodes := muo.mutation.RemovedMedicalTypeIDs(); len(nodes) > 0 {
+	if nodes := mtuo.mutation.RemovedSystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicaltype.MedicalTypeTable,
-			Columns: []string{medicaltype.MedicalTypeColumn},
+			Table:   medicaltype.SystemequipmentTable,
+			Columns: []string{medicaltype.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -363,12 +337,12 @@ func (muo *MedicaltypeUpdateOne) sqlSave(ctx context.Context) (m *Medicaltype, e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := muo.mutation.MedicalTypeIDs(); len(nodes) > 0 {
+	if nodes := mtuo.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicaltype.MedicalTypeTable,
-			Columns: []string{medicaltype.MedicalTypeColumn},
+			Table:   medicaltype.SystemequipmentTable,
+			Columns: []string{medicaltype.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -382,10 +356,10 @@ func (muo *MedicaltypeUpdateOne) sqlSave(ctx context.Context) (m *Medicaltype, e
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	m = &Medicaltype{config: muo.config}
-	_spec.Assign = m.assignValues
-	_spec.ScanValues = m.scanValues()
-	if err = sqlgraph.UpdateNode(ctx, muo.driver, _spec); err != nil {
+	mt = &MedicalType{config: mtuo.config}
+	_spec.Assign = mt.assignValues
+	_spec.ScanValues = mt.scanValues()
+	if err = sqlgraph.UpdateNode(ctx, mtuo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{medicaltype.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
@@ -393,5 +367,5 @@ func (muo *MedicaltypeUpdateOne) sqlSave(ctx context.Context) (m *Medicaltype, e
 		}
 		return nil, err
 	}
-	return m, nil
+	return mt, nil
 }

@@ -1,163 +1,84 @@
 basePath: /api/v1
 definitions:
-  ent.Hook: {}
-  ent.Medicalequipment:
+  ent.MedicalEquipment:
     properties:
-      Medical_ID:
-        description: MedicalID holds the value of the "Medical_ID" field.
-        type: string
-      Medical_NAME:
-        description: MedicalNAME holds the value of the "Medical_NAME" field.
-        type: string
-      Medical_Stock:
-        description: MedicalStock holds the value of the "Medical_Stock" field.
-        type: integer
-      debug:
-        description: debug enable a debug logging.
-        type: boolean
-      driver:
-        description: driver used for executing database requests.
-        type: string
       edges:
-        $ref: '#/definitions/ent.MedicalequipmentEdges'
+        $ref: '#/definitions/ent.MedicalEquipmentEdges'
         description: |-
           Edges holds the relations/edges for other nodes in the graph.
-          The values are being populated by the MedicalequipmentQuery when eager-loading is set.
-        type: object
-      hooks:
-        $ref: '#/definitions/ent.hooks'
-        description: hooks to execute on mutations.
+          The values are being populated by the MedicalEquipmentQuery when eager-loading is set.
         type: object
       id:
         description: ID of the ent.
         type: integer
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
+      stock:
+        description: Stock holds the value of the "stock" field.
+        type: integer
     type: object
-  ent.MedicalequipmentEdges:
+  ent.MedicalEquipmentEdges:
     properties:
-      loadedTypes:
-        description: |-
-          loadedTypes holds the information for reporting if a
-          type was loaded (or requested) in eager-loading or not.
-        items:
-          type: boolean
-        type: array
-      medicalEquipment:
-        description: MedicalEquipment holds the value of the Medical_equipment edge.
+      systemequipment:
+        description: Systemequipment holds the value of the systemequipment edge.
         items:
           $ref: '#/definitions/ent.Systemequipment'
         type: array
     type: object
-  ent.Medicaltype:
+  ent.MedicalType:
     properties:
-      Type_ID:
-        description: TypeID holds the value of the "Type_ID" field.
-        type: string
-      Type_name:
-        description: TypeName holds the value of the "Type_name" field.
-        type: string
-      debug:
-        description: debug enable a debug logging.
-        type: boolean
-      driver:
-        description: driver used for executing database requests.
-        type: string
       edges:
-        $ref: '#/definitions/ent.MedicaltypeEdges'
+        $ref: '#/definitions/ent.MedicalTypeEdges'
         description: |-
           Edges holds the relations/edges for other nodes in the graph.
-          The values are being populated by the MedicaltypeQuery when eager-loading is set.
-        type: object
-      hooks:
-        $ref: '#/definitions/ent.hooks'
-        description: hooks to execute on mutations.
+          The values are being populated by the MedicalTypeQuery when eager-loading is set.
         type: object
       id:
         description: ID of the ent.
         type: integer
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
     type: object
-  ent.MedicaltypeEdges:
+  ent.MedicalTypeEdges:
     properties:
-      loadedTypes:
-        description: |-
-          loadedTypes holds the information for reporting if a
-          type was loaded (or requested) in eager-loading or not.
-        items:
-          type: boolean
-        type: array
-      medicalType:
-        description: MedicalType holds the value of the Medical_type edge.
+      systemequipment:
+        description: Systemequipment holds the value of the systemequipment edge.
         items:
           $ref: '#/definitions/ent.Systemequipment'
         type: array
     type: object
   ent.Physician:
     properties:
-      PHYSICIAN_EMAIL:
-        description: PHYSICIANEMAIL holds the value of the "PHYSICIAN_EMAIL" field.
-        type: string
-      PHYSICIAN_ID:
-        description: PHYSICIANID holds the value of the "PHYSICIAN_ID" field.
-        type: string
-      PHYSICIAN_NAME:
-        description: PHYSICIANNAME holds the value of the "PHYSICIAN_NAME" field.
-        type: string
-      debug:
-        description: debug enable a debug logging.
-        type: boolean
-      driver:
-        description: driver used for executing database requests.
-        type: string
       edges:
         $ref: '#/definitions/ent.PhysicianEdges'
         description: |-
           Edges holds the relations/edges for other nodes in the graph.
           The values are being populated by the PhysicianQuery when eager-loading is set.
         type: object
-      hooks:
-        $ref: '#/definitions/ent.hooks'
-        description: hooks to execute on mutations.
-        type: object
+      email:
+        description: Email holds the value of the "email" field.
+        type: string
       id:
         description: ID of the ent.
         type: integer
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
     type: object
   ent.PhysicianEdges:
     properties:
-      loadedTypes:
-        description: |-
-          loadedTypes holds the information for reporting if a
-          type was loaded (or requested) in eager-loading or not.
-        items:
-          type: boolean
-        type: array
-      userPhysician:
-        description: UserPhysician holds the value of the User_Physician edge.
+      systemequipment:
+        description: Systemequipment holds the value of the systemequipment edge.
         items:
           $ref: '#/definitions/ent.Systemequipment'
         type: array
     type: object
   ent.Systemequipment:
     properties:
-      Medical_ID:
-        description: MedicalID holds the value of the "Medical_ID" field.
-        type: string
-      PHYSICIAN_ID:
-        description: PHYSICIANID holds the value of the "PHYSICIAN_ID" field.
-        type: string
-      System_DATA:
-        description: SystemDATA holds the value of the "System_DATA" field.
-        type: string
-      System_ID:
-        description: SystemID holds the value of the "System_ID" field.
-        type: string
-      Type_ID:
-        description: TypeID holds the value of the "Type_ID" field.
-        type: string
-      debug:
-        description: debug enable a debug logging.
-        type: boolean
-      driver:
-        description: driver used for executing database requests.
+      added_time:
+        description: AddedTime holds the value of the "added_time" field.
         type: string
       edges:
         $ref: '#/definitions/ent.SystemequipmentEdges'
@@ -165,64 +86,27 @@ definitions:
           Edges holds the relations/edges for other nodes in the graph.
           The values are being populated by the SystemequipmentQuery when eager-loading is set.
         type: object
-      hooks:
-        $ref: '#/definitions/ent.hooks'
-        description: hooks to execute on mutations.
-        type: object
       id:
         description: ID of the ent.
-        type: integer
-      medicalequipment_medical_equipment:
-        type: integer
-      medicaltype_medical_type:
-        type: integer
-      physician_user_physician:
         type: integer
     type: object
   ent.SystemequipmentEdges:
     properties:
-      loadedTypes:
-        description: |-
-          loadedTypes holds the information for reporting if a
-          type was loaded (or requested) in eager-loading or not.
-        items:
-          type: boolean
-        type: array
-      owner:
-        $ref: '#/definitions/ent.Physician'
-        description: Owner holds the value of the owner edge.
-        type: object
-      ownera:
-        $ref: '#/definitions/ent.Medicalequipment'
-        description: Ownera holds the value of the ownera edge.
-        type: object
-      ownerf:
-        $ref: '#/definitions/ent.Medicaltype'
-        description: Ownerf holds the value of the ownerf edge.
-        type: object
-    type: object
-  ent.hooks:
-    properties:
       medicalequipment:
-        items:
-          $ref: '#/definitions/ent.Hook'
-        type: array
+        $ref: '#/definitions/ent.MedicalEquipment'
+        description: Medicalequipment holds the value of the medicalequipment edge.
+        type: object
       medicaltype:
-        items:
-          $ref: '#/definitions/ent.Hook'
-        type: array
+        $ref: '#/definitions/ent.MedicalType'
+        description: Medicaltype holds the value of the medicaltype edge.
+        type: object
       physician:
-        items:
-          $ref: '#/definitions/ent.Hook'
-        type: array
-      systemequipment:
-        items:
-          $ref: '#/definitions/ent.Hook'
-        type: array
+        $ref: '#/definitions/ent.Physician'
+        description: Physician holds the value of the physician edge.
+        type: object
     type: object
   gin.H:
-    additionalProperties:
-      type: object
+    additionalProperties: true
     type: object
 host: localhost:8080
 info:
@@ -258,7 +142,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/ent.Medicalequipment'
+              $ref: '#/definitions/ent.MedicalEquipment'
             type: array
         "400":
           description: Bad Request
@@ -280,15 +164,14 @@ paths:
         name: medicalequipment
         required: true
         schema:
-          $ref: '#/definitions/ent.Medicalequipment'
-          type: object
+          $ref: '#/definitions/ent.MedicalEquipment'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Medicalequipment'
+            $ref: '#/definitions/ent.MedicalEquipment'
         "400":
           description: Bad Request
           schema:
@@ -343,7 +226,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Medicalequipment'
+            $ref: '#/definitions/ent.MedicalEquipment'
         "400":
           description: Bad Request
           schema:
@@ -373,15 +256,14 @@ paths:
         name: medicalequipment
         required: true
         schema:
-          $ref: '#/definitions/ent.Medicalequipment'
-          type: object
+          $ref: '#/definitions/ent.MedicalEquipment'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Medicalequipment'
+            $ref: '#/definitions/ent.MedicalEquipment'
         "400":
           description: Bad Request
           schema:
@@ -411,7 +293,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/ent.Medicaltype'
+              $ref: '#/definitions/ent.MedicalType'
             type: array
         "400":
           description: Bad Request
@@ -433,15 +315,14 @@ paths:
         name: medicaltype
         required: true
         schema:
-          $ref: '#/definitions/ent.Medicaltype'
-          type: object
+          $ref: '#/definitions/ent.MedicalType'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Medicaltype'
+            $ref: '#/definitions/ent.MedicalType'
         "400":
           description: Bad Request
           schema:
@@ -485,7 +366,7 @@ paths:
       description: get medicaltype by ID
       operationId: get-medicaltype
       parameters:
-      - description: Medicaltype ID
+      - description: MedicalType ID
         in: path
         name: id
         required: true
@@ -496,7 +377,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Medicaltype'
+            $ref: '#/definitions/ent.MedicalType'
         "400":
           description: Bad Request
           schema:
@@ -526,15 +407,14 @@ paths:
         name: medicaltype
         required: true
         schema:
-          $ref: '#/definitions/ent.Medicaltype'
-          type: object
+          $ref: '#/definitions/ent.MedicalType'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Medicaltype'
+            $ref: '#/definitions/ent.MedicalType'
         "400":
           description: Bad Request
           schema:
@@ -587,7 +467,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/ent.Physician'
-          type: object
       produces:
       - application/json
       responses:
@@ -680,7 +559,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/ent.Physician'
-          type: object
       produces:
       - application/json
       responses:
@@ -740,7 +618,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/ent.Systemequipment'
-          type: object
       produces:
       - application/json
       responses:
@@ -833,7 +710,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/ent.Systemequipment'
-          type: object
       produces:
       - application/json
       responses:

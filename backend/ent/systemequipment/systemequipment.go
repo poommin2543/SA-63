@@ -7,67 +7,50 @@ const (
 	Label = "systemequipment"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldSystemID holds the string denoting the system_id field in the database.
-	FieldSystemID = "system_id"
-	// FieldMedicalID holds the string denoting the medical_id field in the database.
-	FieldMedicalID = "medical_id"
-	// FieldTypeID holds the string denoting the type_id field in the database.
-	FieldTypeID = "type_id"
-	// FieldPHYSICIANID holds the string denoting the physician_id field in the database.
-	FieldPHYSICIANID = "physician_id"
-	// FieldSystemDATA holds the string denoting the system_data field in the database.
-	FieldSystemDATA = "system_data"
+	// FieldAddedTime holds the string denoting the added_time field in the database.
+	FieldAddedTime = "added_time"
 
-	// EdgeOwner holds the string denoting the owner edge name in mutations.
-	EdgeOwner = "owner"
-	// EdgeOwnera holds the string denoting the ownera edge name in mutations.
-	EdgeOwnera = "ownera"
-	// EdgeOwnerf holds the string denoting the ownerf edge name in mutations.
-	EdgeOwnerf = "ownerf"
+	// EdgePhysician holds the string denoting the physician edge name in mutations.
+	EdgePhysician = "physician"
+	// EdgeMedicaltype holds the string denoting the medicaltype edge name in mutations.
+	EdgeMedicaltype = "medicaltype"
+	// EdgeMedicalequipment holds the string denoting the medicalequipment edge name in mutations.
+	EdgeMedicalequipment = "medicalequipment"
 
 	// Table holds the table name of the systemequipment in the database.
 	Table = "systemequipments"
-	// OwnerTable is the table the holds the owner relation/edge.
-	OwnerTable = "systemequipments"
-	// OwnerInverseTable is the table name for the Physician entity.
+	// PhysicianTable is the table the holds the physician relation/edge.
+	PhysicianTable = "systemequipments"
+	// PhysicianInverseTable is the table name for the Physician entity.
 	// It exists in this package in order to avoid circular dependency with the "physician" package.
-	OwnerInverseTable = "physicians"
-	// OwnerColumn is the table column denoting the owner relation/edge.
-	OwnerColumn = "physician_user_physician"
-	// OwneraTable is the table the holds the ownera relation/edge.
-	OwneraTable = "systemequipments"
-	// OwneraInverseTable is the table name for the Medicalequipment entity.
-	// It exists in this package in order to avoid circular dependency with the "medicalequipment" package.
-	OwneraInverseTable = "medicalequipments"
-	// OwneraColumn is the table column denoting the ownera relation/edge.
-	OwneraColumn = "medicalequipment_medical_equipment"
-	// OwnerfTable is the table the holds the ownerf relation/edge.
-	OwnerfTable = "systemequipments"
-	// OwnerfInverseTable is the table name for the Medicaltype entity.
+	PhysicianInverseTable = "physicians"
+	// PhysicianColumn is the table column denoting the physician relation/edge.
+	PhysicianColumn = "physician_id"
+	// MedicaltypeTable is the table the holds the medicaltype relation/edge.
+	MedicaltypeTable = "systemequipments"
+	// MedicaltypeInverseTable is the table name for the MedicalType entity.
 	// It exists in this package in order to avoid circular dependency with the "medicaltype" package.
-	OwnerfInverseTable = "medicaltypes"
-	// OwnerfColumn is the table column denoting the ownerf relation/edge.
-	OwnerfColumn = "medicaltype_medical_type"
+	MedicaltypeInverseTable = "medical_types"
+	// MedicaltypeColumn is the table column denoting the medicaltype relation/edge.
+	MedicaltypeColumn = "medicaltype_id"
+	// MedicalequipmentTable is the table the holds the medicalequipment relation/edge.
+	MedicalequipmentTable = "systemequipments"
+	// MedicalequipmentInverseTable is the table name for the MedicalEquipment entity.
+	// It exists in this package in order to avoid circular dependency with the "medicalequipment" package.
+	MedicalequipmentInverseTable = "medical_equipments"
+	// MedicalequipmentColumn is the table column denoting the medicalequipment relation/edge.
+	MedicalequipmentColumn = "medicalequipment_id"
 )
 
 // Columns holds all SQL columns for systemequipment fields.
 var Columns = []string{
 	FieldID,
-	FieldSystemID,
-	FieldMedicalID,
-	FieldTypeID,
-	FieldPHYSICIANID,
-	FieldSystemDATA,
+	FieldAddedTime,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Systemequipment type.
 var ForeignKeys = []string{
-	"medicalequipment_medical_equipment",
-	"medicaltype_medical_type",
-	"physician_user_physician",
+	"medicalequipment_id",
+	"medicaltype_id",
+	"physician_id",
 }
-
-var (
-	// SystemIDValidator is a validator for the "System_ID" field. It is called by the builders before save.
-	SystemIDValidator func(string) error
-)

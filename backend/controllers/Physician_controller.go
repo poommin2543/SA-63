@@ -1,19 +1,21 @@
 package controllers
- 
+
 import (
-   "context"
-   "fmt"
-   "strconv"
-   "github.com/poommin2543/app/ent"
-   "github.com/poommin2543/app/ent/physician"
-   "github.com/gin-gonic/gin"
+	"context"
+	"fmt"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/poommin2543/app/ent"
+	"github.com/poommin2543/app/ent/physician"
 )
- 
+
 // PhysicianController defines the struct for the physician controller
 type PhysicianController struct {
-   client *ent.Client
-   router gin.IRouter
+	client *ent.Client
+	router gin.IRouter
 }
+
 // CreatePhysician handles POST requests for adding physician entities
 // @Summary Create physician
 // @Description Create physician
@@ -33,12 +35,11 @@ func (ctl *PhysicianController) CreatePhysician(c *gin.Context) {
 		})
 		return
 	}
-  
+
 	u, err := ctl.client.Physician.
 		Create().
-		SetPHYSICIANID(obj.PHYSICIANID).
-		SetPHYSICIANNAME(obj.PHYSICIANNAME).
-		SetPHYSICIANEMAIL(obj.PHYSICIANEMAIL).
+		SetName(obj.Name).
+		SetEmail(obj.Email).
 		Save(context.Background())
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -46,10 +47,11 @@ func (ctl *PhysicianController) CreatePhysician(c *gin.Context) {
 		})
 		return
 	}
-  
+
 	c.JSON(200, u)
- }
- // GetPhysician handles GET requests to retrieve a physician entity
+}
+
+// GetPhysician handles GET requests to retrieve a physician entity
 // @Summary Get a physician entity by ID
 // @Description get physician by ID
 // @ID get-physician
@@ -68,7 +70,7 @@ func (ctl *PhysicianController) GetPhysician(c *gin.Context) {
 		})
 		return
 	}
-  
+
 	u, err := ctl.client.Physician.
 		Query().
 		Where(physician.IDEQ(int(id))).
@@ -79,9 +81,10 @@ func (ctl *PhysicianController) GetPhysician(c *gin.Context) {
 		})
 		return
 	}
-  
+
 	c.JSON(200, u)
- }
+}
+
 // ListPhysician handles request to get a list of physician entities
 // @Summary List physician entities
 // @Description list physician entities
@@ -94,32 +97,37 @@ func (ctl *PhysicianController) GetPhysician(c *gin.Context) {
 // @Failure 500 {object} gin.H
 // @Router /physicians [get]
 func (ctl *PhysicianController) ListPhysician(c *gin.Context) {
-   limitQuery := c.Query("limit")
-   limit := 10
-   if limitQuery != "" {
-       limit64, err := strconv.ParseInt(limitQuery, 10, 64)
-       if err == nil {limit = int(limit64)}
-   }
- 
-   offsetQuery := c.Query("offset")
-   offset := 0
-   if offsetQuery != "" {
-       offset64, err := strconv.ParseInt(offsetQuery, 10, 64)
-       if err == nil {offset = int(offset64)}
-   }
- 
-   physicians, err := ctl.client.Physician.
-       Query().
-       Limit(limit).
-       Offset(offset).
-       All(context.Background())
-   	if err != nil {
-       c.JSON(400, gin.H{"error": err.Error(),})
-       return
-   }
- 
-   c.JSON(200, physicians)
+	limitQuery := c.Query("limit")
+	limit := 10
+	if limitQuery != "" {
+		limit64, err := strconv.ParseInt(limitQuery, 10, 64)
+		if err == nil {
+			limit = int(limit64)
+		}
+	}
+
+	offsetQuery := c.Query("offset")
+	offset := 0
+	if offsetQuery != "" {
+		offset64, err := strconv.ParseInt(offsetQuery, 10, 64)
+		if err == nil {
+			offset = int(offset64)
+		}
+	}
+
+	physicians, err := ctl.client.Physician.
+		Query().
+		Limit(limit).
+		Offset(offset).
+		All(context.Background())
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, physicians)
 }
+
 // DeletePhysician handles DELETE requests to delete a physician entity
 // @Summary Delete a physician entity by ID
 // @Description get physician by ID
@@ -139,7 +147,7 @@ func (ctl *PhysicianController) DeletePhysician(c *gin.Context) {
 		})
 		return
 	}
-  
+
 	err = ctl.client.Physician.
 		DeleteOneID(int(id)).
 		Exec(context.Background())
@@ -149,10 +157,11 @@ func (ctl *PhysicianController) DeletePhysician(c *gin.Context) {
 		})
 		return
 	}
-  
+
 	c.JSON(200, gin.H{"result": fmt.Sprintf("ok deleted %v", id)})
- }
- // UpdatePhysician handles PUT requests to update a physician entity
+}
+
+// UpdatePhysician handles PUT requests to update a physician entity
 // @Summary Update a physician entity by ID
 // @Description update physician by ID
 // @ID update-physician
@@ -172,7 +181,7 @@ func (ctl *PhysicianController) UpdatePhysician(c *gin.Context) {
 		})
 		return
 	}
-  
+
 	obj := ent.Physician{}
 	if err := c.ShouldBind(&obj); err != nil {
 		c.JSON(400, gin.H{
@@ -185,13 +194,14 @@ func (ctl *PhysicianController) UpdatePhysician(c *gin.Context) {
 		UpdateOne(&obj).
 		Save(context.Background())
 	if err != nil {
-		c.JSON(400, gin.H{"error": "update failed",})
+		c.JSON(400, gin.H{"error": "update failed"})
 		return
 	}
-  
+
 	c.JSON(200, u)
- }
- // NewPhysicianController creates and registers handles for the physician controller
+}
+
+// NewPhysicianController creates and registers handles for the physician controller
 func NewPhysicianController(router gin.IRouter, client *ent.Client) *PhysicianController {
 	uc := &PhysicianController{
 		client: client,
@@ -199,19 +209,17 @@ func NewPhysicianController(router gin.IRouter, client *ent.Client) *PhysicianCo
 	}
 	uc.register()
 	return uc
- }
-  
- // InitPhysicianController registers routes to the main engine
- func (ctl *PhysicianController) register() {
+}
+
+// InitPhysicianController registers routes to the main engine
+func (ctl *PhysicianController) register() {
 	physicians := ctl.router.Group("/physicians")
-  
+
 	physicians.GET("", ctl.ListPhysician)
-  
+
 	// CRUD
 	physicians.POST("", ctl.CreatePhysician)
 	physicians.GET(":id", ctl.GetPhysician)
 	physicians.PUT(":id", ctl.UpdatePhysician)
 	physicians.DELETE(":id", ctl.DeletePhysician)
- }
- 
- 
+}

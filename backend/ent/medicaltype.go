@@ -10,50 +10,47 @@ import (
 	"github.com/poommin2543/app/ent/medicaltype"
 )
 
-// Medicaltype is the model entity for the Medicaltype schema.
-type Medicaltype struct {
+// MedicalType is the model entity for the MedicalType schema.
+type MedicalType struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// TypeID holds the value of the "Type_ID" field.
-	TypeID string `json:"Type_ID,omitempty"`
-	// TypeName holds the value of the "Type_name" field.
-	TypeName string `json:"Type_name,omitempty"`
+	// Name holds the value of the "name" field.
+	Name string `json:"name,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
-	// The values are being populated by the MedicaltypeQuery when eager-loading is set.
-	Edges MedicaltypeEdges `json:"edges"`
+	// The values are being populated by the MedicalTypeQuery when eager-loading is set.
+	Edges MedicalTypeEdges `json:"edges"`
 }
 
-// MedicaltypeEdges holds the relations/edges for other nodes in the graph.
-type MedicaltypeEdges struct {
-	// MedicalType holds the value of the Medical_type edge.
-	MedicalType []*Systemequipment
+// MedicalTypeEdges holds the relations/edges for other nodes in the graph.
+type MedicalTypeEdges struct {
+	// Systemequipment holds the value of the systemequipment edge.
+	Systemequipment []*Systemequipment
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [1]bool
 }
 
-// MedicalTypeOrErr returns the MedicalType value or an error if the edge
+// SystemequipmentOrErr returns the Systemequipment value or an error if the edge
 // was not loaded in eager-loading.
-func (e MedicaltypeEdges) MedicalTypeOrErr() ([]*Systemequipment, error) {
+func (e MedicalTypeEdges) SystemequipmentOrErr() ([]*Systemequipment, error) {
 	if e.loadedTypes[0] {
-		return e.MedicalType, nil
+		return e.Systemequipment, nil
 	}
-	return nil, &NotLoadedError{edge: "Medical_type"}
+	return nil, &NotLoadedError{edge: "systemequipment"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*Medicaltype) scanValues() []interface{} {
+func (*MedicalType) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // Type_ID
-		&sql.NullString{}, // Type_name
+		&sql.NullString{}, // name
 	}
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the Medicaltype fields.
-func (m *Medicaltype) assignValues(values ...interface{}) error {
+// to the MedicalType fields.
+func (mt *MedicalType) assignValues(values ...interface{}) error {
 	if m, n := len(values), len(medicaltype.Columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -61,62 +58,55 @@ func (m *Medicaltype) assignValues(values ...interface{}) error {
 	if !ok {
 		return fmt.Errorf("unexpected type %T for field id", value)
 	}
-	m.ID = int(value.Int64)
+	mt.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Type_ID", values[0])
+		return fmt.Errorf("unexpected type %T for field name", values[0])
 	} else if value.Valid {
-		m.TypeID = value.String
-	}
-	if value, ok := values[1].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Type_name", values[1])
-	} else if value.Valid {
-		m.TypeName = value.String
+		mt.Name = value.String
 	}
 	return nil
 }
 
-// QueryMedicalType queries the Medical_type edge of the Medicaltype.
-func (m *Medicaltype) QueryMedicalType() *SystemequipmentQuery {
-	return (&MedicaltypeClient{config: m.config}).QueryMedicalType(m)
+// QuerySystemequipment queries the systemequipment edge of the MedicalType.
+func (mt *MedicalType) QuerySystemequipment() *SystemequipmentQuery {
+	return (&MedicalTypeClient{config: mt.config}).QuerySystemequipment(mt)
 }
 
-// Update returns a builder for updating this Medicaltype.
-// Note that, you need to call Medicaltype.Unwrap() before calling this method, if this Medicaltype
+// Update returns a builder for updating this MedicalType.
+// Note that, you need to call MedicalType.Unwrap() before calling this method, if this MedicalType
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (m *Medicaltype) Update() *MedicaltypeUpdateOne {
-	return (&MedicaltypeClient{config: m.config}).UpdateOne(m)
+func (mt *MedicalType) Update() *MedicalTypeUpdateOne {
+	return (&MedicalTypeClient{config: mt.config}).UpdateOne(mt)
 }
 
 // Unwrap unwraps the entity that was returned from a transaction after it was closed,
 // so that all next queries will be executed through the driver which created the transaction.
-func (m *Medicaltype) Unwrap() *Medicaltype {
-	tx, ok := m.config.driver.(*txDriver)
+func (mt *MedicalType) Unwrap() *MedicalType {
+	tx, ok := mt.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: Medicaltype is not a transactional entity")
+		panic("ent: MedicalType is not a transactional entity")
 	}
-	m.config.driver = tx.drv
-	return m
+	mt.config.driver = tx.drv
+	return mt
 }
 
 // String implements the fmt.Stringer.
-func (m *Medicaltype) String() string {
+func (mt *MedicalType) String() string {
 	var builder strings.Builder
-	builder.WriteString("Medicaltype(")
-	builder.WriteString(fmt.Sprintf("id=%v", m.ID))
-	builder.WriteString(", Type_ID=")
-	builder.WriteString(m.TypeID)
-	builder.WriteString(", Type_name=")
-	builder.WriteString(m.TypeName)
+	builder.WriteString("MedicalType(")
+	builder.WriteString(fmt.Sprintf("id=%v", mt.ID))
+	builder.WriteString(", name=")
+	builder.WriteString(mt.Name)
 	builder.WriteByte(')')
 	return builder.String()
 }
 
-// Medicaltypes is a parsable slice of Medicaltype.
-type Medicaltypes []*Medicaltype
+// MedicalTypes is a parsable slice of MedicalType.
+type MedicalTypes []*MedicalType
 
-func (m Medicaltypes) config(cfg config) {
-	for _i := range m {
-		m[_i].config = cfg
+func (mt MedicalTypes) config(cfg config) {
+	for _i := range mt {
+		mt[_i].config = cfg
 	}
 }

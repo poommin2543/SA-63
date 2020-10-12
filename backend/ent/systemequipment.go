@@ -19,97 +19,85 @@ type Systemequipment struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// SystemID holds the value of the "System_ID" field.
-	SystemID string `json:"System_ID,omitempty"`
-	// MedicalID holds the value of the "Medical_ID" field.
-	MedicalID string `json:"Medical_ID,omitempty"`
-	// TypeID holds the value of the "Type_ID" field.
-	TypeID string `json:"Type_ID,omitempty"`
-	// PHYSICIANID holds the value of the "PHYSICIAN_ID" field.
-	PHYSICIANID string `json:"PHYSICIAN_ID,omitempty"`
-	// SystemDATA holds the value of the "System_DATA" field.
-	SystemDATA time.Time `json:"System_DATA,omitempty"`
+	// AddedTime holds the value of the "added_time" field.
+	AddedTime time.Time `json:"added_time,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SystemequipmentQuery when eager-loading is set.
-	Edges                              SystemequipmentEdges `json:"edges"`
-	medicalequipment_medical_equipment *int
-	medicaltype_medical_type           *int
-	physician_user_physician           *int
+	Edges               SystemequipmentEdges `json:"edges"`
+	medicalequipment_id *int
+	medicaltype_id      *int
+	physician_id        *int
 }
 
 // SystemequipmentEdges holds the relations/edges for other nodes in the graph.
 type SystemequipmentEdges struct {
-	// Owner holds the value of the owner edge.
-	Owner *Physician
-	// Ownera holds the value of the ownera edge.
-	Ownera *Medicalequipment
-	// Ownerf holds the value of the ownerf edge.
-	Ownerf *Medicaltype
+	// Physician holds the value of the physician edge.
+	Physician *Physician
+	// Medicaltype holds the value of the medicaltype edge.
+	Medicaltype *MedicalType
+	// Medicalequipment holds the value of the medicalequipment edge.
+	Medicalequipment *MedicalEquipment
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [3]bool
 }
 
-// OwnerOrErr returns the Owner value or an error if the edge
+// PhysicianOrErr returns the Physician value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
-func (e SystemequipmentEdges) OwnerOrErr() (*Physician, error) {
+func (e SystemequipmentEdges) PhysicianOrErr() (*Physician, error) {
 	if e.loadedTypes[0] {
-		if e.Owner == nil {
-			// The edge owner was loaded in eager-loading,
+		if e.Physician == nil {
+			// The edge physician was loaded in eager-loading,
 			// but was not found.
 			return nil, &NotFoundError{label: physician.Label}
 		}
-		return e.Owner, nil
+		return e.Physician, nil
 	}
-	return nil, &NotLoadedError{edge: "owner"}
+	return nil, &NotLoadedError{edge: "physician"}
 }
 
-// OwneraOrErr returns the Ownera value or an error if the edge
+// MedicaltypeOrErr returns the Medicaltype value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
-func (e SystemequipmentEdges) OwneraOrErr() (*Medicalequipment, error) {
+func (e SystemequipmentEdges) MedicaltypeOrErr() (*MedicalType, error) {
 	if e.loadedTypes[1] {
-		if e.Ownera == nil {
-			// The edge ownera was loaded in eager-loading,
-			// but was not found.
-			return nil, &NotFoundError{label: medicalequipment.Label}
-		}
-		return e.Ownera, nil
-	}
-	return nil, &NotLoadedError{edge: "ownera"}
-}
-
-// OwnerfOrErr returns the Ownerf value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e SystemequipmentEdges) OwnerfOrErr() (*Medicaltype, error) {
-	if e.loadedTypes[2] {
-		if e.Ownerf == nil {
-			// The edge ownerf was loaded in eager-loading,
+		if e.Medicaltype == nil {
+			// The edge medicaltype was loaded in eager-loading,
 			// but was not found.
 			return nil, &NotFoundError{label: medicaltype.Label}
 		}
-		return e.Ownerf, nil
+		return e.Medicaltype, nil
 	}
-	return nil, &NotLoadedError{edge: "ownerf"}
+	return nil, &NotLoadedError{edge: "medicaltype"}
+}
+
+// MedicalequipmentOrErr returns the Medicalequipment value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SystemequipmentEdges) MedicalequipmentOrErr() (*MedicalEquipment, error) {
+	if e.loadedTypes[2] {
+		if e.Medicalequipment == nil {
+			// The edge medicalequipment was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: medicalequipment.Label}
+		}
+		return e.Medicalequipment, nil
+	}
+	return nil, &NotLoadedError{edge: "medicalequipment"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
 func (*Systemequipment) scanValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{},  // id
-		&sql.NullString{}, // System_ID
-		&sql.NullString{}, // Medical_ID
-		&sql.NullString{}, // Type_ID
-		&sql.NullString{}, // PHYSICIAN_ID
-		&sql.NullTime{},   // System_DATA
+		&sql.NullInt64{}, // id
+		&sql.NullTime{},  // added_time
 	}
 }
 
 // fkValues returns the types for scanning foreign-keys values from sql.Rows.
 func (*Systemequipment) fkValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{}, // medicalequipment_medical_equipment
-		&sql.NullInt64{}, // medicaltype_medical_type
-		&sql.NullInt64{}, // physician_user_physician
+		&sql.NullInt64{}, // medicalequipment_id
+		&sql.NullInt64{}, // medicaltype_id
+		&sql.NullInt64{}, // physician_id
 	}
 }
 
@@ -125,68 +113,48 @@ func (s *Systemequipment) assignValues(values ...interface{}) error {
 	}
 	s.ID = int(value.Int64)
 	values = values[1:]
-	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field System_ID", values[0])
+	if value, ok := values[0].(*sql.NullTime); !ok {
+		return fmt.Errorf("unexpected type %T for field added_time", values[0])
 	} else if value.Valid {
-		s.SystemID = value.String
+		s.AddedTime = value.Time
 	}
-	if value, ok := values[1].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Medical_ID", values[1])
-	} else if value.Valid {
-		s.MedicalID = value.String
-	}
-	if value, ok := values[2].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Type_ID", values[2])
-	} else if value.Valid {
-		s.TypeID = value.String
-	}
-	if value, ok := values[3].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field PHYSICIAN_ID", values[3])
-	} else if value.Valid {
-		s.PHYSICIANID = value.String
-	}
-	if value, ok := values[4].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field System_DATA", values[4])
-	} else if value.Valid {
-		s.SystemDATA = value.Time
-	}
-	values = values[5:]
+	values = values[1:]
 	if len(values) == len(systemequipment.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field medicalequipment_medical_equipment", value)
+			return fmt.Errorf("unexpected type %T for edge-field medicalequipment_id", value)
 		} else if value.Valid {
-			s.medicalequipment_medical_equipment = new(int)
-			*s.medicalequipment_medical_equipment = int(value.Int64)
+			s.medicalequipment_id = new(int)
+			*s.medicalequipment_id = int(value.Int64)
 		}
 		if value, ok := values[1].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field medicaltype_medical_type", value)
+			return fmt.Errorf("unexpected type %T for edge-field medicaltype_id", value)
 		} else if value.Valid {
-			s.medicaltype_medical_type = new(int)
-			*s.medicaltype_medical_type = int(value.Int64)
+			s.medicaltype_id = new(int)
+			*s.medicaltype_id = int(value.Int64)
 		}
 		if value, ok := values[2].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field physician_user_physician", value)
+			return fmt.Errorf("unexpected type %T for edge-field physician_id", value)
 		} else if value.Valid {
-			s.physician_user_physician = new(int)
-			*s.physician_user_physician = int(value.Int64)
+			s.physician_id = new(int)
+			*s.physician_id = int(value.Int64)
 		}
 	}
 	return nil
 }
 
-// QueryOwner queries the owner edge of the Systemequipment.
-func (s *Systemequipment) QueryOwner() *PhysicianQuery {
-	return (&SystemequipmentClient{config: s.config}).QueryOwner(s)
+// QueryPhysician queries the physician edge of the Systemequipment.
+func (s *Systemequipment) QueryPhysician() *PhysicianQuery {
+	return (&SystemequipmentClient{config: s.config}).QueryPhysician(s)
 }
 
-// QueryOwnera queries the ownera edge of the Systemequipment.
-func (s *Systemequipment) QueryOwnera() *MedicalequipmentQuery {
-	return (&SystemequipmentClient{config: s.config}).QueryOwnera(s)
+// QueryMedicaltype queries the medicaltype edge of the Systemequipment.
+func (s *Systemequipment) QueryMedicaltype() *MedicalTypeQuery {
+	return (&SystemequipmentClient{config: s.config}).QueryMedicaltype(s)
 }
 
-// QueryOwnerf queries the ownerf edge of the Systemequipment.
-func (s *Systemequipment) QueryOwnerf() *MedicaltypeQuery {
-	return (&SystemequipmentClient{config: s.config}).QueryOwnerf(s)
+// QueryMedicalequipment queries the medicalequipment edge of the Systemequipment.
+func (s *Systemequipment) QueryMedicalequipment() *MedicalEquipmentQuery {
+	return (&SystemequipmentClient{config: s.config}).QueryMedicalequipment(s)
 }
 
 // Update returns a builder for updating this Systemequipment.
@@ -212,16 +180,8 @@ func (s *Systemequipment) String() string {
 	var builder strings.Builder
 	builder.WriteString("Systemequipment(")
 	builder.WriteString(fmt.Sprintf("id=%v", s.ID))
-	builder.WriteString(", System_ID=")
-	builder.WriteString(s.SystemID)
-	builder.WriteString(", Medical_ID=")
-	builder.WriteString(s.MedicalID)
-	builder.WriteString(", Type_ID=")
-	builder.WriteString(s.TypeID)
-	builder.WriteString(", PHYSICIAN_ID=")
-	builder.WriteString(s.PHYSICIANID)
-	builder.WriteString(", System_DATA=")
-	builder.WriteString(s.SystemDATA.Format(time.ANSIC))
+	builder.WriteString(", added_time=")
+	builder.WriteString(s.AddedTime.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -9,28 +9,28 @@ import (
 	"github.com/poommin2543/app/ent"
 )
 
-// The MedicalequipmentFunc type is an adapter to allow the use of ordinary
-// function as Medicalequipment mutator.
-type MedicalequipmentFunc func(context.Context, *ent.MedicalequipmentMutation) (ent.Value, error)
+// The MedicalEquipmentFunc type is an adapter to allow the use of ordinary
+// function as MedicalEquipment mutator.
+type MedicalEquipmentFunc func(context.Context, *ent.MedicalEquipmentMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f MedicalequipmentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.MedicalequipmentMutation)
+func (f MedicalEquipmentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.MedicalEquipmentMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MedicalequipmentMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MedicalEquipmentMutation", m)
 	}
 	return f(ctx, mv)
 }
 
-// The MedicaltypeFunc type is an adapter to allow the use of ordinary
-// function as Medicaltype mutator.
-type MedicaltypeFunc func(context.Context, *ent.MedicaltypeMutation) (ent.Value, error)
+// The MedicalTypeFunc type is an adapter to allow the use of ordinary
+// function as MedicalType mutator.
+type MedicalTypeFunc func(context.Context, *ent.MedicalTypeMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f MedicaltypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.MedicaltypeMutation)
+func (f MedicalTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.MedicalTypeMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MedicaltypeMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MedicalTypeMutation", m)
 	}
 	return f(ctx, mv)
 }

@@ -14,104 +14,98 @@ import (
 	"github.com/poommin2543/app/ent/systemequipment"
 )
 
-// MedicalequipmentUpdate is the builder for updating Medicalequipment entities.
-type MedicalequipmentUpdate struct {
+// MedicalEquipmentUpdate is the builder for updating MedicalEquipment entities.
+type MedicalEquipmentUpdate struct {
 	config
 	hooks      []Hook
-	mutation   *MedicalequipmentMutation
-	predicates []predicate.Medicalequipment
+	mutation   *MedicalEquipmentMutation
+	predicates []predicate.MedicalEquipment
 }
 
 // Where adds a new predicate for the builder.
-func (mu *MedicalequipmentUpdate) Where(ps ...predicate.Medicalequipment) *MedicalequipmentUpdate {
-	mu.predicates = append(mu.predicates, ps...)
-	return mu
+func (meu *MedicalEquipmentUpdate) Where(ps ...predicate.MedicalEquipment) *MedicalEquipmentUpdate {
+	meu.predicates = append(meu.predicates, ps...)
+	return meu
 }
 
-// SetMedicalID sets the Medical_ID field.
-func (mu *MedicalequipmentUpdate) SetMedicalID(s string) *MedicalequipmentUpdate {
-	mu.mutation.SetMedicalID(s)
-	return mu
+// SetName sets the name field.
+func (meu *MedicalEquipmentUpdate) SetName(s string) *MedicalEquipmentUpdate {
+	meu.mutation.SetName(s)
+	return meu
 }
 
-// SetMedicalNAME sets the Medical_NAME field.
-func (mu *MedicalequipmentUpdate) SetMedicalNAME(s string) *MedicalequipmentUpdate {
-	mu.mutation.SetMedicalNAME(s)
-	return mu
+// SetStock sets the stock field.
+func (meu *MedicalEquipmentUpdate) SetStock(i int) *MedicalEquipmentUpdate {
+	meu.mutation.ResetStock()
+	meu.mutation.SetStock(i)
+	return meu
 }
 
-// SetMedicalStock sets the Medical_Stock field.
-func (mu *MedicalequipmentUpdate) SetMedicalStock(i int) *MedicalequipmentUpdate {
-	mu.mutation.ResetMedicalStock()
-	mu.mutation.SetMedicalStock(i)
-	return mu
+// AddStock adds i to stock.
+func (meu *MedicalEquipmentUpdate) AddStock(i int) *MedicalEquipmentUpdate {
+	meu.mutation.AddStock(i)
+	return meu
 }
 
-// AddMedicalStock adds i to Medical_Stock.
-func (mu *MedicalequipmentUpdate) AddMedicalStock(i int) *MedicalequipmentUpdate {
-	mu.mutation.AddMedicalStock(i)
-	return mu
+// AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
+func (meu *MedicalEquipmentUpdate) AddSystemequipmentIDs(ids ...int) *MedicalEquipmentUpdate {
+	meu.mutation.AddSystemequipmentIDs(ids...)
+	return meu
 }
 
-// AddMedicalEquipmentIDs adds the Medical_equipment edge to Systemequipment by ids.
-func (mu *MedicalequipmentUpdate) AddMedicalEquipmentIDs(ids ...int) *MedicalequipmentUpdate {
-	mu.mutation.AddMedicalEquipmentIDs(ids...)
-	return mu
-}
-
-// AddMedicalEquipment adds the Medical_equipment edges to Systemequipment.
-func (mu *MedicalequipmentUpdate) AddMedicalEquipment(s ...*Systemequipment) *MedicalequipmentUpdate {
+// AddSystemequipment adds the systemequipment edges to Systemequipment.
+func (meu *MedicalEquipmentUpdate) AddSystemequipment(s ...*Systemequipment) *MedicalEquipmentUpdate {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return mu.AddMedicalEquipmentIDs(ids...)
+	return meu.AddSystemequipmentIDs(ids...)
 }
 
-// Mutation returns the MedicalequipmentMutation object of the builder.
-func (mu *MedicalequipmentUpdate) Mutation() *MedicalequipmentMutation {
-	return mu.mutation
+// Mutation returns the MedicalEquipmentMutation object of the builder.
+func (meu *MedicalEquipmentUpdate) Mutation() *MedicalEquipmentMutation {
+	return meu.mutation
 }
 
-// RemoveMedicalEquipmentIDs removes the Medical_equipment edge to Systemequipment by ids.
-func (mu *MedicalequipmentUpdate) RemoveMedicalEquipmentIDs(ids ...int) *MedicalequipmentUpdate {
-	mu.mutation.RemoveMedicalEquipmentIDs(ids...)
-	return mu
+// RemoveSystemequipmentIDs removes the systemequipment edge to Systemequipment by ids.
+func (meu *MedicalEquipmentUpdate) RemoveSystemequipmentIDs(ids ...int) *MedicalEquipmentUpdate {
+	meu.mutation.RemoveSystemequipmentIDs(ids...)
+	return meu
 }
 
-// RemoveMedicalEquipment removes Medical_equipment edges to Systemequipment.
-func (mu *MedicalequipmentUpdate) RemoveMedicalEquipment(s ...*Systemequipment) *MedicalequipmentUpdate {
+// RemoveSystemequipment removes systemequipment edges to Systemequipment.
+func (meu *MedicalEquipmentUpdate) RemoveSystemequipment(s ...*Systemequipment) *MedicalEquipmentUpdate {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return mu.RemoveMedicalEquipmentIDs(ids...)
+	return meu.RemoveSystemequipmentIDs(ids...)
 }
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
-func (mu *MedicalequipmentUpdate) Save(ctx context.Context) (int, error) {
+func (meu *MedicalEquipmentUpdate) Save(ctx context.Context) (int, error) {
 
 	var (
 		err      error
 		affected int
 	)
-	if len(mu.hooks) == 0 {
-		affected, err = mu.sqlSave(ctx)
+	if len(meu.hooks) == 0 {
+		affected, err = meu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*MedicalequipmentMutation)
+			mutation, ok := m.(*MedicalEquipmentMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			mu.mutation = mutation
-			affected, err = mu.sqlSave(ctx)
+			meu.mutation = mutation
+			affected, err = meu.sqlSave(ctx)
 			mutation.done = true
 			return affected, err
 		})
-		for i := len(mu.hooks) - 1; i >= 0; i-- {
-			mut = mu.hooks[i](mut)
+		for i := len(meu.hooks) - 1; i >= 0; i-- {
+			mut = meu.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, mu.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, meu.mutation); err != nil {
 			return 0, err
 		}
 	}
@@ -119,8 +113,8 @@ func (mu *MedicalequipmentUpdate) Save(ctx context.Context) (int, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (mu *MedicalequipmentUpdate) SaveX(ctx context.Context) int {
-	affected, err := mu.Save(ctx)
+func (meu *MedicalEquipmentUpdate) SaveX(ctx context.Context) int {
+	affected, err := meu.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -128,19 +122,19 @@ func (mu *MedicalequipmentUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (mu *MedicalequipmentUpdate) Exec(ctx context.Context) error {
-	_, err := mu.Save(ctx)
+func (meu *MedicalEquipmentUpdate) Exec(ctx context.Context) error {
+	_, err := meu.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (mu *MedicalequipmentUpdate) ExecX(ctx context.Context) {
-	if err := mu.Exec(ctx); err != nil {
+func (meu *MedicalEquipmentUpdate) ExecX(ctx context.Context) {
+	if err := meu.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (mu *MedicalequipmentUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (meu *MedicalEquipmentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   medicalequipment.Table,
@@ -151,47 +145,40 @@ func (mu *MedicalequipmentUpdate) sqlSave(ctx context.Context) (n int, err error
 			},
 		},
 	}
-	if ps := mu.predicates; len(ps) > 0 {
+	if ps := meu.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := mu.mutation.MedicalID(); ok {
+	if value, ok := meu.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: medicalequipment.FieldMedicalID,
+			Column: medicalequipment.FieldName,
 		})
 	}
-	if value, ok := mu.mutation.MedicalNAME(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: medicalequipment.FieldMedicalNAME,
-		})
-	}
-	if value, ok := mu.mutation.MedicalStock(); ok {
+	if value, ok := meu.mutation.Stock(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: medicalequipment.FieldMedicalStock,
+			Column: medicalequipment.FieldStock,
 		})
 	}
-	if value, ok := mu.mutation.AddedMedicalStock(); ok {
+	if value, ok := meu.mutation.AddedStock(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: medicalequipment.FieldMedicalStock,
+			Column: medicalequipment.FieldStock,
 		})
 	}
-	if nodes := mu.mutation.RemovedMedicalEquipmentIDs(); len(nodes) > 0 {
+	if nodes := meu.mutation.RemovedSystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicalequipment.MedicalEquipmentTable,
-			Columns: []string{medicalequipment.MedicalEquipmentColumn},
+			Table:   medicalequipment.SystemequipmentTable,
+			Columns: []string{medicalequipment.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -205,12 +192,12 @@ func (mu *MedicalequipmentUpdate) sqlSave(ctx context.Context) (n int, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := mu.mutation.MedicalEquipmentIDs(); len(nodes) > 0 {
+	if nodes := meu.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicalequipment.MedicalEquipmentTable,
-			Columns: []string{medicalequipment.MedicalEquipmentColumn},
+			Table:   medicalequipment.SystemequipmentTable,
+			Columns: []string{medicalequipment.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -224,7 +211,7 @@ func (mu *MedicalequipmentUpdate) sqlSave(ctx context.Context) (n int, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, mu.driver, _spec); err != nil {
+	if n, err = sqlgraph.UpdateNodes(ctx, meu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{medicalequipment.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
@@ -235,97 +222,91 @@ func (mu *MedicalequipmentUpdate) sqlSave(ctx context.Context) (n int, err error
 	return n, nil
 }
 
-// MedicalequipmentUpdateOne is the builder for updating a single Medicalequipment entity.
-type MedicalequipmentUpdateOne struct {
+// MedicalEquipmentUpdateOne is the builder for updating a single MedicalEquipment entity.
+type MedicalEquipmentUpdateOne struct {
 	config
 	hooks    []Hook
-	mutation *MedicalequipmentMutation
+	mutation *MedicalEquipmentMutation
 }
 
-// SetMedicalID sets the Medical_ID field.
-func (muo *MedicalequipmentUpdateOne) SetMedicalID(s string) *MedicalequipmentUpdateOne {
-	muo.mutation.SetMedicalID(s)
-	return muo
+// SetName sets the name field.
+func (meuo *MedicalEquipmentUpdateOne) SetName(s string) *MedicalEquipmentUpdateOne {
+	meuo.mutation.SetName(s)
+	return meuo
 }
 
-// SetMedicalNAME sets the Medical_NAME field.
-func (muo *MedicalequipmentUpdateOne) SetMedicalNAME(s string) *MedicalequipmentUpdateOne {
-	muo.mutation.SetMedicalNAME(s)
-	return muo
+// SetStock sets the stock field.
+func (meuo *MedicalEquipmentUpdateOne) SetStock(i int) *MedicalEquipmentUpdateOne {
+	meuo.mutation.ResetStock()
+	meuo.mutation.SetStock(i)
+	return meuo
 }
 
-// SetMedicalStock sets the Medical_Stock field.
-func (muo *MedicalequipmentUpdateOne) SetMedicalStock(i int) *MedicalequipmentUpdateOne {
-	muo.mutation.ResetMedicalStock()
-	muo.mutation.SetMedicalStock(i)
-	return muo
+// AddStock adds i to stock.
+func (meuo *MedicalEquipmentUpdateOne) AddStock(i int) *MedicalEquipmentUpdateOne {
+	meuo.mutation.AddStock(i)
+	return meuo
 }
 
-// AddMedicalStock adds i to Medical_Stock.
-func (muo *MedicalequipmentUpdateOne) AddMedicalStock(i int) *MedicalequipmentUpdateOne {
-	muo.mutation.AddMedicalStock(i)
-	return muo
+// AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
+func (meuo *MedicalEquipmentUpdateOne) AddSystemequipmentIDs(ids ...int) *MedicalEquipmentUpdateOne {
+	meuo.mutation.AddSystemequipmentIDs(ids...)
+	return meuo
 }
 
-// AddMedicalEquipmentIDs adds the Medical_equipment edge to Systemequipment by ids.
-func (muo *MedicalequipmentUpdateOne) AddMedicalEquipmentIDs(ids ...int) *MedicalequipmentUpdateOne {
-	muo.mutation.AddMedicalEquipmentIDs(ids...)
-	return muo
-}
-
-// AddMedicalEquipment adds the Medical_equipment edges to Systemequipment.
-func (muo *MedicalequipmentUpdateOne) AddMedicalEquipment(s ...*Systemequipment) *MedicalequipmentUpdateOne {
+// AddSystemequipment adds the systemequipment edges to Systemequipment.
+func (meuo *MedicalEquipmentUpdateOne) AddSystemequipment(s ...*Systemequipment) *MedicalEquipmentUpdateOne {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return muo.AddMedicalEquipmentIDs(ids...)
+	return meuo.AddSystemequipmentIDs(ids...)
 }
 
-// Mutation returns the MedicalequipmentMutation object of the builder.
-func (muo *MedicalequipmentUpdateOne) Mutation() *MedicalequipmentMutation {
-	return muo.mutation
+// Mutation returns the MedicalEquipmentMutation object of the builder.
+func (meuo *MedicalEquipmentUpdateOne) Mutation() *MedicalEquipmentMutation {
+	return meuo.mutation
 }
 
-// RemoveMedicalEquipmentIDs removes the Medical_equipment edge to Systemequipment by ids.
-func (muo *MedicalequipmentUpdateOne) RemoveMedicalEquipmentIDs(ids ...int) *MedicalequipmentUpdateOne {
-	muo.mutation.RemoveMedicalEquipmentIDs(ids...)
-	return muo
+// RemoveSystemequipmentIDs removes the systemequipment edge to Systemequipment by ids.
+func (meuo *MedicalEquipmentUpdateOne) RemoveSystemequipmentIDs(ids ...int) *MedicalEquipmentUpdateOne {
+	meuo.mutation.RemoveSystemequipmentIDs(ids...)
+	return meuo
 }
 
-// RemoveMedicalEquipment removes Medical_equipment edges to Systemequipment.
-func (muo *MedicalequipmentUpdateOne) RemoveMedicalEquipment(s ...*Systemequipment) *MedicalequipmentUpdateOne {
+// RemoveSystemequipment removes systemequipment edges to Systemequipment.
+func (meuo *MedicalEquipmentUpdateOne) RemoveSystemequipment(s ...*Systemequipment) *MedicalEquipmentUpdateOne {
 	ids := make([]int, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return muo.RemoveMedicalEquipmentIDs(ids...)
+	return meuo.RemoveSystemequipmentIDs(ids...)
 }
 
 // Save executes the query and returns the updated entity.
-func (muo *MedicalequipmentUpdateOne) Save(ctx context.Context) (*Medicalequipment, error) {
+func (meuo *MedicalEquipmentUpdateOne) Save(ctx context.Context) (*MedicalEquipment, error) {
 
 	var (
 		err  error
-		node *Medicalequipment
+		node *MedicalEquipment
 	)
-	if len(muo.hooks) == 0 {
-		node, err = muo.sqlSave(ctx)
+	if len(meuo.hooks) == 0 {
+		node, err = meuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*MedicalequipmentMutation)
+			mutation, ok := m.(*MedicalEquipmentMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			muo.mutation = mutation
-			node, err = muo.sqlSave(ctx)
+			meuo.mutation = mutation
+			node, err = meuo.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(muo.hooks) - 1; i >= 0; i-- {
-			mut = muo.hooks[i](mut)
+		for i := len(meuo.hooks) - 1; i >= 0; i-- {
+			mut = meuo.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, muo.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, meuo.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -333,28 +314,28 @@ func (muo *MedicalequipmentUpdateOne) Save(ctx context.Context) (*Medicalequipme
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (muo *MedicalequipmentUpdateOne) SaveX(ctx context.Context) *Medicalequipment {
-	m, err := muo.Save(ctx)
+func (meuo *MedicalEquipmentUpdateOne) SaveX(ctx context.Context) *MedicalEquipment {
+	me, err := meuo.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return m
+	return me
 }
 
 // Exec executes the query on the entity.
-func (muo *MedicalequipmentUpdateOne) Exec(ctx context.Context) error {
-	_, err := muo.Save(ctx)
+func (meuo *MedicalEquipmentUpdateOne) Exec(ctx context.Context) error {
+	_, err := meuo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (muo *MedicalequipmentUpdateOne) ExecX(ctx context.Context) {
-	if err := muo.Exec(ctx); err != nil {
+func (meuo *MedicalEquipmentUpdateOne) ExecX(ctx context.Context) {
+	if err := meuo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (muo *MedicalequipmentUpdateOne) sqlSave(ctx context.Context) (m *Medicalequipment, err error) {
+func (meuo *MedicalEquipmentUpdateOne) sqlSave(ctx context.Context) (me *MedicalEquipment, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   medicalequipment.Table,
@@ -365,45 +346,38 @@ func (muo *MedicalequipmentUpdateOne) sqlSave(ctx context.Context) (m *Medicaleq
 			},
 		},
 	}
-	id, ok := muo.mutation.ID()
+	id, ok := meuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Medicalequipment.ID for update")}
+		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing MedicalEquipment.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := muo.mutation.MedicalID(); ok {
+	if value, ok := meuo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: medicalequipment.FieldMedicalID,
+			Column: medicalequipment.FieldName,
 		})
 	}
-	if value, ok := muo.mutation.MedicalNAME(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: medicalequipment.FieldMedicalNAME,
-		})
-	}
-	if value, ok := muo.mutation.MedicalStock(); ok {
+	if value, ok := meuo.mutation.Stock(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: medicalequipment.FieldMedicalStock,
+			Column: medicalequipment.FieldStock,
 		})
 	}
-	if value, ok := muo.mutation.AddedMedicalStock(); ok {
+	if value, ok := meuo.mutation.AddedStock(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Value:  value,
-			Column: medicalequipment.FieldMedicalStock,
+			Column: medicalequipment.FieldStock,
 		})
 	}
-	if nodes := muo.mutation.RemovedMedicalEquipmentIDs(); len(nodes) > 0 {
+	if nodes := meuo.mutation.RemovedSystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicalequipment.MedicalEquipmentTable,
-			Columns: []string{medicalequipment.MedicalEquipmentColumn},
+			Table:   medicalequipment.SystemequipmentTable,
+			Columns: []string{medicalequipment.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -417,12 +391,12 @@ func (muo *MedicalequipmentUpdateOne) sqlSave(ctx context.Context) (m *Medicaleq
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := muo.mutation.MedicalEquipmentIDs(); len(nodes) > 0 {
+	if nodes := meuo.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   medicalequipment.MedicalEquipmentTable,
-			Columns: []string{medicalequipment.MedicalEquipmentColumn},
+			Table:   medicalequipment.SystemequipmentTable,
+			Columns: []string{medicalequipment.SystemequipmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -436,10 +410,10 @@ func (muo *MedicalequipmentUpdateOne) sqlSave(ctx context.Context) (m *Medicaleq
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	m = &Medicalequipment{config: muo.config}
-	_spec.Assign = m.assignValues
-	_spec.ScanValues = m.scanValues()
-	if err = sqlgraph.UpdateNode(ctx, muo.driver, _spec); err != nil {
+	me = &MedicalEquipment{config: meuo.config}
+	_spec.Assign = me.assignValues
+	_spec.ScanValues = me.scanValues()
+	if err = sqlgraph.UpdateNode(ctx, meuo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{medicalequipment.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
@@ -447,5 +421,5 @@ func (muo *MedicalequipmentUpdateOne) sqlSave(ctx context.Context) (m *Medicaleq
 		}
 		return nil, err
 	}
-	return m, nil
+	return me, nil
 }

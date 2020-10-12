@@ -9,29 +9,29 @@ import (
 )
 
 // ID filters vertices based on their identifier.
-func ID(id int) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func ID(id int) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func IDEQ(id int) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func IDNEQ(id int) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldID), id))
 	})
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func IDIn(ids ...int) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(ids) == 0 {
@@ -47,8 +47,8 @@ func IDIn(ids ...int) predicate.Medicaltype {
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func IDNotIn(ids ...int) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(ids) == 0 {
@@ -64,288 +64,170 @@ func IDNotIn(ids ...int) predicate.Medicaltype {
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func IDGT(id int) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldID), id))
 	})
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func IDGTE(id int) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldID), id))
 	})
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func IDLT(id int) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldID), id))
 	})
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func IDLTE(id int) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldID), id))
 	})
 }
 
-// TypeID applies equality check predicate on the "Type_ID" field. It's identical to TypeIDEQ.
-func TypeID(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTypeID), v))
+// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+func Name(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// TypeName applies equality check predicate on the "Type_name" field. It's identical to TypeNameEQ.
-func TypeName(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTypeName), v))
+// NameEQ applies the EQ predicate on the "name" field.
+func NameEQ(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// TypeIDEQ applies the EQ predicate on the "Type_ID" field.
-func TypeIDEQ(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTypeID), v))
+// NameNEQ applies the NEQ predicate on the "name" field.
+func NameNEQ(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// TypeIDNEQ applies the NEQ predicate on the "Type_ID" field.
-func TypeIDNEQ(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldTypeID), v))
-	})
-}
-
-// TypeIDIn applies the In predicate on the "Type_ID" field.
-func TypeIDIn(vs ...string) predicate.Medicaltype {
+// NameIn applies the In predicate on the "name" field.
+func NameIn(vs ...string) predicate.MedicalType {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
-	return predicate.Medicaltype(func(s *sql.Selector) {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(v) == 0 {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldTypeID), v...))
+		s.Where(sql.In(s.C(FieldName), v...))
 	})
 }
 
-// TypeIDNotIn applies the NotIn predicate on the "Type_ID" field.
-func TypeIDNotIn(vs ...string) predicate.Medicaltype {
+// NameNotIn applies the NotIn predicate on the "name" field.
+func NameNotIn(vs ...string) predicate.MedicalType {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
-	return predicate.Medicaltype(func(s *sql.Selector) {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
 		if len(v) == 0 {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldTypeID), v...))
+		s.Where(sql.NotIn(s.C(FieldName), v...))
 	})
 }
 
-// TypeIDGT applies the GT predicate on the "Type_ID" field.
-func TypeIDGT(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldTypeID), v))
+// NameGT applies the GT predicate on the "name" field.
+func NameGT(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// TypeIDGTE applies the GTE predicate on the "Type_ID" field.
-func TypeIDGTE(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldTypeID), v))
+// NameGTE applies the GTE predicate on the "name" field.
+func NameGTE(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// TypeIDLT applies the LT predicate on the "Type_ID" field.
-func TypeIDLT(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldTypeID), v))
+// NameLT applies the LT predicate on the "name" field.
+func NameLT(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// TypeIDLTE applies the LTE predicate on the "Type_ID" field.
-func TypeIDLTE(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldTypeID), v))
+// NameLTE applies the LTE predicate on the "name" field.
+func NameLTE(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// TypeIDContains applies the Contains predicate on the "Type_ID" field.
-func TypeIDContains(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldTypeID), v))
+// NameContains applies the Contains predicate on the "name" field.
+func NameContains(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// TypeIDHasPrefix applies the HasPrefix predicate on the "Type_ID" field.
-func TypeIDHasPrefix(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldTypeID), v))
+// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+func NameHasPrefix(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// TypeIDHasSuffix applies the HasSuffix predicate on the "Type_ID" field.
-func TypeIDHasSuffix(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldTypeID), v))
+// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+func NameHasSuffix(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// TypeIDEqualFold applies the EqualFold predicate on the "Type_ID" field.
-func TypeIDEqualFold(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldTypeID), v))
+// NameEqualFold applies the EqualFold predicate on the "name" field.
+func NameEqualFold(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// TypeIDContainsFold applies the ContainsFold predicate on the "Type_ID" field.
-func TypeIDContainsFold(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldTypeID), v))
+// NameContainsFold applies the ContainsFold predicate on the "name" field.
+func NameContainsFold(v string) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldName), v))
 	})
 }
 
-// TypeNameEQ applies the EQ predicate on the "Type_name" field.
-func TypeNameEQ(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameNEQ applies the NEQ predicate on the "Type_name" field.
-func TypeNameNEQ(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameIn applies the In predicate on the "Type_name" field.
-func TypeNameIn(vs ...string) predicate.Medicaltype {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldTypeName), v...))
-	})
-}
-
-// TypeNameNotIn applies the NotIn predicate on the "Type_name" field.
-func TypeNameNotIn(vs ...string) predicate.Medicaltype {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldTypeName), v...))
-	})
-}
-
-// TypeNameGT applies the GT predicate on the "Type_name" field.
-func TypeNameGT(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameGTE applies the GTE predicate on the "Type_name" field.
-func TypeNameGTE(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameLT applies the LT predicate on the "Type_name" field.
-func TypeNameLT(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameLTE applies the LTE predicate on the "Type_name" field.
-func TypeNameLTE(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameContains applies the Contains predicate on the "Type_name" field.
-func TypeNameContains(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameHasPrefix applies the HasPrefix predicate on the "Type_name" field.
-func TypeNameHasPrefix(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameHasSuffix applies the HasSuffix predicate on the "Type_name" field.
-func TypeNameHasSuffix(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameEqualFold applies the EqualFold predicate on the "Type_name" field.
-func TypeNameEqualFold(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldTypeName), v))
-	})
-}
-
-// TypeNameContainsFold applies the ContainsFold predicate on the "Type_name" field.
-func TypeNameContainsFold(v string) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldTypeName), v))
-	})
-}
-
-// HasMedicalType applies the HasEdge predicate on the "Medical_type" edge.
-func HasMedicalType() predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+// HasSystemequipment applies the HasEdge predicate on the "systemequipment" edge.
+func HasSystemequipment() predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(MedicalTypeTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, MedicalTypeTable, MedicalTypeColumn),
+			sqlgraph.To(SystemequipmentTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, SystemequipmentTable, SystemequipmentColumn),
 		)
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
 
-// HasMedicalTypeWith applies the HasEdge predicate on the "Medical_type" edge with a given conditions (other predicates).
-func HasMedicalTypeWith(preds ...predicate.Systemequipment) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+// HasSystemequipmentWith applies the HasEdge predicate on the "systemequipment" edge with a given conditions (other predicates).
+func HasSystemequipmentWith(preds ...predicate.Systemequipment) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(MedicalTypeInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, MedicalTypeTable, MedicalTypeColumn),
+			sqlgraph.To(SystemequipmentInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, SystemequipmentTable, SystemequipmentColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
@@ -356,8 +238,8 @@ func HasMedicalTypeWith(preds ...predicate.Systemequipment) predicate.Medicaltyp
 }
 
 // And groups list of predicates with the AND operator between them.
-func And(predicates ...predicate.Medicaltype) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func And(predicates ...predicate.MedicalType) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		s1 := s.Clone().SetP(nil)
 		for _, p := range predicates {
 			p(s1)
@@ -367,8 +249,8 @@ func And(predicates ...predicate.Medicaltype) predicate.Medicaltype {
 }
 
 // Or groups list of predicates with the OR operator between them.
-func Or(predicates ...predicate.Medicaltype) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func Or(predicates ...predicate.MedicalType) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		s1 := s.Clone().SetP(nil)
 		for i, p := range predicates {
 			if i > 0 {
@@ -381,8 +263,8 @@ func Or(predicates ...predicate.Medicaltype) predicate.Medicaltype {
 }
 
 // Not applies the not operator on the given predicate.
-func Not(p predicate.Medicaltype) predicate.Medicaltype {
-	return predicate.Medicaltype(func(s *sql.Selector) {
+func Not(p predicate.MedicalType) predicate.MedicalType {
+	return predicate.MedicalType(func(s *sql.Selector) {
 		p(s.Not())
 	})
 }

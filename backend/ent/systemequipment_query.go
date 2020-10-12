@@ -27,10 +27,10 @@ type SystemequipmentQuery struct {
 	unique     []string
 	predicates []predicate.Systemequipment
 	// eager-loading edges.
-	withOwner  *PhysicianQuery
-	withOwnera *MedicalequipmentQuery
-	withOwnerf *MedicaltypeQuery
-	withFKs    bool
+	withPhysician        *PhysicianQuery
+	withMedicaltype      *MedicalTypeQuery
+	withMedicalequipment *MedicalEquipmentQuery
+	withFKs              bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -60,8 +60,8 @@ func (sq *SystemequipmentQuery) Order(o ...OrderFunc) *SystemequipmentQuery {
 	return sq
 }
 
-// QueryOwner chains the current query on the owner edge.
-func (sq *SystemequipmentQuery) QueryOwner() *PhysicianQuery {
+// QueryPhysician chains the current query on the physician edge.
+func (sq *SystemequipmentQuery) QueryPhysician() *PhysicianQuery {
 	query := &PhysicianQuery{config: sq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := sq.prepareQuery(ctx); err != nil {
@@ -70,7 +70,7 @@ func (sq *SystemequipmentQuery) QueryOwner() *PhysicianQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(systemequipment.Table, systemequipment.FieldID, sq.sqlQuery()),
 			sqlgraph.To(physician.Table, physician.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, systemequipment.OwnerTable, systemequipment.OwnerColumn),
+			sqlgraph.Edge(sqlgraph.M2O, true, systemequipment.PhysicianTable, systemequipment.PhysicianColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(sq.driver.Dialect(), step)
 		return fromU, nil
@@ -78,27 +78,9 @@ func (sq *SystemequipmentQuery) QueryOwner() *PhysicianQuery {
 	return query
 }
 
-// QueryOwnera chains the current query on the ownera edge.
-func (sq *SystemequipmentQuery) QueryOwnera() *MedicalequipmentQuery {
-	query := &MedicalequipmentQuery{config: sq.config}
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := sq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(systemequipment.Table, systemequipment.FieldID, sq.sqlQuery()),
-			sqlgraph.To(medicalequipment.Table, medicalequipment.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, systemequipment.OwneraTable, systemequipment.OwneraColumn),
-		)
-		fromU = sqlgraph.SetNeighbors(sq.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
-}
-
-// QueryOwnerf chains the current query on the ownerf edge.
-func (sq *SystemequipmentQuery) QueryOwnerf() *MedicaltypeQuery {
-	query := &MedicaltypeQuery{config: sq.config}
+// QueryMedicaltype chains the current query on the medicaltype edge.
+func (sq *SystemequipmentQuery) QueryMedicaltype() *MedicalTypeQuery {
+	query := &MedicalTypeQuery{config: sq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := sq.prepareQuery(ctx); err != nil {
 			return nil, err
@@ -106,7 +88,25 @@ func (sq *SystemequipmentQuery) QueryOwnerf() *MedicaltypeQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(systemequipment.Table, systemequipment.FieldID, sq.sqlQuery()),
 			sqlgraph.To(medicaltype.Table, medicaltype.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, systemequipment.OwnerfTable, systemequipment.OwnerfColumn),
+			sqlgraph.Edge(sqlgraph.M2O, true, systemequipment.MedicaltypeTable, systemequipment.MedicaltypeColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(sq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryMedicalequipment chains the current query on the medicalequipment edge.
+func (sq *SystemequipmentQuery) QueryMedicalequipment() *MedicalEquipmentQuery {
+	query := &MedicalEquipmentQuery{config: sq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := sq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(systemequipment.Table, systemequipment.FieldID, sq.sqlQuery()),
+			sqlgraph.To(medicalequipment.Table, medicalequipment.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, systemequipment.MedicalequipmentTable, systemequipment.MedicalequipmentColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(sq.driver.Dialect(), step)
 		return fromU, nil
@@ -293,36 +293,36 @@ func (sq *SystemequipmentQuery) Clone() *SystemequipmentQuery {
 	}
 }
 
-//  WithOwner tells the query-builder to eager-loads the nodes that are connected to
-// the "owner" edge. The optional arguments used to configure the query builder of the edge.
-func (sq *SystemequipmentQuery) WithOwner(opts ...func(*PhysicianQuery)) *SystemequipmentQuery {
+//  WithPhysician tells the query-builder to eager-loads the nodes that are connected to
+// the "physician" edge. The optional arguments used to configure the query builder of the edge.
+func (sq *SystemequipmentQuery) WithPhysician(opts ...func(*PhysicianQuery)) *SystemequipmentQuery {
 	query := &PhysicianQuery{config: sq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	sq.withOwner = query
+	sq.withPhysician = query
 	return sq
 }
 
-//  WithOwnera tells the query-builder to eager-loads the nodes that are connected to
-// the "ownera" edge. The optional arguments used to configure the query builder of the edge.
-func (sq *SystemequipmentQuery) WithOwnera(opts ...func(*MedicalequipmentQuery)) *SystemequipmentQuery {
-	query := &MedicalequipmentQuery{config: sq.config}
+//  WithMedicaltype tells the query-builder to eager-loads the nodes that are connected to
+// the "medicaltype" edge. The optional arguments used to configure the query builder of the edge.
+func (sq *SystemequipmentQuery) WithMedicaltype(opts ...func(*MedicalTypeQuery)) *SystemequipmentQuery {
+	query := &MedicalTypeQuery{config: sq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	sq.withOwnera = query
+	sq.withMedicaltype = query
 	return sq
 }
 
-//  WithOwnerf tells the query-builder to eager-loads the nodes that are connected to
-// the "ownerf" edge. The optional arguments used to configure the query builder of the edge.
-func (sq *SystemequipmentQuery) WithOwnerf(opts ...func(*MedicaltypeQuery)) *SystemequipmentQuery {
-	query := &MedicaltypeQuery{config: sq.config}
+//  WithMedicalequipment tells the query-builder to eager-loads the nodes that are connected to
+// the "medicalequipment" edge. The optional arguments used to configure the query builder of the edge.
+func (sq *SystemequipmentQuery) WithMedicalequipment(opts ...func(*MedicalEquipmentQuery)) *SystemequipmentQuery {
+	query := &MedicalEquipmentQuery{config: sq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	sq.withOwnerf = query
+	sq.withMedicalequipment = query
 	return sq
 }
 
@@ -332,12 +332,12 @@ func (sq *SystemequipmentQuery) WithOwnerf(opts ...func(*MedicaltypeQuery)) *Sys
 // Example:
 //
 //	var v []struct {
-//		SystemID string `json:"System_ID,omitempty"`
+//		AddedTime time.Time `json:"added_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Systemequipment.Query().
-//		GroupBy(systemequipment.FieldSystemID).
+//		GroupBy(systemequipment.FieldAddedTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -358,11 +358,11 @@ func (sq *SystemequipmentQuery) GroupBy(field string, fields ...string) *Systeme
 // Example:
 //
 //	var v []struct {
-//		SystemID string `json:"System_ID,omitempty"`
+//		AddedTime time.Time `json:"added_time,omitempty"`
 //	}
 //
 //	client.Systemequipment.Query().
-//		Select(systemequipment.FieldSystemID).
+//		Select(systemequipment.FieldAddedTime).
 //		Scan(ctx, &v)
 //
 func (sq *SystemequipmentQuery) Select(field string, fields ...string) *SystemequipmentSelect {
@@ -394,12 +394,12 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		withFKs     = sq.withFKs
 		_spec       = sq.querySpec()
 		loadedTypes = [3]bool{
-			sq.withOwner != nil,
-			sq.withOwnera != nil,
-			sq.withOwnerf != nil,
+			sq.withPhysician != nil,
+			sq.withMedicaltype != nil,
+			sq.withMedicalequipment != nil,
 		}
 	)
-	if sq.withOwner != nil || sq.withOwnera != nil || sq.withOwnerf != nil {
+	if sq.withPhysician != nil || sq.withMedicaltype != nil || sq.withMedicalequipment != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -429,11 +429,11 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		return nodes, nil
 	}
 
-	if query := sq.withOwner; query != nil {
+	if query := sq.withPhysician; query != nil {
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*Systemequipment)
 		for i := range nodes {
-			if fk := nodes[i].physician_user_physician; fk != nil {
+			if fk := nodes[i].physician_id; fk != nil {
 				ids = append(ids, *fk)
 				nodeids[*fk] = append(nodeids[*fk], nodes[i])
 			}
@@ -446,44 +446,19 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "physician_user_physician" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "physician_id" returned %v`, n.ID)
 			}
 			for i := range nodes {
-				nodes[i].Edges.Owner = n
+				nodes[i].Edges.Physician = n
 			}
 		}
 	}
 
-	if query := sq.withOwnera; query != nil {
+	if query := sq.withMedicaltype; query != nil {
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*Systemequipment)
 		for i := range nodes {
-			if fk := nodes[i].medicalequipment_medical_equipment; fk != nil {
-				ids = append(ids, *fk)
-				nodeids[*fk] = append(nodeids[*fk], nodes[i])
-			}
-		}
-		query.Where(medicalequipment.IDIn(ids...))
-		neighbors, err := query.All(ctx)
-		if err != nil {
-			return nil, err
-		}
-		for _, n := range neighbors {
-			nodes, ok := nodeids[n.ID]
-			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "medicalequipment_medical_equipment" returned %v`, n.ID)
-			}
-			for i := range nodes {
-				nodes[i].Edges.Ownera = n
-			}
-		}
-	}
-
-	if query := sq.withOwnerf; query != nil {
-		ids := make([]int, 0, len(nodes))
-		nodeids := make(map[int][]*Systemequipment)
-		for i := range nodes {
-			if fk := nodes[i].medicaltype_medical_type; fk != nil {
+			if fk := nodes[i].medicaltype_id; fk != nil {
 				ids = append(ids, *fk)
 				nodeids[*fk] = append(nodeids[*fk], nodes[i])
 			}
@@ -496,10 +471,35 @@ func (sq *SystemequipmentQuery) sqlAll(ctx context.Context) ([]*Systemequipment,
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "medicaltype_medical_type" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "medicaltype_id" returned %v`, n.ID)
 			}
 			for i := range nodes {
-				nodes[i].Edges.Ownerf = n
+				nodes[i].Edges.Medicaltype = n
+			}
+		}
+	}
+
+	if query := sq.withMedicalequipment; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*Systemequipment)
+		for i := range nodes {
+			if fk := nodes[i].medicalequipment_id; fk != nil {
+				ids = append(ids, *fk)
+				nodeids[*fk] = append(nodeids[*fk], nodes[i])
+			}
+		}
+		query.Where(medicalequipment.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "medicalequipment_id" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.Medicalequipment = n
 			}
 		}
 	}

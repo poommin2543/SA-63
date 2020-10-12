@@ -7,31 +7,35 @@ const (
 	Label = "physician"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldPHYSICIANID holds the string denoting the physician_id field in the database.
-	FieldPHYSICIANID = "physician_id"
-	// FieldPHYSICIANNAME holds the string denoting the physician_name field in the database.
-	FieldPHYSICIANNAME = "physician_name"
-	// FieldPHYSICIANEMAIL holds the string denoting the physician_email field in the database.
-	FieldPHYSICIANEMAIL = "physician_email"
+	// FieldName holds the string denoting the name field in the database.
+	FieldName = "name"
+	// FieldEmail holds the string denoting the email field in the database.
+	FieldEmail = "email"
 
-	// EdgeUserPhysician holds the string denoting the user_physician edge name in mutations.
-	EdgeUserPhysician = "User_Physician"
+	// EdgeSystemequipment holds the string denoting the systemequipment edge name in mutations.
+	EdgeSystemequipment = "systemequipment"
 
 	// Table holds the table name of the physician in the database.
 	Table = "physicians"
-	// UserPhysicianTable is the table the holds the User_Physician relation/edge.
-	UserPhysicianTable = "systemequipments"
-	// UserPhysicianInverseTable is the table name for the Systemequipment entity.
+	// SystemequipmentTable is the table the holds the systemequipment relation/edge.
+	SystemequipmentTable = "systemequipments"
+	// SystemequipmentInverseTable is the table name for the Systemequipment entity.
 	// It exists in this package in order to avoid circular dependency with the "systemequipment" package.
-	UserPhysicianInverseTable = "systemequipments"
-	// UserPhysicianColumn is the table column denoting the User_Physician relation/edge.
-	UserPhysicianColumn = "physician_user_physician"
+	SystemequipmentInverseTable = "systemequipments"
+	// SystemequipmentColumn is the table column denoting the systemequipment relation/edge.
+	SystemequipmentColumn = "physician_id"
 )
 
 // Columns holds all SQL columns for physician fields.
 var Columns = []string{
 	FieldID,
-	FieldPHYSICIANID,
-	FieldPHYSICIANNAME,
-	FieldPHYSICIANEMAIL,
+	FieldName,
+	FieldEmail,
 }
+
+var (
+	// NameValidator is a validator for the "name" field. It is called by the builders before save.
+	NameValidator func(string) error
+	// EmailValidator is a validator for the "email" field. It is called by the builders before save.
+	EmailValidator func(string) error
+)

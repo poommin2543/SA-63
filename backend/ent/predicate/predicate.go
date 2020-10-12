@@ -6,11 +6,11 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 )
 
-// Medicalequipment is the predicate function for medicalequipment builders.
-type Medicalequipment func(*sql.Selector)
+// MedicalEquipment is the predicate function for medicalequipment builders.
+type MedicalEquipment func(*sql.Selector)
 
-// Medicaltype is the predicate function for medicaltype builders.
-type Medicaltype func(*sql.Selector)
+// MedicalType is the predicate function for medicaltype builders.
+type MedicalType func(*sql.Selector)
 
 // Physician is the predicate function for physician builders.
 type Physician func(*sql.Selector)
