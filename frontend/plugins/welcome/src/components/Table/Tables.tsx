@@ -55,6 +55,7 @@ export default function ComponentsTable() {
           ? null
           : systemequipments.map(item => (
            <TableRow key={item.id}>
+             <TableCell align="center">{item.id}</TableCell>
              <TableCell align="center">{item.addedTime}</TableCell>
              
              <TableCell align="center">

@@ -54,11 +54,11 @@ export interface EntSystemequipmentEdges {
     physician?: EntPhysician;
 }
 
-export function EntSystemequipmentEdgesFromJSON(json): EntSystemequipmentEdges {
+export function EntSystemequipmentEdgesFromJSON(json: any): EntSystemequipmentEdges {
     return EntSystemequipmentEdgesFromJSONTyped(json, false);
 }
 
-export function EntSystemequipmentEdgesFromJSONTyped(json, ignoreDiscriminator: boolean): EntSystemequipmentEdges {
+export function EntSystemequipmentEdgesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntSystemequipmentEdges {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -70,7 +70,7 @@ export function EntSystemequipmentEdgesFromJSONTyped(json, ignoreDiscriminator: 
     };
 }
 
-export function EntSystemequipmentEdgesToJSON(value?: EntSystemequipmentEdges | null) {
+export function EntSystemequipmentEdgesToJSON(value?: EntSystemequipmentEdges | null): any {
     if (value === undefined) {
         return undefined;
     }

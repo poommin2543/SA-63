@@ -27,6 +27,7 @@ import Tabs from '@material-ui/core/Tabs';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Paper from '@material-ui/core/Paper';
 import SaveIcon from '@material-ui/icons/Save';
+import { DefaultApi } from '../../api/apis';
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -64,23 +65,45 @@ const top100Films = [
   { title: 'นำกลับมาใช้ใหม่' }
 ];
 
+const initialSystemequipmentState = {
+  //medicalequipment: 'noom',
+  addedTime : '',
+ };
+
+
 export default function MenuAppBar() {
-  const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
+  
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
+  
+  const classes = useStyles();
+  const profile = { givenName: 'to Software Analysis 63' };
+  const api = new DefaultApi();
+  
+  const [systemequipment, setSystemequipment] = useState(initialSystemequipmentState);
+  const [status, setStatus] = useState(false);
+  const [alert, setAlert] = useState(true);
+  
+  const handleInputChange = (event: any) => {
+    const { id, value } = event.target;
+    setSystemequipment({ ...systemequipment, [id]: value });
+  };
+  
+  const CreateSystemequipment = async () => {
+    const res:any = await api.createSystemequipment({ systemequipment });
+    setStatus(true);
+    if (res.id !== ''){
+      setAlert(true);
+    } else {
+      setAlert(false);
+    }
+    const timer = setTimeout(() => {
+      setStatus(false);
+    }, 1000);
+  
   };
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
 function HomeIcon(props:any) {
     return (
@@ -117,7 +140,7 @@ function HomeIcon(props:any) {
             </Grid>
             <Grid item>
               <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar src="https://shorturl.at/ixKX1" alt="Noom My Avatar" />
+                <Avatar src="https://shorturl.at/ixKX1" alt="NoomAvatar" />
               </IconButton>
             </Grid>
           </Grid>
@@ -198,8 +221,16 @@ function HomeIcon(props:any) {
               </Typography>
             </Grid>
             <Grid item xs={2}>
-              <Paper className={classes.paper}>
-                <TextField id="outlined-basic" label="กรุณาใส่ชื่อเครื่องมือ" variant="outlined"/></Paper>
+              <Paper >
+              <TextField
+               id="addedTime"
+               label="ชื่อเครื่องมือแพทย์"
+               variant="outlined"
+               type="string"
+               size="medium"
+               value={systemequipment.addedTime}
+               onChange={handleInputChange}
+             /></Paper>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}> </Grid>
@@ -231,9 +262,10 @@ function HomeIcon(props:any) {
               </Typography>
             </Grid>
             <Grid item xs={2}>
-              <Paper className={classes.paper}>
+              <Paper >
                 <TextField id="outlined-number" type='number' InputLabelProps={{
-                  shrink: true,}}label="กรุณาใส่จำนวน" variant="outlined"/>
+                  shrink: true,}}label="กรุณาใส่จำนวน" variant="outlined"
+                  />
                   </Paper>
             </Grid>
             <Grid item xs={2}></Grid>
@@ -250,7 +282,9 @@ function HomeIcon(props:any) {
                 color="primary"
                 size="large"
                 className={classes.button}
-                
+                onClick={() => {
+                  CreateSystemequipment();
+                }}
                 startIcon={<SaveIcon 
                 />}
               >
