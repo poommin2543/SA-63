@@ -27,12 +27,6 @@ import {
  */
 export interface EntSystemequipment {
     /**
-     * AddedTime holds the value of the "added_time" field.
-     * @type {string}
-     * @memberof EntSystemequipment
-     */
-    addedTime?: string;
-    /**
      * 
      * @type {EntSystemequipmentEdges}
      * @memberof EntSystemequipment
@@ -56,7 +50,6 @@ export function EntSystemequipmentFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'addedTime': !exists(json, 'added_time') ? undefined : json['added_time'],
         'edges': !exists(json, 'edges') ? undefined : EntSystemequipmentEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
     };
@@ -71,7 +64,6 @@ export function EntSystemequipmentToJSON(value?: EntSystemequipment | null): any
     }
     return {
         
-        'added_time': value.addedTime,
         'edges': EntSystemequipmentEdgesToJSON(value.edges),
         'id': value.id,
     };

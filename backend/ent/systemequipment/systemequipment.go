@@ -7,8 +7,6 @@ const (
 	Label = "systemequipment"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldAddedTime holds the string denoting the added_time field in the database.
-	FieldAddedTime = "added_time"
 
 	// EdgePhysician holds the string denoting the physician edge name in mutations.
 	EdgePhysician = "physician"
@@ -45,7 +43,6 @@ const (
 // Columns holds all SQL columns for systemequipment fields.
 var Columns = []string{
 	FieldID,
-	FieldAddedTime,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Systemequipment type.

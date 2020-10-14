@@ -5,7 +5,6 @@ package ent
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
@@ -28,12 +27,6 @@ type SystemequipmentUpdate struct {
 // Where adds a new predicate for the builder.
 func (su *SystemequipmentUpdate) Where(ps ...predicate.Systemequipment) *SystemequipmentUpdate {
 	su.predicates = append(su.predicates, ps...)
-	return su
-}
-
-// SetAddedTime sets the added_time field.
-func (su *SystemequipmentUpdate) SetAddedTime(t time.Time) *SystemequipmentUpdate {
-	su.mutation.SetAddedTime(t)
 	return su
 }
 
@@ -187,13 +180,6 @@ func (su *SystemequipmentUpdate) sqlSave(ctx context.Context) (n int, err error)
 			}
 		}
 	}
-	if value, ok := su.mutation.AddedTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: systemequipment.FieldAddedTime,
-		})
-	}
 	if su.mutation.PhysicianCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -315,12 +301,6 @@ type SystemequipmentUpdateOne struct {
 	config
 	hooks    []Hook
 	mutation *SystemequipmentMutation
-}
-
-// SetAddedTime sets the added_time field.
-func (suo *SystemequipmentUpdateOne) SetAddedTime(t time.Time) *SystemequipmentUpdateOne {
-	suo.mutation.SetAddedTime(t)
-	return suo
 }
 
 // SetPhysicianID sets the physician edge to Physician by id.
@@ -471,13 +451,6 @@ func (suo *SystemequipmentUpdateOne) sqlSave(ctx context.Context) (s *Systemequi
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Systemequipment.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := suo.mutation.AddedTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: systemequipment.FieldAddedTime,
-		})
-	}
 	if suo.mutation.PhysicianCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,

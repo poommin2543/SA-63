@@ -77,9 +77,6 @@ definitions:
     type: object
   ent.Systemequipment:
     properties:
-      added_time:
-        description: AddedTime holds the value of the "added_time" field.
-        type: string
       edges:
         $ref: '#/definitions/ent.SystemequipmentEdges'
         description: |-

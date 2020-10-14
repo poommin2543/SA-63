@@ -1040,10 +1040,6 @@ var doc = `{
         "ent.Systemequipment": {
             "type": "object",
             "properties": {
-                "added_time": {
-                    "description": "AddedTime holds the value of the \"added_time\" field.",
-                    "type": "string"
-                },
                 "edges": {
                     "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the SystemequipmentQuery when eager-loading is set.",
                     "type": "object",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,Component } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -28,6 +28,8 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import Paper from '@material-ui/core/Paper';
 import SaveIcon from '@material-ui/icons/Save';
 import { DefaultApi } from '../../api/apis';
+
+
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -101,7 +103,6 @@ export default function MenuAppBar() {
     const timer = setTimeout(() => {
       setStatus(false);
     }, 1000);
-  
   };
 
 
@@ -308,7 +309,8 @@ function HomeIcon(props:any) {
       >
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>   
+            <Grid item xs>  
+            new Date() 
             </Grid>
           </Grid>
         </Toolbar>

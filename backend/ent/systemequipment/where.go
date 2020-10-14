@@ -3,8 +3,6 @@
 package systemequipment
 
 import (
-	"time"
-
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/poommin2543/app/ent/predicate"
@@ -90,89 +88,6 @@ func IDLT(id int) predicate.Systemequipment {
 func IDLTE(id int) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldID), id))
-	})
-}
-
-// AddedTime applies equality check predicate on the "added_time" field. It's identical to AddedTimeEQ.
-func AddedTime(v time.Time) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldAddedTime), v))
-	})
-}
-
-// AddedTimeEQ applies the EQ predicate on the "added_time" field.
-func AddedTimeEQ(v time.Time) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldAddedTime), v))
-	})
-}
-
-// AddedTimeNEQ applies the NEQ predicate on the "added_time" field.
-func AddedTimeNEQ(v time.Time) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldAddedTime), v))
-	})
-}
-
-// AddedTimeIn applies the In predicate on the "added_time" field.
-func AddedTimeIn(vs ...time.Time) predicate.Systemequipment {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldAddedTime), v...))
-	})
-}
-
-// AddedTimeNotIn applies the NotIn predicate on the "added_time" field.
-func AddedTimeNotIn(vs ...time.Time) predicate.Systemequipment {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldAddedTime), v...))
-	})
-}
-
-// AddedTimeGT applies the GT predicate on the "added_time" field.
-func AddedTimeGT(v time.Time) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldAddedTime), v))
-	})
-}
-
-// AddedTimeGTE applies the GTE predicate on the "added_time" field.
-func AddedTimeGTE(v time.Time) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldAddedTime), v))
-	})
-}
-
-// AddedTimeLT applies the LT predicate on the "added_time" field.
-func AddedTimeLT(v time.Time) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldAddedTime), v))
-	})
-}
-
-// AddedTimeLTE applies the LTE predicate on the "added_time" field.
-func AddedTimeLTE(v time.Time) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldAddedTime), v))
 	})
 }
 

@@ -4,9 +4,7 @@ package ent
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
@@ -21,12 +19,6 @@ type SystemequipmentCreate struct {
 	config
 	mutation *SystemequipmentMutation
 	hooks    []Hook
-}
-
-// SetAddedTime sets the added_time field.
-func (sc *SystemequipmentCreate) SetAddedTime(t time.Time) *SystemequipmentCreate {
-	sc.mutation.SetAddedTime(t)
-	return sc
 }
 
 // SetPhysicianID sets the physician edge to Physician by id.
@@ -93,9 +85,6 @@ func (sc *SystemequipmentCreate) Mutation() *SystemequipmentMutation {
 
 // Save creates the Systemequipment in the database.
 func (sc *SystemequipmentCreate) Save(ctx context.Context) (*Systemequipment, error) {
-	if _, ok := sc.mutation.AddedTime(); !ok {
-		return nil, &ValidationError{Name: "added_time", err: errors.New("ent: missing required field \"added_time\"")}
-	}
 	var (
 		err  error
 		node *Systemequipment
@@ -156,14 +145,6 @@ func (sc *SystemequipmentCreate) createSpec() (*Systemequipment, *sqlgraph.Creat
 			},
 		}
 	)
-	if value, ok := sc.mutation.AddedTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: systemequipment.FieldAddedTime,
-		})
-		s.AddedTime = value
-	}
 	if nodes := sc.mutation.PhysicianIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,

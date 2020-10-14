@@ -49,7 +49,6 @@ var (
 	// SystemequipmentsColumns holds the columns for the "systemequipments" table.
 	SystemequipmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "added_time", Type: field.TypeTime},
 		{Name: "medical_equipment_systemequipment", Type: field.TypeInt, Nullable: true},
 		{Name: "medical_type_systemequipment", Type: field.TypeInt, Nullable: true},
 		{Name: "physician_systemequipment", Type: field.TypeInt, Nullable: true},
@@ -62,21 +61,21 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:  "systemequipments_medical_equipments_systemequipment",
-				Columns: []*schema.Column{SystemequipmentsColumns[2]},
+				Columns: []*schema.Column{SystemequipmentsColumns[1]},
 
 				RefColumns: []*schema.Column{MedicalEquipmentsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "systemequipments_medical_types_systemequipment",
-				Columns: []*schema.Column{SystemequipmentsColumns[3]},
+				Columns: []*schema.Column{SystemequipmentsColumns[2]},
 
 				RefColumns: []*schema.Column{MedicalTypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "systemequipments_physicians_systemequipment",
-				Columns: []*schema.Column{SystemequipmentsColumns[4]},
+				Columns: []*schema.Column{SystemequipmentsColumns[3]},
 
 				RefColumns: []*schema.Column{PhysiciansColumns[0]},
 				OnDelete:   schema.SetNull,

@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"sync"
-	"time"
 
 	"github.com/poommin2543/app/ent/medicalequipment"
 	"github.com/poommin2543/app/ent/medicaltype"
@@ -1288,7 +1287,6 @@ type SystemequipmentMutation struct {
 	op                      Op
 	typ                     string
 	id                      *int
-	added_time              *time.Time
 	clearedFields           map[string]struct{}
 	physician               *int
 	clearedphysician        bool
@@ -1377,43 +1375,6 @@ func (m *SystemequipmentMutation) ID() (id int, exists bool) {
 		return
 	}
 	return *m.id, true
-}
-
-// SetAddedTime sets the added_time field.
-func (m *SystemequipmentMutation) SetAddedTime(t time.Time) {
-	m.added_time = &t
-}
-
-// AddedTime returns the added_time value in the mutation.
-func (m *SystemequipmentMutation) AddedTime() (r time.Time, exists bool) {
-	v := m.added_time
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldAddedTime returns the old added_time value of the Systemequipment.
-// If the Systemequipment object wasn't provided to the builder, the object is fetched
-// from the database.
-// An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *SystemequipmentMutation) OldAddedTime(ctx context.Context) (v time.Time, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldAddedTime is allowed only on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldAddedTime requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldAddedTime: %w", err)
-	}
-	return oldValue.AddedTime, nil
-}
-
-// ResetAddedTime reset all changes of the "added_time" field.
-func (m *SystemequipmentMutation) ResetAddedTime() {
-	m.added_time = nil
 }
 
 // SetPhysicianID sets the physician edge to Physician by id.
@@ -1547,10 +1508,7 @@ func (m *SystemequipmentMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *SystemequipmentMutation) Fields() []string {
-	fields := make([]string, 0, 1)
-	if m.added_time != nil {
-		fields = append(fields, systemequipment.FieldAddedTime)
-	}
+	fields := make([]string, 0, 0)
 	return fields
 }
 
@@ -1558,10 +1516,6 @@ func (m *SystemequipmentMutation) Fields() []string {
 // The second boolean value indicates that this field was
 // not set, or was not define in the schema.
 func (m *SystemequipmentMutation) Field(name string) (ent.Value, bool) {
-	switch name {
-	case systemequipment.FieldAddedTime:
-		return m.AddedTime()
-	}
 	return nil, false
 }
 
@@ -1569,10 +1523,6 @@ func (m *SystemequipmentMutation) Field(name string) (ent.Value, bool) {
 // An error is returned if the mutation operation is not UpdateOne,
 // or the query to the database was failed.
 func (m *SystemequipmentMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
-	switch name {
-	case systemequipment.FieldAddedTime:
-		return m.OldAddedTime(ctx)
-	}
 	return nil, fmt.Errorf("unknown Systemequipment field %s", name)
 }
 
@@ -1581,13 +1531,6 @@ func (m *SystemequipmentMutation) OldField(ctx context.Context, name string) (en
 // type mismatch the field type.
 func (m *SystemequipmentMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case systemequipment.FieldAddedTime:
-		v, ok := value.(time.Time)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetAddedTime(v)
-		return nil
 	}
 	return fmt.Errorf("unknown Systemequipment field %s", name)
 }
@@ -1609,8 +1552,6 @@ func (m *SystemequipmentMutation) AddedField(name string) (ent.Value, bool) {
 // error if the field is not defined in the schema, or if the
 // type mismatch the field type.
 func (m *SystemequipmentMutation) AddField(name string, value ent.Value) error {
-	switch name {
-	}
 	return fmt.Errorf("unknown Systemequipment numeric field %s", name)
 }
 
@@ -1637,11 +1578,6 @@ func (m *SystemequipmentMutation) ClearField(name string) error {
 // given field name. It returns an error if the field is not
 // defined in the schema.
 func (m *SystemequipmentMutation) ResetField(name string) error {
-	switch name {
-	case systemequipment.FieldAddedTime:
-		m.ResetAddedTime()
-		return nil
-	}
 	return fmt.Errorf("unknown Systemequipment field %s", name)
 }
 

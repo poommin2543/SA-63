@@ -328,19 +328,6 @@ func (sq *SystemequipmentQuery) WithMedicalequipment(opts ...func(*MedicalEquipm
 
 // GroupBy used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
-//
-// Example:
-//
-//	var v []struct {
-//		AddedTime time.Time `json:"added_time,omitempty"`
-//		Count int `json:"count,omitempty"`
-//	}
-//
-//	client.Systemequipment.Query().
-//		GroupBy(systemequipment.FieldAddedTime).
-//		Aggregate(ent.Count()).
-//		Scan(ctx, &v)
-//
 func (sq *SystemequipmentQuery) GroupBy(field string, fields ...string) *SystemequipmentGroupBy {
 	group := &SystemequipmentGroupBy{config: sq.config}
 	group.fields = append([]string{field}, fields...)
@@ -354,17 +341,6 @@ func (sq *SystemequipmentQuery) GroupBy(field string, fields ...string) *Systeme
 }
 
 // Select one or more fields from the given query.
-//
-// Example:
-//
-//	var v []struct {
-//		AddedTime time.Time `json:"added_time,omitempty"`
-//	}
-//
-//	client.Systemequipment.Query().
-//		Select(systemequipment.FieldAddedTime).
-//		Scan(ctx, &v)
-//
 func (sq *SystemequipmentQuery) Select(field string, fields ...string) *SystemequipmentSelect {
 	selector := &SystemequipmentSelect{config: sq.config}
 	selector.fields = append([]string{field}, fields...)
