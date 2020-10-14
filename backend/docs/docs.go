@@ -1048,6 +1048,10 @@ var doc = `{
                 "id": {
                     "description": "ID of the ent.",
                     "type": "integer"
+                },
+                "noom": {
+                    "description": "Noom holds the value of the \"noom\" field.",
+                    "type": "string"
                 }
             }
         },

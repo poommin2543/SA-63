@@ -91,6 +91,124 @@ func IDLTE(id int) predicate.Systemequipment {
 	})
 }
 
+// Noom applies equality check predicate on the "noom" field. It's identical to NoomEQ.
+func Noom(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldNoom), v))
+	})
+}
+
+// NoomEQ applies the EQ predicate on the "noom" field.
+func NoomEQ(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldNoom), v))
+	})
+}
+
+// NoomNEQ applies the NEQ predicate on the "noom" field.
+func NoomNEQ(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldNoom), v))
+	})
+}
+
+// NoomIn applies the In predicate on the "noom" field.
+func NoomIn(vs ...string) predicate.Systemequipment {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldNoom), v...))
+	})
+}
+
+// NoomNotIn applies the NotIn predicate on the "noom" field.
+func NoomNotIn(vs ...string) predicate.Systemequipment {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldNoom), v...))
+	})
+}
+
+// NoomGT applies the GT predicate on the "noom" field.
+func NoomGT(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldNoom), v))
+	})
+}
+
+// NoomGTE applies the GTE predicate on the "noom" field.
+func NoomGTE(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldNoom), v))
+	})
+}
+
+// NoomLT applies the LT predicate on the "noom" field.
+func NoomLT(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldNoom), v))
+	})
+}
+
+// NoomLTE applies the LTE predicate on the "noom" field.
+func NoomLTE(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldNoom), v))
+	})
+}
+
+// NoomContains applies the Contains predicate on the "noom" field.
+func NoomContains(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldNoom), v))
+	})
+}
+
+// NoomHasPrefix applies the HasPrefix predicate on the "noom" field.
+func NoomHasPrefix(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldNoom), v))
+	})
+}
+
+// NoomHasSuffix applies the HasSuffix predicate on the "noom" field.
+func NoomHasSuffix(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldNoom), v))
+	})
+}
+
+// NoomEqualFold applies the EqualFold predicate on the "noom" field.
+func NoomEqualFold(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldNoom), v))
+	})
+}
+
+// NoomContainsFold applies the ContainsFold predicate on the "noom" field.
+func NoomContainsFold(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldNoom), v))
+	})
+}
+
 // HasPhysician applies the HasEdge predicate on the "physician" edge.
 func HasPhysician() predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {

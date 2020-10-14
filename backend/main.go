@@ -13,6 +13,32 @@ import (
    swaggerFiles "github.com/swaggo/files"
    ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+type Medicalequipments struct {
+	Medicalequipment []Medicalequipment
+}
+
+type Medicalequipment struct {
+	Name  string
+	Stock int
+}
+
+type Medicaltypes struct {
+	Medicaltype []Medicaltype
+}
+
+type Medicaltype struct {
+	Name  string
+}
+
+type Physicians struct {
+	Physician []Physician
+}
+
+type Physician struct {
+	Name  string
+	Email string
+}
 // @title SUT SA Example API 
 // @version 1.0
 // @description This is a sample server for SUT SE 2563
@@ -73,6 +99,24 @@ func main() {
    controllers.NewPhysicianController(v1, client)
    controllers.NewSystemequipmentController(v1, client)
  
+   // Set Physicians Data
+   physicians := Physicians{
+		Physician: []Physician {
+			Physician{"Chanwit Kaewkasi", "chanwit@gmail.com"},
+			Physician{"Name Surname", "me@example.com"},
+		},
+	}
+
+	for _, ph := range physicians.Physician {
+		client.Physician.
+			Create().
+			SetEmail(ph.Email).
+			SetName(ph.Name).
+			Save(context.Background())
+    }
+    
+    
+
    router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
    router.Run()
 }

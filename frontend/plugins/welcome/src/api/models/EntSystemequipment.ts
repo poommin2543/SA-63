@@ -38,6 +38,12 @@ export interface EntSystemequipment {
      * @memberof EntSystemequipment
      */
     id?: number;
+    /**
+     * Noom holds the value of the "noom" field.
+     * @type {string}
+     * @memberof EntSystemequipment
+     */
+    noom?: string;
 }
 
 export function EntSystemequipmentFromJSON(json: any): EntSystemequipment {
@@ -52,6 +58,7 @@ export function EntSystemequipmentFromJSONTyped(json: any, ignoreDiscriminator: 
         
         'edges': !exists(json, 'edges') ? undefined : EntSystemequipmentEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'noom': !exists(json, 'noom') ? undefined : json['noom'],
     };
 }
 
@@ -66,6 +73,7 @@ export function EntSystemequipmentToJSON(value?: EntSystemequipment | null): any
         
         'edges': EntSystemequipmentEdgesToJSON(value.edges),
         'id': value.id,
+        'noom': value.noom,
     };
 }
 

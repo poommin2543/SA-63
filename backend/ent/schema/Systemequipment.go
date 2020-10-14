@@ -3,7 +3,7 @@ package schema
 import (
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
-	
+	"github.com/facebookincubator/ent/schema/field"
 )
 
 // Systemequipment holds the schema definition for the Systemequipment entity.
@@ -13,7 +13,10 @@ type Systemequipment struct {
 
 // Fields of the Systemequipment.
 func (Systemequipment) Fields() []ent.Field {
-	return nil 
+	return []ent.Field{
+		field.String("noom"),
+		
+	}
 }
 
 // Edges of the Systemequipment.

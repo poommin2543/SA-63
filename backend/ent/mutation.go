@@ -1287,6 +1287,7 @@ type SystemequipmentMutation struct {
 	op                      Op
 	typ                     string
 	id                      *int
+	noom                    *string
 	clearedFields           map[string]struct{}
 	physician               *int
 	clearedphysician        bool
@@ -1375,6 +1376,43 @@ func (m *SystemequipmentMutation) ID() (id int, exists bool) {
 		return
 	}
 	return *m.id, true
+}
+
+// SetNoom sets the noom field.
+func (m *SystemequipmentMutation) SetNoom(s string) {
+	m.noom = &s
+}
+
+// Noom returns the noom value in the mutation.
+func (m *SystemequipmentMutation) Noom() (r string, exists bool) {
+	v := m.noom
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldNoom returns the old noom value of the Systemequipment.
+// If the Systemequipment object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *SystemequipmentMutation) OldNoom(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldNoom is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldNoom requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldNoom: %w", err)
+	}
+	return oldValue.Noom, nil
+}
+
+// ResetNoom reset all changes of the "noom" field.
+func (m *SystemequipmentMutation) ResetNoom() {
+	m.noom = nil
 }
 
 // SetPhysicianID sets the physician edge to Physician by id.
@@ -1508,7 +1546,10 @@ func (m *SystemequipmentMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *SystemequipmentMutation) Fields() []string {
-	fields := make([]string, 0, 0)
+	fields := make([]string, 0, 1)
+	if m.noom != nil {
+		fields = append(fields, systemequipment.FieldNoom)
+	}
 	return fields
 }
 
@@ -1516,6 +1557,10 @@ func (m *SystemequipmentMutation) Fields() []string {
 // The second boolean value indicates that this field was
 // not set, or was not define in the schema.
 func (m *SystemequipmentMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case systemequipment.FieldNoom:
+		return m.Noom()
+	}
 	return nil, false
 }
 
@@ -1523,6 +1568,10 @@ func (m *SystemequipmentMutation) Field(name string) (ent.Value, bool) {
 // An error is returned if the mutation operation is not UpdateOne,
 // or the query to the database was failed.
 func (m *SystemequipmentMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case systemequipment.FieldNoom:
+		return m.OldNoom(ctx)
+	}
 	return nil, fmt.Errorf("unknown Systemequipment field %s", name)
 }
 
@@ -1531,6 +1580,13 @@ func (m *SystemequipmentMutation) OldField(ctx context.Context, name string) (en
 // type mismatch the field type.
 func (m *SystemequipmentMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case systemequipment.FieldNoom:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetNoom(v)
+		return nil
 	}
 	return fmt.Errorf("unknown Systemequipment field %s", name)
 }
@@ -1552,6 +1608,8 @@ func (m *SystemequipmentMutation) AddedField(name string) (ent.Value, bool) {
 // error if the field is not defined in the schema, or if the
 // type mismatch the field type.
 func (m *SystemequipmentMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	}
 	return fmt.Errorf("unknown Systemequipment numeric field %s", name)
 }
 
@@ -1578,6 +1636,11 @@ func (m *SystemequipmentMutation) ClearField(name string) error {
 // given field name. It returns an error if the field is not
 // defined in the schema.
 func (m *SystemequipmentMutation) ResetField(name string) error {
+	switch name {
+	case systemequipment.FieldNoom:
+		m.ResetNoom()
+		return nil
+	}
 	return fmt.Errorf("unknown Systemequipment field %s", name)
 }
 

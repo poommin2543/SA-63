@@ -1,4 +1,4 @@
-import React, { useState,Component } from 'react';
+import React, { useState,Component, useEffect } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -28,8 +28,10 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import Paper from '@material-ui/core/Paper';
 import SaveIcon from '@material-ui/icons/Save';
 import { DefaultApi } from '../../api/apis';
+import { Select } from '@material-ui/core';
+import { EntPhysician } from '../../api/models/EntPhysician';
 
-
+import ComponanceTable from '../Table';   
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -69,8 +71,14 @@ const top100Films = [
 
 const initialSystemequipmentState = {
   //medicalequipment: 'noom',
-  addedTime : '',
+  noom : 'noom',
  };
+
+interface physiciandata {
+  namelist: number;
+  
+  // create_by: number;
+}
 
 
 export default function MenuAppBar() {
@@ -105,8 +113,74 @@ export default function MenuAppBar() {
     }, 1000);
   };
 
+  const [systemequipment_data, setphysician] = React.useState<
+  Partial<physiciandata>
+>({});
 
-function HomeIcon(props:any) {
+const [physicians, setPhysicians] = React.useState<EntPhysician[]>([]);
+
+
+
+
+const getPhysicians = async () => {
+  const res = await api.listPhysician({ limit: 10, offset: 0 });
+  setPhysicians(res);
+};
+
+
+
+// Lifecycle Hooks
+useEffect(() => {
+  getPhysicians();
+ 
+}, []);
+
+// set data to object playlist_video
+const handleChange = (
+  event: React.ChangeEvent<{ name?: string; value: unknown }>,
+) => {
+  const name = event.target.name ;
+  const { value } = event.target;
+  setphysician({ ...systemequipment_data, [name]: value });
+  console.log(systemequipment_data);
+};
+
+// clear input form
+function clear() {
+  setphysician({});
+}
+
+// function save data
+function save() {
+  const apiUrl = 'http://localhost:8080/api/v1/playlist-videos';
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(systemequipment_data),
+  };
+
+  console.log(systemequipment_data); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
+
+  fetch(apiUrl, requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if (data.status === true) {
+        clear();
+        Toast.fire({
+          icon: 'success',
+          title: 'บันทึกข้อมูลสำเร็จ',
+        });
+      } else {
+        Toast.fire({
+          icon: 'error',
+          title: 'บันทึกข้อมูลไม่สำเร็จ',
+        });
+      }
+    });
+}
+
+ function HomeIcon(props:any) {
     return (
       <SvgIcon {...props}>
         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
@@ -172,15 +246,20 @@ function HomeIcon(props:any) {
                 </Grid>  
             
             <Grid item>
-            <Autocomplete
-              id="combo-box-demo"
-              options={name}
-              getOptionLabel={(option) => option.title}
-              style={{ width: 200 }}
-              
-              renderInput={(params) => <TextField {...params} label=""  variant="outlined" />}
-                  
-            />
+            <Select
+                  name="prefix"
+                  value={systemequipment_data.namelist || ''}
+                  style={{ width: 200 }}
+                  onChange={handleChange}
+                >
+                  {physicians.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    )
+                  })}
+                </Select>
             </Grid>
             
           </Grid>
@@ -229,7 +308,7 @@ function HomeIcon(props:any) {
                variant="outlined"
                type="string"
                size="medium"
-               value={systemequipment.addedTime}
+               value={systemequipment.noom}
                onChange={handleInputChange}
              /></Paper>
             </Grid>
@@ -315,6 +394,7 @@ function HomeIcon(props:any) {
           </Grid>
         </Toolbar>
       </AppBar>
+      <ComponanceTable></ComponanceTable>
     </div>
   );
 }

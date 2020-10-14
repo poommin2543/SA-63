@@ -30,6 +30,12 @@ func (su *SystemequipmentUpdate) Where(ps ...predicate.Systemequipment) *Systeme
 	return su
 }
 
+// SetNoom sets the noom field.
+func (su *SystemequipmentUpdate) SetNoom(s string) *SystemequipmentUpdate {
+	su.mutation.SetNoom(s)
+	return su
+}
+
 // SetPhysicianID sets the physician edge to Physician by id.
 func (su *SystemequipmentUpdate) SetPhysicianID(id int) *SystemequipmentUpdate {
 	su.mutation.SetPhysicianID(id)
@@ -180,6 +186,13 @@ func (su *SystemequipmentUpdate) sqlSave(ctx context.Context) (n int, err error)
 			}
 		}
 	}
+	if value, ok := su.mutation.Noom(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: systemequipment.FieldNoom,
+		})
+	}
 	if su.mutation.PhysicianCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -301,6 +314,12 @@ type SystemequipmentUpdateOne struct {
 	config
 	hooks    []Hook
 	mutation *SystemequipmentMutation
+}
+
+// SetNoom sets the noom field.
+func (suo *SystemequipmentUpdateOne) SetNoom(s string) *SystemequipmentUpdateOne {
+	suo.mutation.SetNoom(s)
+	return suo
 }
 
 // SetPhysicianID sets the physician edge to Physician by id.
@@ -451,6 +470,13 @@ func (suo *SystemequipmentUpdateOne) sqlSave(ctx context.Context) (s *Systemequi
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Systemequipment.ID for update")}
 	}
 	_spec.Node.ID.Value = id
+	if value, ok := suo.mutation.Noom(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: systemequipment.FieldNoom,
+		})
+	}
 	if suo.mutation.PhysicianCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,

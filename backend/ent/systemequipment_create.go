@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
@@ -19,6 +20,12 @@ type SystemequipmentCreate struct {
 	config
 	mutation *SystemequipmentMutation
 	hooks    []Hook
+}
+
+// SetNoom sets the noom field.
+func (sc *SystemequipmentCreate) SetNoom(s string) *SystemequipmentCreate {
+	sc.mutation.SetNoom(s)
+	return sc
 }
 
 // SetPhysicianID sets the physician edge to Physician by id.
@@ -85,6 +92,9 @@ func (sc *SystemequipmentCreate) Mutation() *SystemequipmentMutation {
 
 // Save creates the Systemequipment in the database.
 func (sc *SystemequipmentCreate) Save(ctx context.Context) (*Systemequipment, error) {
+	if _, ok := sc.mutation.Noom(); !ok {
+		return nil, &ValidationError{Name: "noom", err: errors.New("ent: missing required field \"noom\"")}
+	}
 	var (
 		err  error
 		node *Systemequipment
@@ -145,6 +155,14 @@ func (sc *SystemequipmentCreate) createSpec() (*Systemequipment, *sqlgraph.Creat
 			},
 		}
 	)
+	if value, ok := sc.mutation.Noom(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: systemequipment.FieldNoom,
+		})
+		s.Noom = value
+	}
 	if nodes := sc.mutation.PhysicianIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,

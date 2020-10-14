@@ -7,6 +7,8 @@ const (
 	Label = "systemequipment"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldNoom holds the string denoting the noom field in the database.
+	FieldNoom = "noom"
 
 	// EdgePhysician holds the string denoting the physician edge name in mutations.
 	EdgePhysician = "physician"
@@ -43,6 +45,7 @@ const (
 // Columns holds all SQL columns for systemequipment fields.
 var Columns = []string{
 	FieldID,
+	FieldNoom,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Systemequipment type.
