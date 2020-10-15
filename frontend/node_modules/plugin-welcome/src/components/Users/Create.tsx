@@ -28,10 +28,11 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import Paper from '@material-ui/core/Paper';
 import SaveIcon from '@material-ui/icons/Save';
 import { DefaultApi } from '../../api/apis';
-import { Select } from '@material-ui/core';
+
 import { EntPhysician } from '../../api/models/EntPhysician';
 
 import ComponanceTable from '../Table';   
+import Select from '@material-ui/core/Select';
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
