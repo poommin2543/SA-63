@@ -5,6 +5,7 @@ package ent
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
@@ -31,8 +32,8 @@ func (su *SystemequipmentUpdate) Where(ps ...predicate.Systemequipment) *Systeme
 }
 
 // SetAddedtime sets the addedtime field.
-func (su *SystemequipmentUpdate) SetAddedtime(s string) *SystemequipmentUpdate {
-	su.mutation.SetAddedtime(s)
+func (su *SystemequipmentUpdate) SetAddedtime(t time.Time) *SystemequipmentUpdate {
+	su.mutation.SetAddedtime(t)
 	return su
 }
 
@@ -188,7 +189,7 @@ func (su *SystemequipmentUpdate) sqlSave(ctx context.Context) (n int, err error)
 	}
 	if value, ok := su.mutation.Addedtime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeTime,
 			Value:  value,
 			Column: systemequipment.FieldAddedtime,
 		})
@@ -317,8 +318,8 @@ type SystemequipmentUpdateOne struct {
 }
 
 // SetAddedtime sets the addedtime field.
-func (suo *SystemequipmentUpdateOne) SetAddedtime(s string) *SystemequipmentUpdateOne {
-	suo.mutation.SetAddedtime(s)
+func (suo *SystemequipmentUpdateOne) SetAddedtime(t time.Time) *SystemequipmentUpdateOne {
+	suo.mutation.SetAddedtime(t)
 	return suo
 }
 
@@ -472,7 +473,7 @@ func (suo *SystemequipmentUpdateOne) sqlSave(ctx context.Context) (s *Systemequi
 	_spec.Node.ID.Value = id
 	if value, ok := suo.mutation.Addedtime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeTime,
 			Value:  value,
 			Column: systemequipment.FieldAddedtime,
 		})

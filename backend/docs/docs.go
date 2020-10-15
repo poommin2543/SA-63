@@ -774,7 +774,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ent.Systemequipment"
+                            "$ref": "#/definitions/controllers.Systemequipment"
                         }
                     }
                 ],
@@ -782,7 +782,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.Systemequipment"
+                            "$ref": "#/definitions/controllers.Systemequipment"
                         }
                     },
                     "400": {
@@ -939,6 +939,23 @@ var doc = `{
         }
     },
     "definitions": {
+        "controllers.Systemequipment": {
+            "type": "object",
+            "properties": {
+                "nameEquipmentID": {
+                    "type": "integer"
+                },
+                "physicianID": {
+                    "type": "integer"
+                },
+                "stockEquipmentID": {
+                    "type": "integer"
+                },
+                "typeEquipmentID": {
+                    "type": "integer"
+                }
+            }
+        },
         "ent.MedicalEquipment": {
             "type": "object",
             "properties": {

@@ -130,6 +130,21 @@ func main() {
 			Save(context.Background())
 	}
 
+	medicalequipments := Medicalequipments{
+		Medicalequipment: []Medicalequipment{
+			Medicalequipment{"กรรไกร",1},
+			Medicalequipment{"ปากกา",2},
+		},
+	}
+
+	for _, me := range medicalequipments.Medicalequipment {
+		client.MedicalEquipment.
+			Create().
+			SetName(me.Name).
+			SetStock(me.Stock).
+			Save(context.Background())
+	}
+
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Run()
 }

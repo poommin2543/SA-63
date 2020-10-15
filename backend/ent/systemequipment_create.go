@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
@@ -23,8 +24,8 @@ type SystemequipmentCreate struct {
 }
 
 // SetAddedtime sets the addedtime field.
-func (sc *SystemequipmentCreate) SetAddedtime(s string) *SystemequipmentCreate {
-	sc.mutation.SetAddedtime(s)
+func (sc *SystemequipmentCreate) SetAddedtime(t time.Time) *SystemequipmentCreate {
+	sc.mutation.SetAddedtime(t)
 	return sc
 }
 
@@ -157,7 +158,7 @@ func (sc *SystemequipmentCreate) createSpec() (*Systemequipment, *sqlgraph.Creat
 	)
 	if value, ok := sc.mutation.Addedtime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeTime,
 			Value:  value,
 			Column: systemequipment.FieldAddedtime,
 		})

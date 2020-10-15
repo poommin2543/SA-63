@@ -1,5 +1,16 @@
 basePath: /api/v1
 definitions:
+  controllers.Systemequipment:
+    properties:
+      nameEquipmentID:
+        type: integer
+      physicianID:
+        type: integer
+      stockEquipmentID:
+        type: integer
+      typeEquipmentID:
+        type: integer
+    type: object
   ent.MedicalEquipment:
     properties:
       edges:
@@ -617,14 +628,14 @@ paths:
         name: systemequipment
         required: true
         schema:
-          $ref: '#/definitions/ent.Systemequipment'
+          $ref: '#/definitions/controllers.Systemequipment'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Systemequipment'
+            $ref: '#/definitions/controllers.Systemequipment'
         "400":
           description: Bad Request
           schema:

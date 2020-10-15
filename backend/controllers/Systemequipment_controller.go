@@ -4,10 +4,15 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/poommin2543/app/ent"
+	"github.com/poommin2543/app/ent/physician"
+	"github.com/poommin2543/app/ent/medicaltype"
 	"github.com/poommin2543/app/ent/systemequipment"
+	"github.com/poommin2543/app/ent/medicalequipment"
+	
 )
 
 // SystemequipmentController defines the struct for the systemequipment controller
@@ -15,13 +20,13 @@ type SystemequipmentController struct {
 	client *ent.Client
 	router gin.IRouter
 }
-type Medicalequipments struct {
-	Medicalequipment []Medicalequipment
-}
 
-type Medicalequipment struct {
-	Name  string
-	Stock int
+type Systemequipment struct {
+	NameEquipmentID  int
+	StockEquipmentID int
+	TypeEquipmentID  int
+	PhysicianID      int
+	addedtime             string
 }
 
 // CreateSystemequipment handles POST requests for adding systemequipment entities
@@ -30,13 +35,13 @@ type Medicalequipment struct {
 // @ID create-systemequipment
 // @Accept   json
 // @Produce  json
-// @Param systemequipment body ent.Systemequipment true "Systemequipment entity"
-// @Success 200 {object} ent.Systemequipment
+// @Param systemequipment body Systemequipment true "Systemequipment entity"
+// @Success 200 {object} Systemequipment
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /systemequipments [post]
 func (ctl *SystemequipmentController) CreateSystemequipment(c *gin.Context) {
-	obj := ent.Systemequipment{}
+	obj := Systemequipment{}
 	if err := c.ShouldBind(&obj); err != nil {
 		c.JSON(400, gin.H{
 			"error": "systemequipment binding failed",
@@ -44,9 +49,63 @@ func (ctl *SystemequipmentController) CreateSystemequipment(c *gin.Context) {
 		return
 	}
 
-	u, err := ctl.client.Systemequipment.
+	ph, err := ctl.client.Physician.
+		Query().
+		Where(physician.IDEQ(int(obj.PhysicianID))).
+		Only(context.Background())
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "physician not found",
+		})
+		return
+	}
+
+	mt, err := ctl.client.MedicalType.
+		Query().
+		Where(medicaltype.IDEQ(int(obj.TypeEquipmentID))).
+		Only(context.Background())
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "MedicalType  not found",
+		})
+		return
+	}
+
+	men, err := ctl.client.MedicalEquipment.
+		Query().
+		Where(medicalequipment.IDEQ(int(obj.NameEquipmentID))).
+		Only(context.Background())
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "NameEquipmentID   not found",
+		})
+		return
+	}
+
+	mes, err := ctl.client.MedicalEquipment.
+		Query().
+		Where(medicalequipment.IDEQ(int(obj.StockEquipmentID))).
+		Only(context.Background())
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "StockEquipmentID   not found",
+		})
+		return
+	}
+
+	times, err := time.Parse(time.RFC3339, obj.addedtime)
+	
+	sa, err := ctl.client.Systemequipment.
 		Create().
-		SetAddedtime(obj.Addedtime).
+		SetPhysician(ph).
+		SetMedicaltype(mt).
+		SetMedicalequipment(men).
+		SetMedicalequipment(mes).
+		SetAddedtime(times).
 		Save(context.Background())
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -55,7 +114,7 @@ func (ctl *SystemequipmentController) CreateSystemequipment(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, u)
+	c.JSON(200, sa)
 }
 
 // GetSystemequipment handles GET requests to retrieve a systemequipment entity
@@ -124,6 +183,9 @@ func (ctl *SystemequipmentController) ListSystemequipment(c *gin.Context) {
 
 	systemequipments, err := ctl.client.Systemequipment.
 		Query().
+		WithPhysician().
+		WithMedicalequipment().
+		WithMedicaltype().
 		Limit(limit).
 		Offset(offset).
 		All(context.Background())

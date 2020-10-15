@@ -1,3 +1,4 @@
+export * from './ControllersSystemequipment';
 export * from './EntMedicalEquipment';
 export * from './EntMedicalEquipmentEdges';
 export * from './EntMedicalType';

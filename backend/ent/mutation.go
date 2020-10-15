@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/poommin2543/app/ent/medicalequipment"
 	"github.com/poommin2543/app/ent/medicaltype"
@@ -1287,7 +1288,7 @@ type SystemequipmentMutation struct {
 	op                      Op
 	typ                     string
 	id                      *int
-	addedtime               *string
+	addedtime               *time.Time
 	clearedFields           map[string]struct{}
 	physician               *int
 	clearedphysician        bool
@@ -1379,12 +1380,12 @@ func (m *SystemequipmentMutation) ID() (id int, exists bool) {
 }
 
 // SetAddedtime sets the addedtime field.
-func (m *SystemequipmentMutation) SetAddedtime(s string) {
-	m.addedtime = &s
+func (m *SystemequipmentMutation) SetAddedtime(t time.Time) {
+	m.addedtime = &t
 }
 
 // Addedtime returns the addedtime value in the mutation.
-func (m *SystemequipmentMutation) Addedtime() (r string, exists bool) {
+func (m *SystemequipmentMutation) Addedtime() (r time.Time, exists bool) {
 	v := m.addedtime
 	if v == nil {
 		return
@@ -1396,7 +1397,7 @@ func (m *SystemequipmentMutation) Addedtime() (r string, exists bool) {
 // If the Systemequipment object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *SystemequipmentMutation) OldAddedtime(ctx context.Context) (v string, err error) {
+func (m *SystemequipmentMutation) OldAddedtime(ctx context.Context) (v time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldAddedtime is allowed only on UpdateOne operations")
 	}
@@ -1581,7 +1582,7 @@ func (m *SystemequipmentMutation) OldField(ctx context.Context, name string) (en
 func (m *SystemequipmentMutation) SetField(name string, value ent.Value) error {
 	switch name {
 	case systemequipment.FieldAddedtime:
-		v, ok := value.(string)
+		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

@@ -15,6 +15,9 @@
 
 import * as runtime from '../runtime';
 import {
+    ControllersSystemequipment,
+    ControllersSystemequipmentFromJSON,
+    ControllersSystemequipmentToJSON,
     EntMedicalEquipment,
     EntMedicalEquipmentFromJSON,
     EntMedicalEquipmentToJSON,
@@ -42,7 +45,7 @@ export interface CreatePhysicianRequest {
 }
 
 export interface CreateSystemequipmentRequest {
-    systemequipment: EntSystemequipment;
+    systemequipment: ControllersSystemequipment;
 }
 
 export interface DeleteMedicalequipmentRequest {
@@ -231,7 +234,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Create systemequipment
      * Create systemequipment
      */
-    async createSystemequipmentRaw(requestParameters: CreateSystemequipmentRequest): Promise<runtime.ApiResponse<EntSystemequipment>> {
+    async createSystemequipmentRaw(requestParameters: CreateSystemequipmentRequest): Promise<runtime.ApiResponse<ControllersSystemequipment>> {
         if (requestParameters.systemequipment === null || requestParameters.systemequipment === undefined) {
             throw new runtime.RequiredError('systemequipment','Required parameter requestParameters.systemequipment was null or undefined when calling createSystemequipment.');
         }
@@ -247,17 +250,17 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: EntSystemequipmentToJSON(requestParameters.systemequipment),
+            body: ControllersSystemequipmentToJSON(requestParameters.systemequipment),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EntSystemequipmentFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ControllersSystemequipmentFromJSON(jsonValue));
     }
 
     /**
      * Create systemequipment
      * Create systemequipment
      */
-    async createSystemequipment(requestParameters: CreateSystemequipmentRequest): Promise<EntSystemequipment> {
+    async createSystemequipment(requestParameters: CreateSystemequipmentRequest): Promise<ControllersSystemequipment> {
         const response = await this.createSystemequipmentRaw(requestParameters);
         return await response.value();
     }

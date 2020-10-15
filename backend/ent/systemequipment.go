@@ -5,6 +5,7 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/poommin2543/app/ent/medicalequipment"
@@ -19,7 +20,7 @@ type Systemequipment struct {
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
 	// Addedtime holds the value of the "addedtime" field.
-	Addedtime string `json:"addedtime,omitempty"`
+	Addedtime time.Time `json:"addedtime,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SystemequipmentQuery when eager-loading is set.
 	Edges                             SystemequipmentEdges `json:"edges"`
@@ -86,8 +87,8 @@ func (e SystemequipmentEdges) MedicalequipmentOrErr() (*MedicalEquipment, error)
 // scanValues returns the types for scanning values from sql.Rows.
 func (*Systemequipment) scanValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{},  // id
-		&sql.NullString{}, // addedtime
+		&sql.NullInt64{}, // id
+		&sql.NullTime{},  // addedtime
 	}
 }
 
@@ -112,10 +113,10 @@ func (s *Systemequipment) assignValues(values ...interface{}) error {
 	}
 	s.ID = int(value.Int64)
 	values = values[1:]
-	if value, ok := values[0].(*sql.NullString); !ok {
+	if value, ok := values[0].(*sql.NullTime); !ok {
 		return fmt.Errorf("unexpected type %T for field addedtime", values[0])
 	} else if value.Valid {
-		s.Addedtime = value.String
+		s.Addedtime = value.Time
 	}
 	values = values[1:]
 	if len(values) == len(systemequipment.ForeignKeys) {
@@ -180,7 +181,7 @@ func (s *Systemequipment) String() string {
 	builder.WriteString("Systemequipment(")
 	builder.WriteString(fmt.Sprintf("id=%v", s.ID))
 	builder.WriteString(", addedtime=")
-	builder.WriteString(s.Addedtime)
+	builder.WriteString(s.Addedtime.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

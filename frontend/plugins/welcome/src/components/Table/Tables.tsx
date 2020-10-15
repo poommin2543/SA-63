@@ -58,7 +58,7 @@ export default function ComponentsTable() {
           : systemequipments.map(item => (
            <TableRow key={item.id}>
              <TableCell align="center">{item.id}</TableCell>
-             <TableCell align="center">{moment(item.deathTime).format('DD/MM/YYYY HH:mm:ss')}</TableCell>
+             <TableCell align="center">{moment(item.addedtime).format('DD/MM/YYYY HH:mm:ss')}</TableCell>
             
              <TableCell align="center">
                <Button

@@ -4,36 +4,23 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TableCell from '@material-ui/core/TableCell';
-import FormControl from '@material-ui/core/FormControl';
-
 import Hidden from '@material-ui/core/Hidden';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
-import Tooltip from '@material-ui/core/Tooltip';
 import Avatar from '@material-ui/core/Avatar';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import Paper from '@material-ui/core/Paper';
 import SaveIcon from '@material-ui/icons/Save';
 import { DefaultApi } from '../../api/apis';
-
 import { EntPhysician } from '../../api/models/EntPhysician';
-
 import ComponanceTable from '../Table';   
 import Select from '@material-ui/core/Select';
-import moment from 'moment';
+import { EntMedicalType } from '../../api/models/EntMedicalType';
+import { EntMedicalEquipment } from '../../api/models/EntMedicalEquipment';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -60,19 +47,10 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const name = [
-  { title: 'นพ. ภูมิมินทร์ ' },
-  { title: 'นพ. พินพิมาย' }
-];
-
-const top100Films = [
-  { title: 'ใช้แล้วทิ้ง' },
-  { title: 'นำกลับมาใช้ใหม่' }
-];
 
 const initialSystemequipmentState = {
   //medicalequipment: 'noom',
-  noom : 'noom',
+  noom : '',
  };
 
 interface physiciandata {
@@ -92,6 +70,11 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+interface inter {
+  nameEquipmentID: number;
+  typeEquipmentID: number;
+  stockEquipmentID: number;
 }
 export default function MenuAppBar() {
   
@@ -125,56 +108,70 @@ export default function MenuAppBar() {
     }, 1000);
   };
 
-  const [systemequipment_data, setphysician] = React.useState<
-  Partial<physiciandata>
->({});
-
-
-
-
-
-
-const getPhysicians = async () => {
-  const res = await api.listPhysician({ limit: 10, offset: 0 });
-  setPhysicians(res);
-};
-
-
-
-// Lifecycle Hooks
-useEffect(() => {
-  getPhysicians();
- 
-}, []);
-
-// set data to object playlist_video
-const handleChange = (
-  event: React.ChangeEvent<{ name?: string; value: unknown }>,
-) => {
-  const name = event.target.name ;
-  const { value } = event.target;
-  setphysician({ ...systemequipment_data, [name]: value });
-  console.log(systemequipment_data);
-};
-
-// clear input form
-function clear() {
-  setphysician({});
-}
-
-// function save data
-function save() {
-  const apiUrl = 'http://localhost:8080/api/v1/playlist-videos';
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(systemequipment_data),
-  };
-
-  console.log(systemequipment_data); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
-
+    const [systemequipment_data, setSystemequipment_data] = React.useState<
+      Partial<inter>
+    >({});
   
-}
+    const [physicians, setPhysicians] = React.useState<EntPhysician[]>([]);
+    const [medicaltypes, setMedicaltypes] = React.useState<EntMedicalType[]>([]);
+    const [medicalEquipments, setMedicalEquipments] = React.useState<EntMedicalEquipment[]>([]);
+    
+  
+    const getPhysicians = async () => {
+      const res = await api.listPhysician({ limit: 10, offset: 0 });
+      setPhysicians(res);
+    };
+  
+    const getMedicaltypes = async () => {
+      const res = await api.listMedicaltype({ limit: 10, offset: 0 });
+      setMedicaltypes(res);
+    };
+  
+    const getMedicalEquipments = async () => {
+      const res = await api.listMedicalequipment({ limit: 10, offset: 0 });
+      setMedicalEquipments(res);
+    };
+  
+  
+  
+    // Lifecycle Hooks
+    useEffect(() => {
+      getPhysicians();
+      getMedicaltypes();
+      getMedicalEquipments();
+      
+    }, []);
+  
+    // set data to object playlist_video
+    const handleChange = (
+      event: React.ChangeEvent<{ name?: string; value: unknown }>,
+    ) => {
+      const name = event.target.name ;
+      const { value } = event.target;
+      setSystemequipment_data({ ...systemequipment_data, [name]: value });
+      console.log(systemequipment_data);
+    };
+    const handleChange1 = (
+      event: React.ChangeEvent<{ name?: string; value: unknown }>,
+    ) => {
+      const name = event.target.name ;
+      const { value } = event.target;
+      setSystemequipment_data({ ...systemequipment_data, [name]: value });
+      console.log(systemequipment_data);
+    };
+    const handleChange2 = (
+      event: React.ChangeEvent<{ name?: string; value: unknown }>,
+    ) => {
+      const name = event.target.name ;
+      const { value } = event.target;
+      setSystemequipment_data({ ...systemequipment_data, [name]: value });
+      console.log(systemequipment_data);
+    };
+  
+   
+  
+
+
 
  function HomeIcon(props:any) {
     return (
@@ -287,16 +284,21 @@ function save() {
               </Typography>
             </Grid>
             <Grid item xs={2}>
-              <Paper >
-              <TextField
-               id="addedTime"
-               label="ชื่อเครื่องมือแพทย์"
-               variant="outlined"
-               type="string"
-               size="medium"
-               value={systemequipment.noom}
-               onChange={handleInputChange}
-             /></Paper>
+              
+              <Select
+                  name="prefix"
+                  value={systemequipment_data.medicalequipmentdata || ''}
+                  style={{ width: 200 }}
+                  onChange={handleChange}
+                >
+                  {medicalEquipments.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    )
+                  })}
+                </Select>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}> </Grid>
@@ -309,13 +311,20 @@ function save() {
               </Typography>
             </Grid>
             <Grid item xs={2}>
-            <Autocomplete
-              id="combo-box-demo"
-              options={top100Films}
-              getOptionLabel={(option) => option.title}
-              
-              renderInput={(params) => <TextField {...params} label="โปรดระบุประเภท" variant="outlined" />}
-            />
+            <Select
+                  name="types"
+                  value={systemequipment_data.typedata || ''}
+                  style={{ width: 200 }}
+                  onChange={handleChange1}
+                >
+                  {medicaltypes.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    )
+                  })}
+                </Select>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}> </Grid>
@@ -328,15 +337,40 @@ function save() {
               </Typography>
             </Grid>
             <Grid item xs={2}>
-              <Paper >
-                <TextField id="outlined-number" type='number' InputLabelProps={{
-                  shrink: true,}}label="กรุณาใส่จำนวน" variant="outlined"
-                  />
-                  </Paper>
+              
+              <Select
+                  name="prefix"
+                  value={systemequipment_data.medicalequipmentdata || ''}
+                  style={{ width: 200 }}
+                  onChange={handleChange2}
+                >
+                  {medicalEquipments.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.stock}
+                      </MenuItem>
+                    )
+                  })}
+                </Select>
+                  
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}> </Grid>
 
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Typography color="primary" variant="h6" component="h1">
+                วันที่/เวลาที่บันทึก
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              
+              
+                  
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}> </Grid>
 
             <Grid item xs={2}></Grid>
             <Grid item xs={2}> </Grid>
