@@ -71,11 +71,7 @@ function Copyright() {
     </Typography>
   );
 }
-interface inter {
-  nameEquipmentID: number;
-  typeEquipmentID: number;
-  stockEquipmentID: number;
-}
+
 export default function MenuAppBar() {
   
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -90,83 +86,14 @@ export default function MenuAppBar() {
   const [status, setStatus] = useState(false);
   const [alert, setAlert] = useState(true);
   
-  const handleInputChange = (event: any) => {
-    const { id, value } = event.target;
-    setSystemequipment({ ...systemequipment, [id]: value });
-  };
   
-  const CreateSystemequipment = async () => {
-    const res:any = await api.createSystemequipment({ systemequipment });
-    setStatus(true);
-    if (res.id !== ''){
-      setAlert(true);
-    } else {
-      setAlert(false);
-    }
-    const timer = setTimeout(() => {
-      setStatus(false);
-    }, 1000);
-  };
-
-    const [systemequipment_data, setSystemequipment_data] = React.useState<
-      Partial<inter>
-    >({});
   
-    const [physicians, setPhysicians] = React.useState<EntPhysician[]>([]);
-    const [medicaltypes, setMedicaltypes] = React.useState<EntMedicalType[]>([]);
-    const [medicalEquipments, setMedicalEquipments] = React.useState<EntMedicalEquipment[]>([]);
     
   
-    const getPhysicians = async () => {
-      const res = await api.listPhysician({ limit: 10, offset: 0 });
-      setPhysicians(res);
-    };
-  
-    const getMedicaltypes = async () => {
-      const res = await api.listMedicaltype({ limit: 10, offset: 0 });
-      setMedicaltypes(res);
-    };
-  
-    const getMedicalEquipments = async () => {
-      const res = await api.listMedicalequipment({ limit: 10, offset: 0 });
-      setMedicalEquipments(res);
-    };
   
   
   
-    // Lifecycle Hooks
-    useEffect(() => {
-      getPhysicians();
-      getMedicaltypes();
-      getMedicalEquipments();
-      
-    }, []);
-  
-    // set data to object playlist_video
-    const handleChange = (
-      event: React.ChangeEvent<{ name?: string; value: unknown }>,
-    ) => {
-      const name = event.target.name ;
-      const { value } = event.target;
-      setSystemequipment_data({ ...systemequipment_data, [name]: value });
-      console.log(systemequipment_data);
-    };
-    const handleChange1 = (
-      event: React.ChangeEvent<{ name?: string; value: unknown }>,
-    ) => {
-      const name = event.target.name ;
-      const { value } = event.target;
-      setSystemequipment_data({ ...systemequipment_data, [name]: value });
-      console.log(systemequipment_data);
-    };
-    const handleChange2 = (
-      event: React.ChangeEvent<{ name?: string; value: unknown }>,
-    ) => {
-      const name = event.target.name ;
-      const { value } = event.target;
-      setSystemequipment_data({ ...systemequipment_data, [name]: value });
-      console.log(systemequipment_data);
-    };
+    
   
    
   
@@ -285,20 +212,16 @@ export default function MenuAppBar() {
             </Grid>
             <Grid item xs={2}>
               
-              <Select
-                  name="prefix"
-                  value={systemequipment_data.medicalequipmentdata || ''}
-                  style={{ width: 200 }}
-                  onChange={handleChange}
-                >
-                  {medicalEquipments.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    )
-                  })}
-                </Select>
+              
+
+
+
+
+
+
+
+
+
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}> </Grid>
@@ -311,20 +234,14 @@ export default function MenuAppBar() {
               </Typography>
             </Grid>
             <Grid item xs={2}>
-            <Select
-                  name="types"
-                  value={systemequipment_data.typedata || ''}
-                  style={{ width: 200 }}
-                  onChange={handleChange1}
-                >
-                  {medicaltypes.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    )
-                  })}
-                </Select>
+            
+
+
+
+
+
+
+
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}> </Grid>
@@ -338,20 +255,14 @@ export default function MenuAppBar() {
             </Grid>
             <Grid item xs={2}>
               
-              <Select
-                  name="prefix"
-                  value={systemequipment_data.medicalequipmentdata || ''}
-                  style={{ width: 200 }}
-                  onChange={handleChange2}
-                >
-                  {medicalEquipments.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.stock}
-                      </MenuItem>
-                    )
-                  })}
-                </Select>
+              
+
+
+
+
+
+
+
                   
             </Grid>
             <Grid item xs={2}></Grid>
