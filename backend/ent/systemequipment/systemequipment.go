@@ -9,6 +9,8 @@ const (
 	FieldID = "id"
 	// FieldAddedtime holds the string denoting the addedtime field in the database.
 	FieldAddedtime = "addedtime"
+	// FieldStock holds the string denoting the stock field in the database.
+	FieldStock = "stock"
 
 	// EdgePhysician holds the string denoting the physician edge name in mutations.
 	EdgePhysician = "physician"
@@ -46,6 +48,7 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldAddedtime,
+	FieldStock,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Systemequipment type.

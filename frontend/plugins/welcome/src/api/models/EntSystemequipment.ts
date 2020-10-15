@@ -44,6 +44,12 @@ export interface EntSystemequipment {
      * @memberof EntSystemequipment
      */
     id?: number;
+    /**
+     * Stock holds the value of the "stock" field.
+     * @type {number}
+     * @memberof EntSystemequipment
+     */
+    stock?: number;
 }
 
 export function EntSystemequipmentFromJSON(json: any): EntSystemequipment {
@@ -59,6 +65,7 @@ export function EntSystemequipmentFromJSONTyped(json: any, ignoreDiscriminator: 
         'addedtime': !exists(json, 'addedtime') ? undefined : json['addedtime'],
         'edges': !exists(json, 'edges') ? undefined : EntSystemequipmentEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'stock': !exists(json, 'stock') ? undefined : json['stock'],
     };
 }
 
@@ -74,6 +81,7 @@ export function EntSystemequipmentToJSON(value?: EntSystemequipment | null): any
         'addedtime': value.addedtime,
         'edges': EntSystemequipmentEdgesToJSON(value.edges),
         'id': value.id,
+        'stock': value.stock,
     };
 }
 

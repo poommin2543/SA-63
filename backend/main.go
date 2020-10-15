@@ -20,7 +20,7 @@ type Medicalequipments struct {
 
 type Medicalequipment struct {
 	Name  string
-	Stock int
+	
 }
 
 type Medicaltypes struct {
@@ -132,8 +132,8 @@ func main() {
 
 	medicalequipments := Medicalequipments{
 		Medicalequipment: []Medicalequipment{
-			Medicalequipment{"กรรไกร",1},
-			Medicalequipment{"ปากกา",2},
+			Medicalequipment{"กรรไกร"},
+			Medicalequipment{"ปากกา"},
 		},
 	}
 
@@ -141,7 +141,7 @@ func main() {
 		client.MedicalEquipment.
 			Create().
 			SetName(me.Name).
-			SetStock(me.Stock).
+			
 			Save(context.Background())
 	}
 

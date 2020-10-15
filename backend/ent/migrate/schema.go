@@ -12,7 +12,6 @@ var (
 	MedicalEquipmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "name", Type: field.TypeString},
-		{Name: "stock", Type: field.TypeInt},
 	}
 	// MedicalEquipmentsTable holds the schema information for the "medical_equipments" table.
 	MedicalEquipmentsTable = &schema.Table{
@@ -50,6 +49,7 @@ var (
 	SystemequipmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "addedtime", Type: field.TypeTime},
+		{Name: "stock", Type: field.TypeInt},
 		{Name: "medical_equipment_systemequipment", Type: field.TypeInt, Nullable: true},
 		{Name: "medical_type_systemequipment", Type: field.TypeInt, Nullable: true},
 		{Name: "physician_systemequipment", Type: field.TypeInt, Nullable: true},
@@ -62,21 +62,21 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:  "systemequipments_medical_equipments_systemequipment",
-				Columns: []*schema.Column{SystemequipmentsColumns[2]},
+				Columns: []*schema.Column{SystemequipmentsColumns[3]},
 
 				RefColumns: []*schema.Column{MedicalEquipmentsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "systemequipments_medical_types_systemequipment",
-				Columns: []*schema.Column{SystemequipmentsColumns[3]},
+				Columns: []*schema.Column{SystemequipmentsColumns[4]},
 
 				RefColumns: []*schema.Column{MedicalTypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "systemequipments_physicians_systemequipment",
-				Columns: []*schema.Column{SystemequipmentsColumns[4]},
+				Columns: []*schema.Column{SystemequipmentsColumns[5]},
 
 				RefColumns: []*schema.Column{PhysiciansColumns[0]},
 				OnDelete:   schema.SetNull,

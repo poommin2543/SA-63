@@ -34,19 +34,6 @@ func (meu *MedicalEquipmentUpdate) SetName(s string) *MedicalEquipmentUpdate {
 	return meu
 }
 
-// SetStock sets the stock field.
-func (meu *MedicalEquipmentUpdate) SetStock(i int) *MedicalEquipmentUpdate {
-	meu.mutation.ResetStock()
-	meu.mutation.SetStock(i)
-	return meu
-}
-
-// AddStock adds i to stock.
-func (meu *MedicalEquipmentUpdate) AddStock(i int) *MedicalEquipmentUpdate {
-	meu.mutation.AddStock(i)
-	return meu
-}
-
 // AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
 func (meu *MedicalEquipmentUpdate) AddSystemequipmentIDs(ids ...int) *MedicalEquipmentUpdate {
 	meu.mutation.AddSystemequipmentIDs(ids...)
@@ -159,20 +146,6 @@ func (meu *MedicalEquipmentUpdate) sqlSave(ctx context.Context) (n int, err erro
 			Column: medicalequipment.FieldName,
 		})
 	}
-	if value, ok := meu.mutation.Stock(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: medicalequipment.FieldStock,
-		})
-	}
-	if value, ok := meu.mutation.AddedStock(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: medicalequipment.FieldStock,
-		})
-	}
 	if nodes := meu.mutation.RemovedSystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -232,19 +205,6 @@ type MedicalEquipmentUpdateOne struct {
 // SetName sets the name field.
 func (meuo *MedicalEquipmentUpdateOne) SetName(s string) *MedicalEquipmentUpdateOne {
 	meuo.mutation.SetName(s)
-	return meuo
-}
-
-// SetStock sets the stock field.
-func (meuo *MedicalEquipmentUpdateOne) SetStock(i int) *MedicalEquipmentUpdateOne {
-	meuo.mutation.ResetStock()
-	meuo.mutation.SetStock(i)
-	return meuo
-}
-
-// AddStock adds i to stock.
-func (meuo *MedicalEquipmentUpdateOne) AddStock(i int) *MedicalEquipmentUpdateOne {
-	meuo.mutation.AddStock(i)
 	return meuo
 }
 
@@ -356,20 +316,6 @@ func (meuo *MedicalEquipmentUpdateOne) sqlSave(ctx context.Context) (me *Medical
 			Type:   field.TypeString,
 			Value:  value,
 			Column: medicalequipment.FieldName,
-		})
-	}
-	if value, ok := meuo.mutation.Stock(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: medicalequipment.FieldStock,
-		})
-	}
-	if value, ok := meuo.mutation.AddedStock(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: medicalequipment.FieldStock,
 		})
 	}
 	if nodes := meuo.mutation.RemovedSystemequipmentIDs(); len(nodes) > 0 {

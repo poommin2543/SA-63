@@ -39,7 +39,6 @@ func (ctl *MedicalequipmentController) CreateMedicalequipment(c *gin.Context) {
 	u, err := ctl.client.MedicalEquipment.
 		Create().
 		SetName(obj.Name).
-		SetStock(obj.Stock).
 		Save(context.Background())
 	if err != nil {
 		c.JSON(400, gin.H{

@@ -15,7 +15,7 @@ type MedicalEquipment struct {
 func (MedicalEquipment) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name"),
-		field.Int("stock"),
+		
 	}
 }
 

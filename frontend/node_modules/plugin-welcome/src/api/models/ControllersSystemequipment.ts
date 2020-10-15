@@ -36,6 +36,12 @@ export interface ControllersSystemequipment {
      * @type {number}
      * @memberof ControllersSystemequipment
      */
+    stock?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ControllersSystemequipment
+     */
     stockEquipmentID?: number;
     /**
      * 
@@ -57,6 +63,7 @@ export function ControllersSystemequipmentFromJSONTyped(json: any, ignoreDiscrim
         
         'nameEquipmentID': !exists(json, 'nameEquipmentID') ? undefined : json['nameEquipmentID'],
         'physicianID': !exists(json, 'physicianID') ? undefined : json['physicianID'],
+        'stock': !exists(json, 'stock') ? undefined : json['stock'],
         'stockEquipmentID': !exists(json, 'stockEquipmentID') ? undefined : json['stockEquipmentID'],
         'typeEquipmentID': !exists(json, 'typeEquipmentID') ? undefined : json['typeEquipmentID'],
     };
@@ -73,7 +80,7 @@ export function ControllersSystemequipmentToJSON(value?: ControllersSystemequipm
         
         'nameEquipmentID': value.nameEquipmentID,
         'physicianID': value.physicianID,
-        'stockEquipmentID': value.stockEquipmentID,
+        'Stock': value.stock,
         'typeEquipmentID': value.typeEquipmentID,
     };
 }

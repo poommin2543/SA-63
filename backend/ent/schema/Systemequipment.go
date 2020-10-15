@@ -15,7 +15,7 @@ type Systemequipment struct {
 func (Systemequipment) Fields() []ent.Field {
 	return []ent.Field{
 		field.Time("addedtime"),
-		
+		field.Int("stock"),
 	}
 }
 

@@ -26,12 +26,6 @@ func (mec *MedicalEquipmentCreate) SetName(s string) *MedicalEquipmentCreate {
 	return mec
 }
 
-// SetStock sets the stock field.
-func (mec *MedicalEquipmentCreate) SetStock(i int) *MedicalEquipmentCreate {
-	mec.mutation.SetStock(i)
-	return mec
-}
-
 // AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
 func (mec *MedicalEquipmentCreate) AddSystemequipmentIDs(ids ...int) *MedicalEquipmentCreate {
 	mec.mutation.AddSystemequipmentIDs(ids...)
@@ -56,9 +50,6 @@ func (mec *MedicalEquipmentCreate) Mutation() *MedicalEquipmentMutation {
 func (mec *MedicalEquipmentCreate) Save(ctx context.Context) (*MedicalEquipment, error) {
 	if _, ok := mec.mutation.Name(); !ok {
 		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
-	}
-	if _, ok := mec.mutation.Stock(); !ok {
-		return nil, &ValidationError{Name: "stock", err: errors.New("ent: missing required field \"stock\"")}
 	}
 	var (
 		err  error
@@ -127,14 +118,6 @@ func (mec *MedicalEquipmentCreate) createSpec() (*MedicalEquipment, *sqlgraph.Cr
 			Column: medicalequipment.FieldName,
 		})
 		me.Name = value
-	}
-	if value, ok := mec.mutation.Stock(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: medicalequipment.FieldStock,
-		})
-		me.Stock = value
 	}
 	if nodes := mec.mutation.SystemequipmentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

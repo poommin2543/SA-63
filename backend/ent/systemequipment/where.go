@@ -100,6 +100,13 @@ func Addedtime(v time.Time) predicate.Systemequipment {
 	})
 }
 
+// Stock applies equality check predicate on the "stock" field. It's identical to StockEQ.
+func Stock(v int) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStock), v))
+	})
+}
+
 // AddedtimeEQ applies the EQ predicate on the "addedtime" field.
 func AddedtimeEQ(v time.Time) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
@@ -173,6 +180,82 @@ func AddedtimeLT(v time.Time) predicate.Systemequipment {
 func AddedtimeLTE(v time.Time) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldAddedtime), v))
+	})
+}
+
+// StockEQ applies the EQ predicate on the "stock" field.
+func StockEQ(v int) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStock), v))
+	})
+}
+
+// StockNEQ applies the NEQ predicate on the "stock" field.
+func StockNEQ(v int) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldStock), v))
+	})
+}
+
+// StockIn applies the In predicate on the "stock" field.
+func StockIn(vs ...int) predicate.Systemequipment {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldStock), v...))
+	})
+}
+
+// StockNotIn applies the NotIn predicate on the "stock" field.
+func StockNotIn(vs ...int) predicate.Systemequipment {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldStock), v...))
+	})
+}
+
+// StockGT applies the GT predicate on the "stock" field.
+func StockGT(v int) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldStock), v))
+	})
+}
+
+// StockGTE applies the GTE predicate on the "stock" field.
+func StockGTE(v int) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldStock), v))
+	})
+}
+
+// StockLT applies the LT predicate on the "stock" field.
+func StockLT(v int) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldStock), v))
+	})
+}
+
+// StockLTE applies the LTE predicate on the "stock" field.
+func StockLTE(v int) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldStock), v))
 	})
 }
 

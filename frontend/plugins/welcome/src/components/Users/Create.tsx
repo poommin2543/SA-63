@@ -16,11 +16,13 @@ import Tabs from '@material-ui/core/Tabs';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import SaveIcon from '@material-ui/icons/Save';
 import { DefaultApi } from '../../api/apis';
-import { EntPhysician } from '../../api/models/EntPhysician';
 import ComponanceTable from '../Table';   
 import Select from '@material-ui/core/Select';
+import { EntPhysician } from '../../api/models/EntPhysician';
 import { EntMedicalType } from '../../api/models/EntMedicalType';
 import { EntMedicalEquipment } from '../../api/models/EntMedicalEquipment';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -44,20 +46,13 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    textField: {
+      width: 300,
+    },
   }),
 );
 
 
-const initialSystemequipmentState = {
-  //medicalequipment: 'noom',
-  noom : '',
- };
-
-interface physiciandata {
-  namelist: number;
-  
-  // create_by: number;
-}
 
 function Copyright() {
   return (
@@ -75,30 +70,105 @@ function Copyright() {
 export default function MenuAppBar() {
   
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-
   const classes = useStyles();
   const profile = { givenName: 'to Software Analysis 63' };
   const api = new DefaultApi();
   
-  const [systemequipment, setSystemequipment] = useState(initialSystemequipmentState);
+  const [physicians, setPhysicians] = useState<EntPhysician[]>([]);
+  const [medicalEquipments, setMedicalEquipments] = useState<EntMedicalEquipment[]>([]);
+  const [medicalEquipmentstocks, setMedicalEquipmentstocks] = useState<EntMedicalEquipment[]>([]);
+  const [medicalTypes, setMedicalTypes] = useState<EntMedicalType[]>([]);
   const [status, setStatus] = useState(false);
   const [alert, setAlert] = useState(true);
-  
-  
-  
-    
-  
-  
-  
-  
-    
-  
-   
-  
+  const [loading, setLoading] = useState(true);
 
 
+  const [physicianid, setPhysicianid] = useState(Number);
+  const [medicalEquipmentid, setMedicalEquipmentid] = useState(Number);
+  const [medicalTypeid, setMedicalTypeid] = useState(Number);
+  const [medicalEquipmentstockid, setMedicalEquipmentstockid] = useState(Number);
+  const [datetime, setDatetime] = useState(String);
+ let stock = Number(medicalEquipmentstockid)
+ let nameEquipmentID = Number(medicalEquipmentid)
+ let typeEquipmentID =Number(medicalTypeid)
+
+  useEffect(() => {
+
+    const getmedicalEquipments = async () => {
+ 
+      const pa = await api.listMedicalequipment({ limit: 10, offset: 0 });
+      setLoading(false);
+      setMedicalEquipments(pa);
+    };
+    getmedicalEquipments();
+ 
+    const getPhysicians = async () => {
+ 
+    const us = await api.listPhysician({ limit: 10, offset: 0 });
+      setLoading(false);
+      setPhysicians(us);
+    };
+    getPhysicians();
+ 
+    const getmedicalTypes = async () => {
+ 
+     const sp = await api.listMedicaltype({ limit: 10, offset: 0 });
+       setLoading(false);
+       setMedicalTypes(sp);
+     };
+     getmedicalTypes();
+
+     const getmedicalEquipmentstocks = async () => {
+ 
+      const sp = await api.listMedicalequipment({ limit: 10, offset: 0 });
+        setLoading(false);
+        setMedicalEquipmentstocks(sp);
+      };
+      getmedicalEquipmentstocks();
+ 
+  }, [loading]);
+  const handleDatetimeChange = (event: any) => {
+    setDatetime(event.target.value as string);
+};
+const systemequipment = {
+                 
+  physicianID    :1 , 
+  nameEquipmentID,   
+  stock , 
+  typeEquipmentID   
+}
+const createSystemequipment = async () => {
+ 
+ console.log(medicalEquipmentid)
+const res:any = await api.createSystemequipment({ systemequipment});
+setStatus(true);
+if (res.id != ''){
+ setAlert(true);
+} else {
+ setAlert(false);
+}
+
+const timer = setTimeout(() => {
+ setStatus(false);
+}, 1000);
+};
+  
+const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  setPhysicianid(event.target.value as number);
+   };
+
+  const Equipment_id_handleChange = (event:any) => {
+    setMedicalEquipmentid(event.target.value);
+   };
+
+  const Type_id_handleChange = (event: any) => {
+    setMedicalTypeid(event.target.value);
+  }
+  const Stock_id_handleChange = (event: any) => {
+    setMedicalEquipmentstockid(event.target.value);
+   };
+    
+  
 
  function HomeIcon(props:any) {
     return (
@@ -212,13 +282,16 @@ export default function MenuAppBar() {
             </Grid>
             <Grid item xs={2}>
               
-              
-
-
-
-
-
-
+            <Select
+               labelId="Equipment_id-label"
+               label="Equipment"
+               id="Equipment_id"
+               onChange={Equipment_id_handleChange}
+               style = {{width: 200}}
+               >
+               {medicalEquipments.map((item:EntMedicalEquipment)=>
+               <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
+             </Select>
 
 
 
@@ -235,10 +308,16 @@ export default function MenuAppBar() {
             </Grid>
             <Grid item xs={2}>
             
-
-
-
-
+            <Select
+               labelId="medicalType_id-label"
+               label="medicalType"
+               id="medicalType_id"
+               onChange={Type_id_handleChange}
+               style = {{width: 200}}
+               >
+               {medicalTypes.map((item:EntMedicalType)=>
+               <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
+             </Select>
 
 
 
@@ -254,15 +333,12 @@ export default function MenuAppBar() {
               </Typography>
             </Grid>
             <Grid item xs={2}>
-              
-              
-
-
-
-
-
-
-
+            <Paper >
+                <TextField id="outlined-number" type='number'  InputLabelProps={{
+                  shrink: true,}}label="กรุณาใส่จำนวน" variant="outlined"
+                  onChange = {Stock_id_handleChange}
+                  />
+                  </Paper>
                   
             </Grid>
             <Grid item xs={2}></Grid>
@@ -276,7 +352,18 @@ export default function MenuAppBar() {
               </Typography>
             </Grid>
             <Grid item xs={2}>
-              
+               <form  noValidate>
+                <TextField
+                  label="เลือกเวลา"
+                  name="added"
+                  type="date"
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={handleDatetimeChange}
+                />
+              </form>
               
                   
             </Grid>
@@ -294,7 +381,7 @@ export default function MenuAppBar() {
                 size="large"
                 className={classes.button}
                 onClick={() => {
-                  CreateSystemequipment();
+                  createSystemequipment();
                 }}
                 startIcon={<SaveIcon 
                 />}
@@ -329,4 +416,4 @@ export default function MenuAppBar() {
       <ComponanceTable></ComponanceTable>
     </div>
   );
-}
+ }

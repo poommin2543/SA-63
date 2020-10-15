@@ -37,6 +37,19 @@ func (su *SystemequipmentUpdate) SetAddedtime(t time.Time) *SystemequipmentUpdat
 	return su
 }
 
+// SetStock sets the stock field.
+func (su *SystemequipmentUpdate) SetStock(i int) *SystemequipmentUpdate {
+	su.mutation.ResetStock()
+	su.mutation.SetStock(i)
+	return su
+}
+
+// AddStock adds i to stock.
+func (su *SystemequipmentUpdate) AddStock(i int) *SystemequipmentUpdate {
+	su.mutation.AddStock(i)
+	return su
+}
+
 // SetPhysicianID sets the physician edge to Physician by id.
 func (su *SystemequipmentUpdate) SetPhysicianID(id int) *SystemequipmentUpdate {
 	su.mutation.SetPhysicianID(id)
@@ -194,6 +207,20 @@ func (su *SystemequipmentUpdate) sqlSave(ctx context.Context) (n int, err error)
 			Column: systemequipment.FieldAddedtime,
 		})
 	}
+	if value, ok := su.mutation.Stock(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: systemequipment.FieldStock,
+		})
+	}
+	if value, ok := su.mutation.AddedStock(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: systemequipment.FieldStock,
+		})
+	}
 	if su.mutation.PhysicianCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -320,6 +347,19 @@ type SystemequipmentUpdateOne struct {
 // SetAddedtime sets the addedtime field.
 func (suo *SystemequipmentUpdateOne) SetAddedtime(t time.Time) *SystemequipmentUpdateOne {
 	suo.mutation.SetAddedtime(t)
+	return suo
+}
+
+// SetStock sets the stock field.
+func (suo *SystemequipmentUpdateOne) SetStock(i int) *SystemequipmentUpdateOne {
+	suo.mutation.ResetStock()
+	suo.mutation.SetStock(i)
+	return suo
+}
+
+// AddStock adds i to stock.
+func (suo *SystemequipmentUpdateOne) AddStock(i int) *SystemequipmentUpdateOne {
+	suo.mutation.AddStock(i)
 	return suo
 }
 
@@ -476,6 +516,20 @@ func (suo *SystemequipmentUpdateOne) sqlSave(ctx context.Context) (s *Systemequi
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: systemequipment.FieldAddedtime,
+		})
+	}
+	if value, ok := suo.mutation.Stock(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: systemequipment.FieldStock,
+		})
+	}
+	if value, ok := suo.mutation.AddedStock(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: systemequipment.FieldStock,
 		})
 	}
 	if suo.mutation.PhysicianCleared() {

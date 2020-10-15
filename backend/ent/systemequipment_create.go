@@ -29,6 +29,12 @@ func (sc *SystemequipmentCreate) SetAddedtime(t time.Time) *SystemequipmentCreat
 	return sc
 }
 
+// SetStock sets the stock field.
+func (sc *SystemequipmentCreate) SetStock(i int) *SystemequipmentCreate {
+	sc.mutation.SetStock(i)
+	return sc
+}
+
 // SetPhysicianID sets the physician edge to Physician by id.
 func (sc *SystemequipmentCreate) SetPhysicianID(id int) *SystemequipmentCreate {
 	sc.mutation.SetPhysicianID(id)
@@ -95,6 +101,9 @@ func (sc *SystemequipmentCreate) Mutation() *SystemequipmentMutation {
 func (sc *SystemequipmentCreate) Save(ctx context.Context) (*Systemequipment, error) {
 	if _, ok := sc.mutation.Addedtime(); !ok {
 		return nil, &ValidationError{Name: "addedtime", err: errors.New("ent: missing required field \"addedtime\"")}
+	}
+	if _, ok := sc.mutation.Stock(); !ok {
+		return nil, &ValidationError{Name: "stock", err: errors.New("ent: missing required field \"stock\"")}
 	}
 	var (
 		err  error
@@ -163,6 +172,14 @@ func (sc *SystemequipmentCreate) createSpec() (*Systemequipment, *sqlgraph.Creat
 			Column: systemequipment.FieldAddedtime,
 		})
 		s.Addedtime = value
+	}
+	if value, ok := sc.mutation.Stock(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: systemequipment.FieldStock,
+		})
+		s.Stock = value
 	}
 	if nodes := sc.mutation.PhysicianIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

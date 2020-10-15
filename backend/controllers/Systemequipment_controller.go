@@ -23,10 +23,10 @@ type SystemequipmentController struct {
 
 type Systemequipment struct {
 	NameEquipmentID  int
-	StockEquipmentID int
 	TypeEquipmentID  int
 	PhysicianID      int
-	addedtime             string
+	Stock			 int
+	addedtime       string
 }
 
 // CreateSystemequipment handles POST requests for adding systemequipment entities
@@ -85,17 +85,7 @@ func (ctl *SystemequipmentController) CreateSystemequipment(c *gin.Context) {
 		return
 	}
 
-	mes, err := ctl.client.MedicalEquipment.
-		Query().
-		Where(medicalequipment.IDEQ(int(obj.StockEquipmentID))).
-		Only(context.Background())
-
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "StockEquipmentID   not found",
-		})
-		return
-	}
+	
 
 	times, err := time.Parse(time.RFC3339, obj.addedtime)
 	
@@ -104,7 +94,7 @@ func (ctl *SystemequipmentController) CreateSystemequipment(c *gin.Context) {
 		SetPhysician(ph).
 		SetMedicaltype(mt).
 		SetMedicalequipment(men).
-		SetMedicalequipment(mes).
+		SetStock(obj.Stock).
 		SetAddedtime(times).
 		Save(context.Background())
 	if err != nil {

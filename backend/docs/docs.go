@@ -948,7 +948,7 @@ var doc = `{
                 "physicianID": {
                     "type": "integer"
                 },
-                "stockEquipmentID": {
+                "stock": {
                     "type": "integer"
                 },
                 "typeEquipmentID": {
@@ -971,10 +971,6 @@ var doc = `{
                 "name": {
                     "description": "Name holds the value of the \"name\" field.",
                     "type": "string"
-                },
-                "stock": {
-                    "description": "Stock holds the value of the \"stock\" field.",
-                    "type": "integer"
                 }
             }
         },
@@ -1068,6 +1064,10 @@ var doc = `{
                 },
                 "id": {
                     "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "stock": {
+                    "description": "Stock holds the value of the \"stock\" field.",
                     "type": "integer"
                 }
             }

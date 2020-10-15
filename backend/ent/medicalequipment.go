@@ -17,8 +17,6 @@ type MedicalEquipment struct {
 	ID int `json:"id,omitempty"`
 	// Name holds the value of the "name" field.
 	Name string `json:"name,omitempty"`
-	// Stock holds the value of the "stock" field.
-	Stock int `json:"stock,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MedicalEquipmentQuery when eager-loading is set.
 	Edges MedicalEquipmentEdges `json:"edges"`
@@ -47,7 +45,6 @@ func (*MedicalEquipment) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
 		&sql.NullString{}, // name
-		&sql.NullInt64{},  // stock
 	}
 }
 
@@ -67,11 +64,6 @@ func (me *MedicalEquipment) assignValues(values ...interface{}) error {
 		return fmt.Errorf("unexpected type %T for field name", values[0])
 	} else if value.Valid {
 		me.Name = value.String
-	}
-	if value, ok := values[1].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field stock", values[1])
-	} else if value.Valid {
-		me.Stock = int(value.Int64)
 	}
 	return nil
 }
@@ -106,8 +98,6 @@ func (me *MedicalEquipment) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", me.ID))
 	builder.WriteString(", name=")
 	builder.WriteString(me.Name)
-	builder.WriteString(", stock=")
-	builder.WriteString(fmt.Sprintf("%v", me.Stock))
 	builder.WriteByte(')')
 	return builder.String()
 }

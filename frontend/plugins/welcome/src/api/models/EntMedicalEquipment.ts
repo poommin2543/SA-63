@@ -44,12 +44,6 @@ export interface EntMedicalEquipment {
      * @memberof EntMedicalEquipment
      */
     name?: string;
-    /**
-     * Stock holds the value of the "stock" field.
-     * @type {number}
-     * @memberof EntMedicalEquipment
-     */
-    stock?: number;
 }
 
 export function EntMedicalEquipmentFromJSON(json: any): EntMedicalEquipment {
@@ -65,7 +59,6 @@ export function EntMedicalEquipmentFromJSONTyped(json: any, ignoreDiscriminator:
         'edges': !exists(json, 'edges') ? undefined : EntMedicalEquipmentEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'stock': !exists(json, 'stock') ? undefined : json['stock'],
     };
 }
 
@@ -81,7 +74,6 @@ export function EntMedicalEquipmentToJSON(value?: EntMedicalEquipment | null): a
         'edges': EntMedicalEquipmentEdgesToJSON(value.edges),
         'id': value.id,
         'name': value.name,
-        'stock': value.stock,
     };
 }
 

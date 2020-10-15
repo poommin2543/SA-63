@@ -9,8 +9,6 @@ const (
 	FieldID = "id"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldStock holds the string denoting the stock field in the database.
-	FieldStock = "stock"
 
 	// EdgeSystemequipment holds the string denoting the systemequipment edge name in mutations.
 	EdgeSystemequipment = "systemequipment"
@@ -30,5 +28,4 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldName,
-	FieldStock,
 }

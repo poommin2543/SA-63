@@ -21,6 +21,8 @@ type Systemequipment struct {
 	ID int `json:"id,omitempty"`
 	// Addedtime holds the value of the "addedtime" field.
 	Addedtime time.Time `json:"addedtime,omitempty"`
+	// Stock holds the value of the "stock" field.
+	Stock int `json:"stock,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SystemequipmentQuery when eager-loading is set.
 	Edges                             SystemequipmentEdges `json:"edges"`
@@ -89,6 +91,7 @@ func (*Systemequipment) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{}, // id
 		&sql.NullTime{},  // addedtime
+		&sql.NullInt64{}, // stock
 	}
 }
 
@@ -118,7 +121,12 @@ func (s *Systemequipment) assignValues(values ...interface{}) error {
 	} else if value.Valid {
 		s.Addedtime = value.Time
 	}
-	values = values[1:]
+	if value, ok := values[1].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field stock", values[1])
+	} else if value.Valid {
+		s.Stock = int(value.Int64)
+	}
+	values = values[2:]
 	if len(values) == len(systemequipment.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field medical_equipment_systemequipment", value)
@@ -182,6 +190,8 @@ func (s *Systemequipment) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", s.ID))
 	builder.WriteString(", addedtime=")
 	builder.WriteString(s.Addedtime.Format(time.ANSIC))
+	builder.WriteString(", stock=")
+	builder.WriteString(fmt.Sprintf("%v", s.Stock))
 	builder.WriteByte(')')
 	return builder.String()
 }

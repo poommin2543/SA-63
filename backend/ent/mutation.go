@@ -39,8 +39,6 @@ type MedicalEquipmentMutation struct {
 	typ                    string
 	id                     *int
 	name                   *string
-	stock                  *int
-	addstock               *int
 	clearedFields          map[string]struct{}
 	systemequipment        map[int]struct{}
 	removedsystemequipment map[int]struct{}
@@ -164,63 +162,6 @@ func (m *MedicalEquipmentMutation) ResetName() {
 	m.name = nil
 }
 
-// SetStock sets the stock field.
-func (m *MedicalEquipmentMutation) SetStock(i int) {
-	m.stock = &i
-	m.addstock = nil
-}
-
-// Stock returns the stock value in the mutation.
-func (m *MedicalEquipmentMutation) Stock() (r int, exists bool) {
-	v := m.stock
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldStock returns the old stock value of the MedicalEquipment.
-// If the MedicalEquipment object wasn't provided to the builder, the object is fetched
-// from the database.
-// An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *MedicalEquipmentMutation) OldStock(ctx context.Context) (v int, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldStock is allowed only on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldStock requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStock: %w", err)
-	}
-	return oldValue.Stock, nil
-}
-
-// AddStock adds i to stock.
-func (m *MedicalEquipmentMutation) AddStock(i int) {
-	if m.addstock != nil {
-		*m.addstock += i
-	} else {
-		m.addstock = &i
-	}
-}
-
-// AddedStock returns the value that was added to the stock field in this mutation.
-func (m *MedicalEquipmentMutation) AddedStock() (r int, exists bool) {
-	v := m.addstock
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetStock reset all changes of the "stock" field.
-func (m *MedicalEquipmentMutation) ResetStock() {
-	m.stock = nil
-	m.addstock = nil
-}
-
 // AddSystemequipmentIDs adds the systemequipment edge to Systemequipment by ids.
 func (m *MedicalEquipmentMutation) AddSystemequipmentIDs(ids ...int) {
 	if m.systemequipment == nil {
@@ -277,12 +218,9 @@ func (m *MedicalEquipmentMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *MedicalEquipmentMutation) Fields() []string {
-	fields := make([]string, 0, 2)
+	fields := make([]string, 0, 1)
 	if m.name != nil {
 		fields = append(fields, medicalequipment.FieldName)
-	}
-	if m.stock != nil {
-		fields = append(fields, medicalequipment.FieldStock)
 	}
 	return fields
 }
@@ -294,8 +232,6 @@ func (m *MedicalEquipmentMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case medicalequipment.FieldName:
 		return m.Name()
-	case medicalequipment.FieldStock:
-		return m.Stock()
 	}
 	return nil, false
 }
@@ -307,8 +243,6 @@ func (m *MedicalEquipmentMutation) OldField(ctx context.Context, name string) (e
 	switch name {
 	case medicalequipment.FieldName:
 		return m.OldName(ctx)
-	case medicalequipment.FieldStock:
-		return m.OldStock(ctx)
 	}
 	return nil, fmt.Errorf("unknown MedicalEquipment field %s", name)
 }
@@ -325,13 +259,6 @@ func (m *MedicalEquipmentMutation) SetField(name string, value ent.Value) error 
 		}
 		m.SetName(v)
 		return nil
-	case medicalequipment.FieldStock:
-		v, ok := value.(int)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetStock(v)
-		return nil
 	}
 	return fmt.Errorf("unknown MedicalEquipment field %s", name)
 }
@@ -339,21 +266,13 @@ func (m *MedicalEquipmentMutation) SetField(name string, value ent.Value) error 
 // AddedFields returns all numeric fields that were incremented
 // or decremented during this mutation.
 func (m *MedicalEquipmentMutation) AddedFields() []string {
-	var fields []string
-	if m.addstock != nil {
-		fields = append(fields, medicalequipment.FieldStock)
-	}
-	return fields
+	return nil
 }
 
 // AddedField returns the numeric value that was in/decremented
 // from a field with the given name. The second value indicates
 // that this field was not set, or was not define in the schema.
 func (m *MedicalEquipmentMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	case medicalequipment.FieldStock:
-		return m.AddedStock()
-	}
 	return nil, false
 }
 
@@ -362,13 +281,6 @@ func (m *MedicalEquipmentMutation) AddedField(name string) (ent.Value, bool) {
 // type mismatch the field type.
 func (m *MedicalEquipmentMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case medicalequipment.FieldStock:
-		v, ok := value.(int)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStock(v)
-		return nil
 	}
 	return fmt.Errorf("unknown MedicalEquipment numeric field %s", name)
 }
@@ -399,9 +311,6 @@ func (m *MedicalEquipmentMutation) ResetField(name string) error {
 	switch name {
 	case medicalequipment.FieldName:
 		m.ResetName()
-		return nil
-	case medicalequipment.FieldStock:
-		m.ResetStock()
 		return nil
 	}
 	return fmt.Errorf("unknown MedicalEquipment field %s", name)
@@ -1289,6 +1198,8 @@ type SystemequipmentMutation struct {
 	typ                     string
 	id                      *int
 	addedtime               *time.Time
+	stock                   *int
+	addstock                *int
 	clearedFields           map[string]struct{}
 	physician               *int
 	clearedphysician        bool
@@ -1414,6 +1325,63 @@ func (m *SystemequipmentMutation) OldAddedtime(ctx context.Context) (v time.Time
 // ResetAddedtime reset all changes of the "addedtime" field.
 func (m *SystemequipmentMutation) ResetAddedtime() {
 	m.addedtime = nil
+}
+
+// SetStock sets the stock field.
+func (m *SystemequipmentMutation) SetStock(i int) {
+	m.stock = &i
+	m.addstock = nil
+}
+
+// Stock returns the stock value in the mutation.
+func (m *SystemequipmentMutation) Stock() (r int, exists bool) {
+	v := m.stock
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStock returns the old stock value of the Systemequipment.
+// If the Systemequipment object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *SystemequipmentMutation) OldStock(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldStock is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldStock requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStock: %w", err)
+	}
+	return oldValue.Stock, nil
+}
+
+// AddStock adds i to stock.
+func (m *SystemequipmentMutation) AddStock(i int) {
+	if m.addstock != nil {
+		*m.addstock += i
+	} else {
+		m.addstock = &i
+	}
+}
+
+// AddedStock returns the value that was added to the stock field in this mutation.
+func (m *SystemequipmentMutation) AddedStock() (r int, exists bool) {
+	v := m.addstock
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetStock reset all changes of the "stock" field.
+func (m *SystemequipmentMutation) ResetStock() {
+	m.stock = nil
+	m.addstock = nil
 }
 
 // SetPhysicianID sets the physician edge to Physician by id.
@@ -1547,9 +1515,12 @@ func (m *SystemequipmentMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *SystemequipmentMutation) Fields() []string {
-	fields := make([]string, 0, 1)
+	fields := make([]string, 0, 2)
 	if m.addedtime != nil {
 		fields = append(fields, systemequipment.FieldAddedtime)
+	}
+	if m.stock != nil {
+		fields = append(fields, systemequipment.FieldStock)
 	}
 	return fields
 }
@@ -1561,6 +1532,8 @@ func (m *SystemequipmentMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case systemequipment.FieldAddedtime:
 		return m.Addedtime()
+	case systemequipment.FieldStock:
+		return m.Stock()
 	}
 	return nil, false
 }
@@ -1572,6 +1545,8 @@ func (m *SystemequipmentMutation) OldField(ctx context.Context, name string) (en
 	switch name {
 	case systemequipment.FieldAddedtime:
 		return m.OldAddedtime(ctx)
+	case systemequipment.FieldStock:
+		return m.OldStock(ctx)
 	}
 	return nil, fmt.Errorf("unknown Systemequipment field %s", name)
 }
@@ -1588,6 +1563,13 @@ func (m *SystemequipmentMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetAddedtime(v)
 		return nil
+	case systemequipment.FieldStock:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStock(v)
+		return nil
 	}
 	return fmt.Errorf("unknown Systemequipment field %s", name)
 }
@@ -1595,13 +1577,21 @@ func (m *SystemequipmentMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented
 // or decremented during this mutation.
 func (m *SystemequipmentMutation) AddedFields() []string {
-	return nil
+	var fields []string
+	if m.addstock != nil {
+		fields = append(fields, systemequipment.FieldStock)
+	}
+	return fields
 }
 
 // AddedField returns the numeric value that was in/decremented
 // from a field with the given name. The second value indicates
 // that this field was not set, or was not define in the schema.
 func (m *SystemequipmentMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case systemequipment.FieldStock:
+		return m.AddedStock()
+	}
 	return nil, false
 }
 
@@ -1610,6 +1600,13 @@ func (m *SystemequipmentMutation) AddedField(name string) (ent.Value, bool) {
 // type mismatch the field type.
 func (m *SystemequipmentMutation) AddField(name string, value ent.Value) error {
 	switch name {
+	case systemequipment.FieldStock:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddStock(v)
+		return nil
 	}
 	return fmt.Errorf("unknown Systemequipment numeric field %s", name)
 }
@@ -1640,6 +1637,9 @@ func (m *SystemequipmentMutation) ResetField(name string) error {
 	switch name {
 	case systemequipment.FieldAddedtime:
 		m.ResetAddedtime()
+		return nil
+	case systemequipment.FieldStock:
+		m.ResetStock()
 		return nil
 	}
 	return fmt.Errorf("unknown Systemequipment field %s", name)

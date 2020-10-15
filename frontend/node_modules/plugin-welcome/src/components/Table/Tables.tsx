@@ -38,7 +38,7 @@ export default function ComponentsTable() {
    const res = await api.deleteSystemequipment({ id: id });
    setLoading(true);
  };
- 
+ console.log(systemequipments)
  return (
    <TableContainer component={Paper}>
      <Table className={classes.table} aria-label="simple table">
@@ -47,6 +47,7 @@ export default function ComponentsTable() {
          <TableCell align="center">No.</TableCell>
          <TableCell align="center">Medical</TableCell>
          <TableCell align="center">Type</TableCell>
+         <TableCell align="center">Stock</TableCell>
          <TableCell align="center">PHYSICIAN</TableCell>
          <TableCell align="center">DATA</TableCell>
          <TableCell align="center">Manage</TableCell>
@@ -55,9 +56,13 @@ export default function ComponentsTable() {
        <TableBody>
          {systemequipments === undefined 
           ? null
-          : systemequipments.map(item => (
+          : systemequipments.map((item :any)=> (
            <TableRow key={item.id}>
              <TableCell align="center">{item.id}</TableCell>
+             <TableCell align="center">{item.edges?.medicalequipment?.name}</TableCell>
+             <TableCell align="center">{item.edges?.medicaltype?.name}</TableCell>
+             <TableCell align="center">{item.stock}</TableCell>
+             <TableCell align="center">{item.edges?.physician?.name}</TableCell>
              <TableCell align="center">{moment(item.addedtime).format('DD/MM/YYYY HH:mm:ss')}</TableCell>
             
              <TableCell align="center">

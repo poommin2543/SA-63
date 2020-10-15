@@ -64,9 +64,9 @@ export function EntSystemequipmentEdgesFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'medicalequipment': !exists(json, 'medicalequipment') ? undefined : EntMedicalEquipmentFromJSON(json['medicalequipment']),
-        'medicaltype': !exists(json, 'medicaltype') ? undefined : EntMedicalTypeFromJSON(json['medicaltype']),
-        'physician': !exists(json, 'physician') ? undefined : EntPhysicianFromJSON(json['physician']),
+        'medicalequipment': !exists(json, 'Medicalequipment') ? undefined : EntMedicalEquipmentFromJSON(json['Medicalequipment']),
+        'medicaltype': !exists(json, 'Medicaltype') ? undefined : EntMedicalTypeFromJSON(json['Medicaltype']),
+        'physician': !exists(json, 'Physician') ? undefined : EntPhysicianFromJSON(json['Physician']),
     };
 }
 
