@@ -33,7 +33,7 @@ import { EntPhysician } from '../../api/models/EntPhysician';
 
 import ComponanceTable from '../Table';   
 import Select from '@material-ui/core/Select';
-
+import moment from 'moment';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -98,7 +98,7 @@ export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  
+
   const classes = useStyles();
   const profile = { givenName: 'to Software Analysis 63' };
   const api = new DefaultApi();
@@ -129,7 +129,7 @@ export default function MenuAppBar() {
   Partial<physiciandata>
 >({});
 
-const [physicians, setPhysicians] = React.useState<EntPhysician[]>([]);
+
 
 
 
@@ -173,23 +173,7 @@ function save() {
 
   console.log(systemequipment_data); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
 
-  fetch(apiUrl, requestOptions)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      if (data.status === true) {
-        clear();
-        Toast.fire({
-          icon: 'success',
-          title: 'บันทึกข้อมูลสำเร็จ',
-        });
-      } else {
-        Toast.fire({
-          icon: 'error',
-          title: 'บันทึกข้อมูลไม่สำเร็จ',
-        });
-      }
-    });
+  
 }
 
  function HomeIcon(props:any) {
@@ -198,9 +182,6 @@ function save() {
         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
       </SvgIcon>
     );
-  }
-  function refreshPage() {
-    window.location.reload(false);
   }
 
   return (
@@ -235,20 +216,7 @@ function save() {
               </Button>
                 </Grid>  
             <Grid item>
-            <Select
-                  name="prefix"
-                  value={systemequipment_data.namelist || ''}
-                  style={{ width: 200 }}
-                  onChange={handleChange}
-                >
-                  {physicians.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    )
-                  })}
-                </Select>
+            
             </Grid>
             <Grid item>
               <IconButton color="inherit" className={classes.iconButtonAvatar}>
@@ -381,8 +349,7 @@ function save() {
                 size="large"
                 className={classes.button}
                 onClick={() => {
-                  CreateSystemequipment()
-                  refreshPage;
+                  CreateSystemequipment();
                 }}
                 startIcon={<SaveIcon 
                 />}

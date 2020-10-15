@@ -332,7 +332,7 @@ func (sq *SystemequipmentQuery) WithMedicalequipment(opts ...func(*MedicalEquipm
 // Example:
 //
 //	var v []struct {
-//		Addedtime time.Time `json:"addedtime,omitempty"`
+//		Addedtime string `json:"addedtime,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
@@ -358,7 +358,7 @@ func (sq *SystemequipmentQuery) GroupBy(field string, fields ...string) *Systeme
 // Example:
 //
 //	var v []struct {
-//		Addedtime time.Time `json:"addedtime,omitempty"`
+//		Addedtime string `json:"addedtime,omitempty"`
 //	}
 //
 //	client.Systemequipment.Query().

@@ -49,7 +49,7 @@ var (
 	// SystemequipmentsColumns holds the columns for the "systemequipments" table.
 	SystemequipmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "addedtime", Type: field.TypeTime},
+		{Name: "addedtime", Type: field.TypeString},
 		{Name: "medical_equipment_systemequipment", Type: field.TypeInt, Nullable: true},
 		{Name: "medical_type_systemequipment", Type: field.TypeInt, Nullable: true},
 		{Name: "physician_systemequipment", Type: field.TypeInt, Nullable: true},

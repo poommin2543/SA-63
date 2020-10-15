@@ -15,6 +15,14 @@ type SystemequipmentController struct {
 	client *ent.Client
 	router gin.IRouter
 }
+type Medicalequipments struct {
+	Medicalequipment []Medicalequipment
+}
+
+type Medicalequipment struct {
+	Name  string
+	Stock int
+}
 
 // CreateSystemequipment handles POST requests for adding systemequipment entities
 // @Summary Create systemequipment

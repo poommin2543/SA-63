@@ -3,8 +3,6 @@
 package systemequipment
 
 import (
-	"time"
-
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/poommin2543/app/ent/predicate"
@@ -94,28 +92,28 @@ func IDLTE(id int) predicate.Systemequipment {
 }
 
 // Addedtime applies equality check predicate on the "addedtime" field. It's identical to AddedtimeEQ.
-func Addedtime(v time.Time) predicate.Systemequipment {
+func Addedtime(v string) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldAddedtime), v))
 	})
 }
 
 // AddedtimeEQ applies the EQ predicate on the "addedtime" field.
-func AddedtimeEQ(v time.Time) predicate.Systemequipment {
+func AddedtimeEQ(v string) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldAddedtime), v))
 	})
 }
 
 // AddedtimeNEQ applies the NEQ predicate on the "addedtime" field.
-func AddedtimeNEQ(v time.Time) predicate.Systemequipment {
+func AddedtimeNEQ(v string) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldAddedtime), v))
 	})
 }
 
 // AddedtimeIn applies the In predicate on the "addedtime" field.
-func AddedtimeIn(vs ...time.Time) predicate.Systemequipment {
+func AddedtimeIn(vs ...string) predicate.Systemequipment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -132,7 +130,7 @@ func AddedtimeIn(vs ...time.Time) predicate.Systemequipment {
 }
 
 // AddedtimeNotIn applies the NotIn predicate on the "addedtime" field.
-func AddedtimeNotIn(vs ...time.Time) predicate.Systemequipment {
+func AddedtimeNotIn(vs ...string) predicate.Systemequipment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -149,30 +147,65 @@ func AddedtimeNotIn(vs ...time.Time) predicate.Systemequipment {
 }
 
 // AddedtimeGT applies the GT predicate on the "addedtime" field.
-func AddedtimeGT(v time.Time) predicate.Systemequipment {
+func AddedtimeGT(v string) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldAddedtime), v))
 	})
 }
 
 // AddedtimeGTE applies the GTE predicate on the "addedtime" field.
-func AddedtimeGTE(v time.Time) predicate.Systemequipment {
+func AddedtimeGTE(v string) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldAddedtime), v))
 	})
 }
 
 // AddedtimeLT applies the LT predicate on the "addedtime" field.
-func AddedtimeLT(v time.Time) predicate.Systemequipment {
+func AddedtimeLT(v string) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldAddedtime), v))
 	})
 }
 
 // AddedtimeLTE applies the LTE predicate on the "addedtime" field.
-func AddedtimeLTE(v time.Time) predicate.Systemequipment {
+func AddedtimeLTE(v string) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldAddedtime), v))
+	})
+}
+
+// AddedtimeContains applies the Contains predicate on the "addedtime" field.
+func AddedtimeContains(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldAddedtime), v))
+	})
+}
+
+// AddedtimeHasPrefix applies the HasPrefix predicate on the "addedtime" field.
+func AddedtimeHasPrefix(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldAddedtime), v))
+	})
+}
+
+// AddedtimeHasSuffix applies the HasSuffix predicate on the "addedtime" field.
+func AddedtimeHasSuffix(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldAddedtime), v))
+	})
+}
+
+// AddedtimeEqualFold applies the EqualFold predicate on the "addedtime" field.
+func AddedtimeEqualFold(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldAddedtime), v))
+	})
+}
+
+// AddedtimeContainsFold applies the ContainsFold predicate on the "addedtime" field.
+func AddedtimeContainsFold(v string) predicate.Systemequipment {
+	return predicate.Systemequipment(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldAddedtime), v))
 	})
 }
 
