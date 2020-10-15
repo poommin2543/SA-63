@@ -27,6 +27,12 @@ import {
  */
 export interface EntSystemequipment {
     /**
+     * Addedtime holds the value of the "addedtime" field.
+     * @type {string}
+     * @memberof EntSystemequipment
+     */
+    addedtime?: string;
+    /**
      * 
      * @type {EntSystemequipmentEdges}
      * @memberof EntSystemequipment
@@ -38,12 +44,6 @@ export interface EntSystemequipment {
      * @memberof EntSystemequipment
      */
     id?: number;
-    /**
-     * Noom holds the value of the "noom" field.
-     * @type {string}
-     * @memberof EntSystemequipment
-     */
-    noom?: string;
 }
 
 export function EntSystemequipmentFromJSON(json: any): EntSystemequipment {
@@ -56,9 +56,9 @@ export function EntSystemequipmentFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
+        'addedtime': !exists(json, 'addedtime') ? undefined : json['addedtime'],
         'edges': !exists(json, 'edges') ? undefined : EntSystemequipmentEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'noom': !exists(json, 'noom') ? undefined : json['noom'],
     };
 }
 
@@ -71,9 +71,9 @@ export function EntSystemequipmentToJSON(value?: EntSystemequipment | null): any
     }
     return {
         
+        'addedtime': value.addedtime,
         'edges': EntSystemequipmentEdgesToJSON(value.edges),
         'id': value.id,
-        'noom': value.noom,
     };
 }
 

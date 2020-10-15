@@ -38,7 +38,7 @@ func (ctl *SystemequipmentController) CreateSystemequipment(c *gin.Context) {
 
 	u, err := ctl.client.Systemequipment.
 		Create().
-		SetNoom(obj.Noom).
+		SetAddedtime(obj.Addedtime).
 		Save(context.Background())
 	if err != nil {
 		c.JSON(400, gin.H{

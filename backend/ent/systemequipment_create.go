@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
@@ -22,9 +23,9 @@ type SystemequipmentCreate struct {
 	hooks    []Hook
 }
 
-// SetNoom sets the noom field.
-func (sc *SystemequipmentCreate) SetNoom(s string) *SystemequipmentCreate {
-	sc.mutation.SetNoom(s)
+// SetAddedtime sets the addedtime field.
+func (sc *SystemequipmentCreate) SetAddedtime(t time.Time) *SystemequipmentCreate {
+	sc.mutation.SetAddedtime(t)
 	return sc
 }
 
@@ -92,8 +93,8 @@ func (sc *SystemequipmentCreate) Mutation() *SystemequipmentMutation {
 
 // Save creates the Systemequipment in the database.
 func (sc *SystemequipmentCreate) Save(ctx context.Context) (*Systemequipment, error) {
-	if _, ok := sc.mutation.Noom(); !ok {
-		return nil, &ValidationError{Name: "noom", err: errors.New("ent: missing required field \"noom\"")}
+	if _, ok := sc.mutation.Addedtime(); !ok {
+		return nil, &ValidationError{Name: "addedtime", err: errors.New("ent: missing required field \"addedtime\"")}
 	}
 	var (
 		err  error
@@ -155,13 +156,13 @@ func (sc *SystemequipmentCreate) createSpec() (*Systemequipment, *sqlgraph.Creat
 			},
 		}
 	)
-	if value, ok := sc.mutation.Noom(); ok {
+	if value, ok := sc.mutation.Addedtime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: systemequipment.FieldNoom,
+			Column: systemequipment.FieldAddedtime,
 		})
-		s.Noom = value
+		s.Addedtime = value
 	}
 	if nodes := sc.mutation.PhysicianIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

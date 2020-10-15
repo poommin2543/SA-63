@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import { DefaultApi } from '../../api/apis';
 import { EntSystemequipment } from '../../api/models/EntSystemequipment';
  
+import moment from 'moment';
 const useStyles = makeStyles({
  table: {
    minWidth: 650,
@@ -48,6 +49,7 @@ export default function ComponentsTable() {
          <TableCell align="center">Type</TableCell>
          <TableCell align="center">PHYSICIAN</TableCell>
          <TableCell align="center">DATA</TableCell>
+         <TableCell align="center">Manage</TableCell>
          </TableRow>
        </TableHead>
        <TableBody>
@@ -56,7 +58,7 @@ export default function ComponentsTable() {
           : systemequipments.map(item => (
            <TableRow key={item.id}>
              <TableCell align="center">{item.id}</TableCell>
-             <TableCell align="center">{item.noom}</TableCell>
+             <TableCell align="center">{moment(item.deathTime).format('DD/MM/YYYY HH:mm:ss')}</TableCell>
             
              <TableCell align="center">
                <Button

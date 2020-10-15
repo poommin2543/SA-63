@@ -5,6 +5,7 @@ package ent
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
@@ -30,9 +31,9 @@ func (su *SystemequipmentUpdate) Where(ps ...predicate.Systemequipment) *Systeme
 	return su
 }
 
-// SetNoom sets the noom field.
-func (su *SystemequipmentUpdate) SetNoom(s string) *SystemequipmentUpdate {
-	su.mutation.SetNoom(s)
+// SetAddedtime sets the addedtime field.
+func (su *SystemequipmentUpdate) SetAddedtime(t time.Time) *SystemequipmentUpdate {
+	su.mutation.SetAddedtime(t)
 	return su
 }
 
@@ -186,11 +187,11 @@ func (su *SystemequipmentUpdate) sqlSave(ctx context.Context) (n int, err error)
 			}
 		}
 	}
-	if value, ok := su.mutation.Noom(); ok {
+	if value, ok := su.mutation.Addedtime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: systemequipment.FieldNoom,
+			Column: systemequipment.FieldAddedtime,
 		})
 	}
 	if su.mutation.PhysicianCleared() {
@@ -316,9 +317,9 @@ type SystemequipmentUpdateOne struct {
 	mutation *SystemequipmentMutation
 }
 
-// SetNoom sets the noom field.
-func (suo *SystemequipmentUpdateOne) SetNoom(s string) *SystemequipmentUpdateOne {
-	suo.mutation.SetNoom(s)
+// SetAddedtime sets the addedtime field.
+func (suo *SystemequipmentUpdateOne) SetAddedtime(t time.Time) *SystemequipmentUpdateOne {
+	suo.mutation.SetAddedtime(t)
 	return suo
 }
 
@@ -470,11 +471,11 @@ func (suo *SystemequipmentUpdateOne) sqlSave(ctx context.Context) (s *Systemequi
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Systemequipment.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := suo.mutation.Noom(); ok {
+	if value, ok := suo.mutation.Addedtime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: systemequipment.FieldNoom,
+			Column: systemequipment.FieldAddedtime,
 		})
 	}
 	if suo.mutation.PhysicianCleared() {

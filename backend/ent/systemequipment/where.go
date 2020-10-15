@@ -3,6 +3,8 @@
 package systemequipment
 
 import (
+	"time"
+
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/poommin2543/app/ent/predicate"
@@ -91,29 +93,29 @@ func IDLTE(id int) predicate.Systemequipment {
 	})
 }
 
-// Noom applies equality check predicate on the "noom" field. It's identical to NoomEQ.
-func Noom(v string) predicate.Systemequipment {
+// Addedtime applies equality check predicate on the "addedtime" field. It's identical to AddedtimeEQ.
+func Addedtime(v time.Time) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldNoom), v))
+		s.Where(sql.EQ(s.C(FieldAddedtime), v))
 	})
 }
 
-// NoomEQ applies the EQ predicate on the "noom" field.
-func NoomEQ(v string) predicate.Systemequipment {
+// AddedtimeEQ applies the EQ predicate on the "addedtime" field.
+func AddedtimeEQ(v time.Time) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldNoom), v))
+		s.Where(sql.EQ(s.C(FieldAddedtime), v))
 	})
 }
 
-// NoomNEQ applies the NEQ predicate on the "noom" field.
-func NoomNEQ(v string) predicate.Systemequipment {
+// AddedtimeNEQ applies the NEQ predicate on the "addedtime" field.
+func AddedtimeNEQ(v time.Time) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldNoom), v))
+		s.Where(sql.NEQ(s.C(FieldAddedtime), v))
 	})
 }
 
-// NoomIn applies the In predicate on the "noom" field.
-func NoomIn(vs ...string) predicate.Systemequipment {
+// AddedtimeIn applies the In predicate on the "addedtime" field.
+func AddedtimeIn(vs ...time.Time) predicate.Systemequipment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -125,12 +127,12 @@ func NoomIn(vs ...string) predicate.Systemequipment {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldNoom), v...))
+		s.Where(sql.In(s.C(FieldAddedtime), v...))
 	})
 }
 
-// NoomNotIn applies the NotIn predicate on the "noom" field.
-func NoomNotIn(vs ...string) predicate.Systemequipment {
+// AddedtimeNotIn applies the NotIn predicate on the "addedtime" field.
+func AddedtimeNotIn(vs ...time.Time) predicate.Systemequipment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -142,70 +144,35 @@ func NoomNotIn(vs ...string) predicate.Systemequipment {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldNoom), v...))
+		s.Where(sql.NotIn(s.C(FieldAddedtime), v...))
 	})
 }
 
-// NoomGT applies the GT predicate on the "noom" field.
-func NoomGT(v string) predicate.Systemequipment {
+// AddedtimeGT applies the GT predicate on the "addedtime" field.
+func AddedtimeGT(v time.Time) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldNoom), v))
+		s.Where(sql.GT(s.C(FieldAddedtime), v))
 	})
 }
 
-// NoomGTE applies the GTE predicate on the "noom" field.
-func NoomGTE(v string) predicate.Systemequipment {
+// AddedtimeGTE applies the GTE predicate on the "addedtime" field.
+func AddedtimeGTE(v time.Time) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldNoom), v))
+		s.Where(sql.GTE(s.C(FieldAddedtime), v))
 	})
 }
 
-// NoomLT applies the LT predicate on the "noom" field.
-func NoomLT(v string) predicate.Systemequipment {
+// AddedtimeLT applies the LT predicate on the "addedtime" field.
+func AddedtimeLT(v time.Time) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldNoom), v))
+		s.Where(sql.LT(s.C(FieldAddedtime), v))
 	})
 }
 
-// NoomLTE applies the LTE predicate on the "noom" field.
-func NoomLTE(v string) predicate.Systemequipment {
+// AddedtimeLTE applies the LTE predicate on the "addedtime" field.
+func AddedtimeLTE(v time.Time) predicate.Systemequipment {
 	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldNoom), v))
-	})
-}
-
-// NoomContains applies the Contains predicate on the "noom" field.
-func NoomContains(v string) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldNoom), v))
-	})
-}
-
-// NoomHasPrefix applies the HasPrefix predicate on the "noom" field.
-func NoomHasPrefix(v string) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldNoom), v))
-	})
-}
-
-// NoomHasSuffix applies the HasSuffix predicate on the "noom" field.
-func NoomHasSuffix(v string) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldNoom), v))
-	})
-}
-
-// NoomEqualFold applies the EqualFold predicate on the "noom" field.
-func NoomEqualFold(v string) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldNoom), v))
-	})
-}
-
-// NoomContainsFold applies the ContainsFold predicate on the "noom" field.
-func NoomContainsFold(v string) predicate.Systemequipment {
-	return predicate.Systemequipment(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldNoom), v))
+		s.Where(sql.LTE(s.C(FieldAddedtime), v))
 	})
 }
 

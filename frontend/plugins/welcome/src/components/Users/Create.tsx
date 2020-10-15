@@ -81,7 +81,18 @@ interface physiciandata {
   // create_by: number;
 }
 
-
+function Copyright() {
+  return (
+    <Typography variant="body2" color="inherit" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Poommin Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 export default function MenuAppBar() {
   
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -188,6 +199,9 @@ function save() {
       </SvgIcon>
     );
   }
+  function refreshPage() {
+    window.location.reload(false);
+  }
 
   return (
     <div className={classes.root}>
@@ -201,22 +215,44 @@ function save() {
             </Hidden>
             <Grid item xs />
             <Grid item>
-            <Link
-            component="button"
-            variant="body2"
-            onClick={() => {
-              console.info("I'm a button.");
-            }}
-          >
-            Logout
-            </Link>
+            
             </Grid>
+            
             <Grid item>
-              
+                <IconButton 
+                style={{ marginLeft: 20 }}
+                component={RouterLink}
+                to="/login"
+                >    
+                <HomeIcon color="inherit" />
+                </IconButton>
+                </Grid>
+                <Grid item>
+            <Button className={classes.button} variant="outlined" color="inherit" 
+            size="small" component={RouterLink}
+            to="/">
+                logout
+              </Button>
+                </Grid>  
+            <Grid item>
+            <Select
+                  name="prefix"
+                  value={systemequipment_data.namelist || ''}
+                  style={{ width: 200 }}
+                  onChange={handleChange}
+                >
+                  {physicians.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    )
+                  })}
+                </Select>
             </Grid>
             <Grid item>
               <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar src="https://shorturl.at/ixKX1" alt="NoomAvatar" />
+                <Avatar src="https://shorturl.at/zABQU" alt="NoomAvatar" />
               </IconButton>
             </Grid>
           </Grid>
@@ -237,30 +273,11 @@ function save() {
               </Typography>
             </Grid>
             <Grid item>
-                <IconButton 
-                style={{ marginLeft: 20 }}
-                component={RouterLink}
-                to="/"
-                >    
-                <HomeIcon color="inherit" />
-                </IconButton>
+            
                 </Grid>  
             
             <Grid item>
-            <Select
-                  name="prefix"
-                  value={systemequipment_data.namelist || ''}
-                  style={{ width: 200 }}
-                  onChange={handleChange}
-                >
-                  {physicians.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    )
-                  })}
-                </Select>
+            
             </Grid>
             
           </Grid>
@@ -364,7 +381,8 @@ function save() {
                 size="large"
                 className={classes.button}
                 onClick={() => {
-                  CreateSystemequipment();
+                  CreateSystemequipment()
+                  refreshPage;
                 }}
                 startIcon={<SaveIcon 
                 />}
@@ -390,7 +408,8 @@ function save() {
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>  
-            new Date() 
+            <Copyright />
+              
             </Grid>
           </Grid>
         </Toolbar>

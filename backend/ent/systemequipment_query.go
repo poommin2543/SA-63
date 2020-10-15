@@ -332,12 +332,12 @@ func (sq *SystemequipmentQuery) WithMedicalequipment(opts ...func(*MedicalEquipm
 // Example:
 //
 //	var v []struct {
-//		Noom string `json:"noom,omitempty"`
+//		Addedtime time.Time `json:"addedtime,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Systemequipment.Query().
-//		GroupBy(systemequipment.FieldNoom).
+//		GroupBy(systemequipment.FieldAddedtime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -358,11 +358,11 @@ func (sq *SystemequipmentQuery) GroupBy(field string, fields ...string) *Systeme
 // Example:
 //
 //	var v []struct {
-//		Noom string `json:"noom,omitempty"`
+//		Addedtime time.Time `json:"addedtime,omitempty"`
 //	}
 //
 //	client.Systemequipment.Query().
-//		Select(systemequipment.FieldNoom).
+//		Select(systemequipment.FieldAddedtime).
 //		Scan(ctx, &v)
 //
 func (sq *SystemequipmentQuery) Select(field string, fields ...string) *SystemequipmentSelect {

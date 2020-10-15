@@ -77,6 +77,9 @@ definitions:
     type: object
   ent.Systemequipment:
     properties:
+      addedtime:
+        description: Addedtime holds the value of the "addedtime" field.
+        type: string
       edges:
         $ref: '#/definitions/ent.SystemequipmentEdges'
         description: |-
@@ -86,9 +89,6 @@ definitions:
       id:
         description: ID of the ent.
         type: integer
-      noom:
-        description: Noom holds the value of the "noom" field.
-        type: string
     type: object
   ent.SystemequipmentEdges:
     properties:
