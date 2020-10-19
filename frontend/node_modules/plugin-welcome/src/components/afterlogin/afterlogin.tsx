@@ -12,17 +12,17 @@ import {
  Link,
 } from '@backstage/core';
  
-const WelcomePage: FC<{}> = () => {
- const profile = { givenName: 'to Department' };
+const afterlogin: FC<{}> = () => {
+ const profile = { givenName: 'to ระบบเครื่องมือแพทย์' };
  
  return (
    <Page theme={pageTheme.home}>
      <Header
        title={`Welcome ${profile.givenName || 'to Backstage'}`}
-       subtitle="Select the department you want to be in."
+       subtitle="ระบบหลัก : ระบบข้อมูลแพทย์"
      ></Header>
      <Content>
-       <ContentHeader title="Application CRUD">
+       <ContentHeader title="บันทึกข้อมูล">
          <Link component={RouterLink} to="/user">
            <Button variant="contained" color="primary">
              Add User
@@ -36,4 +36,4 @@ const WelcomePage: FC<{}> = () => {
  );
 };
  
-export default WelcomePage;
+export default afterlogin;

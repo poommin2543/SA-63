@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     textField: {
-      width: 300,
+      width: 200,
     },
   }),
 );
@@ -135,12 +135,13 @@ const systemequipment = {
   physicianID    :1 , 
   nameEquipmentID,   
   stock , 
-  typeEquipmentID   
+  typeEquipmentID ,
+  addtime :datetime   + "T00:00:00+07:00"
 }
 const createSystemequipment = async () => {
  
  console.log(medicalEquipmentid)
-const res:any = await api.createSystemequipment({ systemequipment});
+const res:any = await api.createSystemequipment({ systemequipment : systemequipment});
 setStatus(true);
 if (res.id != ''){
  setAlert(true);
@@ -356,7 +357,7 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
                 <TextField
                   label="เลือกเวลา"
                   name="added"
-                  type="date"
+                  type="datetime-local"
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,

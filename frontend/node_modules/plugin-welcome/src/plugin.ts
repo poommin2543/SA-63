@@ -3,7 +3,7 @@ import { createPlugin } from '@backstage/core';
 import WelcomePage from './components/WelcomePage';
 
 import CreateUser from './components/Users';
-import login from './components/login';
+import login from './components/afterlogin';
 
 
 export const plugin = createPlugin({
