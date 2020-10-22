@@ -194,7 +194,7 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
                 <IconButton 
                 style={{ marginLeft: 20 }}
                 component={RouterLink}
-                to="/login"
+                to="/afterlogin"
                 >    
                 <HomeIcon color="inherit" />
                 </IconButton>

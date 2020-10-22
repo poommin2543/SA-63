@@ -53,7 +53,7 @@ export default function MenuAppBar() {
             <Grid item>
             <Button  variant="outlined" color="inherit" 
             size="small" component={RouterLink}
-            to="/user">
+            to="/adddata">
                 เพิ่มข้อมูล
               </Button>
                 </Grid>

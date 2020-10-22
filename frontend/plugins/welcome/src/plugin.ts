@@ -2,8 +2,8 @@ import { createPlugin } from '@backstage/core';
 
 import WelcomePage from './components/WelcomePage';
 
-import CreateUser from './components/Users';
-import login from './components/afterlogin';
+import Adddata from './components/Adddata';
+import afterlogin from './components/afterlogin';
 
 
 export const plugin = createPlugin({
@@ -13,10 +13,8 @@ export const plugin = createPlugin({
   register({ router }) {
 
     router.registerRoute('/', WelcomePage);
-
-    router.registerRoute('/user', CreateUser);
-
-    router.registerRoute('/login', login);
+    router.registerRoute('/adddata', Adddata);
+    router.registerRoute('/afterlogin', afterlogin);
 
   },
 

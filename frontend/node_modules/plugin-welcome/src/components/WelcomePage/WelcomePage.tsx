@@ -188,7 +188,7 @@ const Login = () => {
             disabled={state.isButtonDisabled}    
             
             component={RouterLink}
-            to="/login"    
+            to="/afterlogin"    
             >
             Login
           </Button>
