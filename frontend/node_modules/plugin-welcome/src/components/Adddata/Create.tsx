@@ -211,7 +211,7 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
             </Grid>
             <Grid item>
               <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar src="https://shorturl.at/zABQU" alt="NoomAvatar" />
+                <Avatar src="o" alt="P" />
               </IconButton>
             </Grid>
           </Grid>
@@ -303,9 +303,6 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
                {medicalEquipments.map((item:EntMedicalEquipment)=>
                <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
              </Select>
-
-
-
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}> </Grid>

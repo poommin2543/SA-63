@@ -14,19 +14,24 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexWrap: 'wrap',
       width: 400,
+      
       margin: `${theme.spacing(0)} auto`
     },
     loginBtn: {
       marginTop: theme.spacing(2),
+      background: '#ffb5a7',
+      color: '#fff',
       flexGrow: 1
     },
     header: {
       textAlign: 'center',
-      background: '#212121',
+      background: '#fec89a',
       color: '#fff'
     },
     card: {
-      marginTop: theme.spacing(10)
+      marginTop: theme.spacing(10),
+      background: '#f8edeb',
+      
     }
   })
 );
@@ -112,7 +117,7 @@ const Login = () => {
   }, [state.username, state.password]);
 
   const handleLogin = () => {
-    if (state.username === 'poommin' && state.password === '1234') {
+    if (state.username === 'Poommin' && state.password === '1234') {
       dispatch({
         type: 'loginSuccess',
         payload: 'Login Successfully'
@@ -149,6 +154,7 @@ const Login = () => {
     }
   return (
     <form className={classes.container} noValidate autoComplete="off">
+      
       <Card className={classes.card}>
         <CardHeader className={classes.header} title="Login App" />
         <CardContent>
@@ -182,7 +188,6 @@ const Login = () => {
           <Button
             variant="contained"
             size="large"
-            color="secondary"
             className={classes.loginBtn}
             onClick={handleLogin}
             disabled={state.isButtonDisabled}    

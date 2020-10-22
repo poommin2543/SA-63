@@ -1,6 +1,6 @@
 import { createPlugin } from '@backstage/core';
 
-import WelcomePage from './components/WelcomePage';
+import WelcomePage from './components/Login';
 
 import Adddata from './components/Adddata';
 import afterlogin from './components/afterlogin';
