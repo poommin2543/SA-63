@@ -8,3 +8,5 @@
 บันทึกได้แล้วเหลือแค่ วันที่เวลา
 [![Screenshot-21.png](https://i.postimg.cc/6pc430tx/Screenshot-21.png)](https://postimg.cc/WdD1Y0d5)
 
+บันทึกวันที่ได้แน้ว
+[![Screenshot-22.png](https://i.postimg.cc/5yCYSCPM/Screenshot-22.png)](https://postimg.cc/xN910cDs)
