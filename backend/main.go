@@ -103,8 +103,8 @@ func main() {
 	// Set Physicians Data
 	physicians := Physicians{
 		Physician: []Physician{
-			Physician{"Chanwit Kaewkasi", "chanwit@gmail.com"},
-			Physician{"Name Surname", "me@example.com"},
+			Physician{"Poommin", "poommin@gmail.com"},
+			Physician{"Phinphimai", "me@example.com"},
 		},
 	}
 
@@ -132,8 +132,10 @@ func main() {
 
 	medicalequipments := Medicalequipments{
 		Medicalequipment: []Medicalequipment{
-			Medicalequipment{"กรรไกร"},
-			Medicalequipment{"ปากกา"},
+			Medicalequipment{"สำลี"},
+			Medicalequipment{"ถุงมือ"},
+			Medicalequipment{"มีดผ่าตัด"},
+			Medicalequipment{"เครื่องผลิตออกซิเจนพกพา"},
 		},
 	}
 
