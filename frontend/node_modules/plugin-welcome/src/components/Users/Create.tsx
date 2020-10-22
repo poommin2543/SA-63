@@ -23,6 +23,8 @@ import { EntMedicalType } from '../../api/models/EntMedicalType';
 import { EntMedicalEquipment } from '../../api/models/EntMedicalEquipment';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
+import { ContentHeader } from '@backstage/core';
+import { Alert } from '@material-ui/lab';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -76,7 +78,6 @@ export default function MenuAppBar() {
   
   const [physicians, setPhysicians] = useState<EntPhysician[]>([]);
   const [medicalEquipments, setMedicalEquipments] = useState<EntMedicalEquipment[]>([]);
-  const [medicalEquipmentstocks, setMedicalEquipmentstocks] = useState<EntMedicalEquipment[]>([]);
   const [medicalTypes, setMedicalTypes] = useState<EntMedicalType[]>([]);
   const [status, setStatus] = useState(false);
   const [alert, setAlert] = useState(true);
@@ -88,6 +89,7 @@ export default function MenuAppBar() {
   const [medicalTypeid, setMedicalTypeid] = useState(Number);
   const [medicalEquipmentstockid, setMedicalEquipmentstockid] = useState(Number);
   const [datetime, setDatetime] = useState(String);
+
  let stock = Number(medicalEquipmentstockid)
  let nameEquipmentID = Number(medicalEquipmentid)
  let typeEquipmentID =Number(medicalTypeid)
@@ -118,26 +120,18 @@ export default function MenuAppBar() {
      };
      getmedicalTypes();
 
-     const getmedicalEquipmentstocks = async () => {
- 
-      const sp = await api.listMedicalequipment({ limit: 10, offset: 0 });
-        setLoading(false);
-        setMedicalEquipmentstocks(sp);
-      };
-      getmedicalEquipmentstocks();
- 
+     
   }, [loading]);
-  const handleDatetimeChange = (event: any) => {
-    setDatetime(event.target.value as string);
-};
+  
 const systemequipment = {
                  
   physicianID    :1 , 
   nameEquipmentID,   
   stock , 
   typeEquipmentID ,
-  addtime :datetime   + "T00:00:00+07:00"
+  addedtime :datetime   + ":00+07:00"
 }
+console.log(systemequipment)
 const createSystemequipment = async () => {
  
  console.log(medicalEquipmentid)
@@ -168,7 +162,9 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
   const Stock_id_handleChange = (event: any) => {
     setMedicalEquipmentstockid(event.target.value);
    };
-    
+  const handleDatetimeChange = (event: any) => {
+    setDatetime(event.target.value as string);
+  }; 
   
 
  function HomeIcon(props:any) {
@@ -221,7 +217,7 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
           </Grid>
         </Toolbar>
       </AppBar>
-
+      
       <AppBar
         component="div"
         color="primary"
@@ -258,7 +254,21 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
         </Tabs>
         
       </AppBar>
-
+            
+          {status ? (
+            <div>
+              {alert ? (
+                <Alert severity="success">
+                  This is a success alert — check it out!
+                </Alert>
+              ) : (
+                  <Alert severity="warning" style={{ marginTop: 20 }}>
+                    This is a warning alert — check it out!
+                  </Alert>
+                )}
+            </div>
+          ) : null}
+       
       <AppBar
         component="div"
         className={classes.secondaryBar}
@@ -354,16 +364,18 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
             </Grid>
             <Grid item xs={2}>
                <form  noValidate>
-                <TextField
-                  label="เลือกเวลา"
-                  name="added"
-                  type="datetime-local"
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onChange={handleDatetimeChange}
-                />
+               <TextField
+                      id="date"
+                      label="DateTime"
+                      type="datetime-local"
+                      value={datetime}
+                      onChange={handleDatetimeChange}
+                      //defaultValue="2017-05-24"
+                      className={classes.textField}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
               </form>
               
                   
@@ -384,6 +396,7 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
                 onClick={() => {
                   createSystemequipment();
                 }}
+                
                 startIcon={<SaveIcon 
                 />}
               >

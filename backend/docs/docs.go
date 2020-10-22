@@ -942,6 +942,9 @@ var doc = `{
         "controllers.Systemequipment": {
             "type": "object",
             "properties": {
+                "addedtime": {
+                    "type": "string"
+                },
                 "nameEquipmentID": {
                     "type": "integer"
                 },

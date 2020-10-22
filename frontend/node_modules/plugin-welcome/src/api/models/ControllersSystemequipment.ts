@@ -21,6 +21,12 @@ import { exists, mapValues } from '../runtime';
 export interface ControllersSystemequipment {
     /**
      * 
+     * @type {string}
+     * @memberof ControllersSystemequipment
+     */
+    addedtime?: string;
+    /**
+     * 
      * @type {number}
      * @memberof ControllersSystemequipment
      */
@@ -42,12 +48,6 @@ export interface ControllersSystemequipment {
      * @type {number}
      * @memberof ControllersSystemequipment
      */
-    stockEquipmentID?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ControllersSystemequipment
-     */
     typeEquipmentID?: number;
 }
 
@@ -61,10 +61,10 @@ export function ControllersSystemequipmentFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
+        'addedtime': !exists(json, 'addedtime') ? undefined : json['addedtime'],
         'nameEquipmentID': !exists(json, 'nameEquipmentID') ? undefined : json['nameEquipmentID'],
         'physicianID': !exists(json, 'physicianID') ? undefined : json['physicianID'],
         'stock': !exists(json, 'stock') ? undefined : json['stock'],
-        'stockEquipmentID': !exists(json, 'stockEquipmentID') ? undefined : json['stockEquipmentID'],
         'typeEquipmentID': !exists(json, 'typeEquipmentID') ? undefined : json['typeEquipmentID'],
     };
 }
@@ -78,9 +78,10 @@ export function ControllersSystemequipmentToJSON(value?: ControllersSystemequipm
     }
     return {
         
+        'addedtime': value.addedtime,
         'nameEquipmentID': value.nameEquipmentID,
         'physicianID': value.physicianID,
-        'Stock': value.stock,
+        'stock': value.stock,
         'typeEquipmentID': value.typeEquipmentID,
     };
 }

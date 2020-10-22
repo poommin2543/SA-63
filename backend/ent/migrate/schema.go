@@ -11,7 +11,7 @@ var (
 	// MedicalEquipmentsColumns holds the columns for the "medical_equipments" table.
 	MedicalEquipmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString, Unique: true},
 	}
 	// MedicalEquipmentsTable holds the schema information for the "medical_equipments" table.
 	MedicalEquipmentsTable = &schema.Table{
@@ -23,7 +23,7 @@ var (
 	// MedicalTypesColumns holds the columns for the "medical_types" table.
 	MedicalTypesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString, Unique: true},
 	}
 	// MedicalTypesTable holds the schema information for the "medical_types" table.
 	MedicalTypesTable = &schema.Table{
@@ -35,8 +35,8 @@ var (
 	// PhysiciansColumns holds the columns for the "physicians" table.
 	PhysiciansColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString},
-		{Name: "email", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString, Unique: true},
+		{Name: "email", Type: field.TypeString, Unique: true},
 	}
 	// PhysiciansTable holds the schema information for the "physicians" table.
 	PhysiciansTable = &schema.Table{

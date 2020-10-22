@@ -14,8 +14,8 @@ type Physician struct {
 // Fields of the Physician.
 func (Physician) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("name").NotEmpty(),
-		field.String("email").NotEmpty(),
+		field.String("name").NotEmpty().Unique(),
+		field.String("email").NotEmpty().Unique(),
 	}
 }
 

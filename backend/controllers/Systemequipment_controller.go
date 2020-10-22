@@ -26,7 +26,7 @@ type Systemequipment struct {
 	TypeEquipmentID  int
 	PhysicianID      int
 	Stock			 int
-	addedtime       string
+	Addedtime       string
 }
 
 // CreateSystemequipment handles POST requests for adding systemequipment entities
@@ -87,7 +87,7 @@ func (ctl *SystemequipmentController) CreateSystemequipment(c *gin.Context) {
 
 	
 
-	times, err := time.Parse(time.RFC3339, obj.addedtime)
+	times, err := time.Parse(time.RFC3339, obj.Addedtime)
 	
 	sa, err := ctl.client.Systemequipment.
 		Create().

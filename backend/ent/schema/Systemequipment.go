@@ -1,6 +1,7 @@
 package schema
 
 import (
+	
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
 	"github.com/facebookincubator/ent/schema/field"
