@@ -93,7 +93,9 @@ export default function MenuAppBar() {
  let stock = Number(medicalEquipmentstockid)
  let nameEquipmentID = Number(medicalEquipmentid)
  let typeEquipmentID =Number(medicalTypeid)
+ let physicianID = Number(physicianid)
 
+ console.log(physicianID)
   useEffect(() => {
 
     const getmedicalEquipments = async () => {
@@ -125,8 +127,8 @@ export default function MenuAppBar() {
   
 const systemequipment = {
                  
-  physicianID    :1 , 
-  nameEquipmentID,   
+  physicianID  , 
+  nameEquipmentID ,   
   stock , 
   typeEquipmentID ,
   addedtime :datetime   + ":00+07:00"
@@ -148,9 +150,9 @@ const timer = setTimeout(() => {
 }, 1000);
 };
   
-const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-  setPhysicianid(event.target.value as number);
-   };
+const physician_id_handleChange = (event: any)=> {
+  setPhysicianid(event.target.value);
+   }; 
 
   const Equipment_id_handleChange = (event:any) => {
     setMedicalEquipmentid(event.target.value);
@@ -283,6 +285,28 @@ const physician_id_handleChange = (event: React.ChangeEvent<{ value: unknown }>)
         
             
             
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Typography color="primary" variant="h6" component="h1">
+                ชื่อแพทย์
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              
+            <Select
+               labelId="physician_id-label"
+               label="physician"
+               id="physician_id"
+               onChange={physician_id_handleChange}
+               style = {{width: 200}}
+               >
+               {physicians.map((item:EntPhysician)=>
+               <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
+             </Select>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}> </Grid>
 
             <Grid item xs={2}></Grid>
             <Grid item xs={2}></Grid>
